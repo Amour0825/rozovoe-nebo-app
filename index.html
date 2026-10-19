@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff0f6">
+  <title>розовое небо ♡</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #78445f;
+      background:
+        radial-gradient(ellipse at top left, #ffe0ee, transparent 55%),
+        linear-gradient(160deg, #fff8fb, #ffeaf3 55%, #fce0ed);
+    }
+
+    .page {
+      width: min(100% - 32px, 480px);
+      margin: 0 auto;
+      padding: 36px 0 42px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 28px 12px 26px;
+    }
+
+    .flowers {
+      font-size: 32px;
+      letter-spacing: 8px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-weight: 500;
+      font-size: clamp(35px, 10vw, 47px);
+      color: #b85885;
+      letter-spacing: -1.5px;
+    }
+
+    .subtitle {
+      margin: 13px auto 0;
+      max-width: 300px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #9d6c84;
+    }
+
+    .divider {
+      width: 70px;
+      height: 1px;
+      margin: 25px auto 22px;
+      background: #e8b4cc;
+    }
+
+    .section-label {
+      margin: 0 0 14px 4px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #b47a96;
+    }
+
+    .menu {
+      display: grid;
+      gap: 11px;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      width: 100%;
+      padding: 16px;
+      border: 1px solid rgba(223, 160, 190, .4);
+      border-radius: 19px;
+      background: rgba(255, 255, 255, .68);
+      color: inherit;
+      text-align: left;
+      font: inherit;
+      cursor: pointer;
+      transition: transform .2s, background .2s;
+    }
+
+    .item:active { transform: scale(.98); }
+    .item:hover { background: #fff; }
+
+    .emoji {
+      display: grid;
+      place-items: center;
+      width: 47px;
+      height: 47px;
+      flex-shrink: 0;
+      border-radius: 15px;
+      background: #ffedf5;
+      font-size: 24px;
+    }
+
+    .item-text { flex: 1; }
+
+    .item-title {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #925271;
+    }
+
+    .item-description {
+      display: block;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #ac8397;
+    }
+
+    .arrow {
+      font-size: 22px;
+      color: #d59ab6;
+    }
+
+    .footer {
+      margin-top: 25px;
+      text-align: center;
+      font-family: Georgia, serif;
+      font-size: 13px;
+      font-style: italic;
+      color: #b47a96;
+    }
+
+    .notice {
+      display: none;
+      margin-top: 20px;
+      padding: 18px;
+      border: 1px solid #efc5d8;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .8);
+      font-size: 14px;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .notice.show { display: block; }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div class="flowers">🌸 ✧ 🌷</div>
+      <h1>розовое небо</h1>
+      <p class="subtitle">
+        маленькое место, где можно выдохнуть,
+        почувствовать нежность и побыть собой ♡
+      </p>
+      <div class="divider"></div>
+    </header>
+
+    <p class="section-label">твой маленький мир</p>
+
+    <section class="menu">
+      <button class="item" data-section="polls">
+        <span class="emoji">🦋</span>
+        <span class="item-text">
+          <span class="item-title">опросы и интересы</span>
+          <span class="item-description">узнай себя немного лучше</span>
+        </span>
+        <span class="arrow">›</span>
+      </button>
+
+      <button class="item" data-section="gallery">
+        <span class="emoji">🌷</span>
+        <span class="item-text">
+          <span class="item-title">моя галерея</span>
+          <span class="item-description">картинки, воспоминания и послания</span>
+        </span>
+        <span class="arrow">›</span>
+      </button>
+
+      <button class="item" data-section="galaxy">
+        <span class="emoji">🌌</span>
+        <span class="item-text">
+          <span class="item-title">моя галактика</span>
+          <span class="item-description">маленькая вселенная с твоими словами</span>
+        </span>
+        <span class="arrow">›</span>
+      </button>
+
+      <button class="item" data-section="daily">
+        <span class="emoji">💌</span>
+        <span class="item-text">
+          <span class="item-title">послание дня</span>
+          <span class="item-description">советы, цитаты и нежные напоминания</span>
+        </span>
+        <span class="arrow">›</span>
+      </button>
+
+      <button class="item" data-section="game">
+        <span class="emoji">🎀</span>
+        <span class="item-text">
+          <span class="item-title">маленькая игра</span>
+          <span class="item-description">скоро здесь появится что-то особенное</span>
+        </span>
+        <span class="arrow">›</span>
+      </button>
+    </section>
+
+    <div id="notice" class="notice" role="status"></div>
+
+    <footer class="footer">
+      сделано с нежностью, для тебя ♡
+    </footer>
+  </main>
+
+  <script>
+    const messages = {
+      polls: "🦋 здесь будут мини-опросы о твоих интересах, увлечениях и маленьких радостях.",
+      gallery: "🌷 здесь появится галерея с загруженными картинками и красивыми посланиями.",
+      galaxy: "🌌 здесь будет вращающаяся галактика с текстом, который можно менять.",
+      daily: "💌 здесь будут ежедневные советы, комплименты, цитаты и напоминания.",
+      game: "🎀 маленькую игру оставим на потом — сначала создадим остальные разделы."
+    };
+
+    const notice = document.getElementById("notice");
+
+    document.querySelectorAll("[data-section]").forEach(button => {
+      button.addEventListener("click", () => {
+        notice.textContent = messages[button.dataset.section];
+        notice.classList.add("show");
+        notice.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      });
+    });
+  </script>
+</body>
+</html>
