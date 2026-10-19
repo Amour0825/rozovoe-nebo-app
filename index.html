@@ -695,9 +695,9 @@
       game: ["маленькая игра 🎀", "здесь появится небольшая игра. пока готовим для неё что-то особенное."]
     };
 
-    const home = document.getElementById("home");{
+    const home = document.getElementById("home");
     const galaxyView = document.getElementById("galaxy-view");
-const cosmicObjects = };
+const cosmicObjects = {
   sirius: {
     title: "Сириус ✦",
     description: "Сириус — самая яркая звезда ночного неба, видимая с Земли. Это двойная звёздная система в созвездии Большого Пса."
@@ -834,10 +834,6 @@ document.getElementById("back-galaxy").addEventListener("click", () => {
   document.getElementById("other-text").textContent = otherSections[section][1];
   showView(other);
 }
-       } else { 
-          document.getElementById("other-title").textContent = otherSections[section][0];
-          document.getElementById("other-text").textContent = otherSections[section][1];
-          showView(other);
         }
       });
     });
