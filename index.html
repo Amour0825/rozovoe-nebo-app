@@ -8,45 +8,47 @@
   <style>
     * { box-sizing: border-box; }
 
+    :root {
+      --pink: #b85885;
+      --text: #78445f;
+      --muted: #a87891;
+      --border: #efcadd;
+      --white: rgba(255,255,255,.78);
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: #78445f;
+      color: var(--text);
       background:
         radial-gradient(ellipse at top left, #ffe0ee, transparent 55%),
         linear-gradient(160deg, #fff8fb, #ffeaf3 55%, #fce0ed);
     }
 
+    button { font: inherit; }
+
     .page {
       width: min(100% - 32px, 480px);
       margin: 0 auto;
-      padding: 36px 0 42px;
+      padding: 25px 0 42px;
     }
 
-    .hero {
-      text-align: center;
-      padding: 28px 12px 26px;
-    }
-
-    .flowers {
-      font-size: 32px;
-      letter-spacing: 8px;
-      margin-bottom: 18px;
-    }
+    .hero { text-align: center; padding: 20px 12px 25px; }
+    .flowers { font-size: 29px; letter-spacing: 7px; margin-bottom: 15px; }
 
     h1 {
       margin: 0;
       font-family: Georgia, serif;
       font-weight: 500;
       font-size: clamp(35px, 10vw, 47px);
-      color: #b85885;
+      color: var(--pink);
       letter-spacing: -1.5px;
     }
 
     .subtitle {
       margin: 13px auto 0;
-      max-width: 300px;
+      max-width: 310px;
       font-size: 14px;
       line-height: 1.7;
       color: #9d6c84;
@@ -55,77 +57,59 @@
     .divider {
       width: 70px;
       height: 1px;
-      margin: 25px auto 22px;
+      margin: 23px auto;
       background: #e8b4cc;
     }
 
     .section-label {
-      margin: 0 0 14px 4px;
+      margin: 0 0 13px 4px;
       font-size: 11px;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: #b47a96;
     }
 
-    .menu {
-      display: grid;
-      gap: 11px;
-    }
+    .menu { display: grid; gap: 10px; }
 
     .item {
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 14px;
       width: 100%;
-      padding: 16px;
-      border: 1px solid rgba(223, 160, 190, .4);
+      padding: 15px;
+      border: 1px solid rgba(223,160,190,.4);
       border-radius: 19px;
-      background: rgba(255, 255, 255, .68);
+      background: var(--white);
       color: inherit;
       text-align: left;
-      font: inherit;
       cursor: pointer;
       transition: transform .2s, background .2s;
     }
 
-    .item:active { transform: scale(.98); }
+    .item:active, .action:active, .category:active {
+      transform: scale(.98);
+    }
+
     .item:hover { background: #fff; }
 
     .emoji {
       display: grid;
       place-items: center;
-      width: 47px;
-      height: 47px;
+      width: 46px;
+      height: 46px;
       flex-shrink: 0;
       border-radius: 15px;
       background: #ffedf5;
-      font-size: 24px;
+      font-size: 23px;
     }
 
     .item-text { flex: 1; }
-
-    .item-title {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 15px;
-      font-weight: 600;
-      color: #925271;
-    }
-
-    .item-description {
-      display: block;
-      font-size: 12px;
-      line-height: 1.5;
-      color: #ac8397;
-    }
-
-    .arrow {
-      font-size: 22px;
-      color: #d59ab6;
-    }
+    .item-title { display: block; margin-bottom: 5px; font-size: 15px; font-weight: 600; color: #925271; }
+    .item-description { display: block; font-size: 12px; line-height: 1.5; color: #ac8397; }
+    .arrow { font-size: 22px; color: #d59ab6; }
 
     .footer {
-      margin-top: 25px;
+      margin-top: 27px;
       text-align: center;
       font-family: Georgia, serif;
       font-size: 13px;
@@ -133,19 +117,121 @@
       color: #b47a96;
     }
 
-    .notice {
-      display: none;
-      margin-top: 20px;
-      padding: 18px;
-      border: 1px solid #efc5d8;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, .8);
-      font-size: 14px;
-      line-height: 1.7;
-      text-align: center;
+    .view { display: none; }
+    .view.active { display: block; animation: appear .25s ease; }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(7px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .notice.show { display: block; }
+    .back {
+      border: 0;
+      background: transparent;
+      color: #a45d80;
+      padding: 8px 0 18px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .view-title {
+      font-family: Georgia, serif;
+      font-size: 31px;
+      font-weight: 500;
+      color: var(--pink);
+      margin: 0 0 8px;
+    }
+
+    .view-subtitle {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 0 0 20px;
+    }
+
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .category {
+      border: 1px solid #ecc6d8;
+      background: rgba(255,255,255,.65);
+      color: #a15d7e;
+      padding: 9px 12px;
+      border-radius: 30px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .category.active {
+      background: #c8789e;
+      border-color: #c8789e;
+      color: white;
+    }
+
+    .letter {
+      position: relative;
+      overflow: hidden;
+      padding: 25px 22px 23px;
+      border: 1px solid #efc6d9;
+      border-radius: 24px;
+      background: linear-gradient(145deg, rgba(255,255,255,.94), rgba(255,241,247,.92));
+      box-shadow: 0 12px 35px rgba(179,94,137,.09);
+    }
+
+    .letter::after {
+      content: "✧";
+      position: absolute;
+      right: 17px;
+      top: 8px;
+      font-size: 34px;
+      color: #f1c7dc;
+    }
+
+    .letter-icon { font-size: 27px; margin-bottom: 15px; }
+    .letter-type { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #bd7d9d; margin-bottom: 12px; }
+
+    .letter-text {
+      font-family: Georgia, serif;
+      font-size: 21px;
+      line-height: 1.65;
+      color: #87516b;
+      overflow-wrap: anywhere;
+      white-space: pre-line;
+    }
+
+    .letter-date { margin-top: 19px; font-size: 11px; color: #c18aa5; }
+
+    .actions { display: grid; gap: 9px; margin-top: 14px; }
+
+    .action {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 15px;
+      border: 1px solid #ecc4d7;
+      background: rgba(255,255,255,.78);
+      color: #995775;
+      cursor: pointer;
+      transition: transform .2s, background .2s;
+    }
+
+    .action.primary {
+      background: #c8789e;
+      border-color: #c8789e;
+      color: white;
+      box-shadow: 0 6px 17px rgba(184,88,133,.18);
+    }
+
+    .action:hover { filter: brightness(1.02); }
+    .status { min-height: 20px; margin-top: 10px; text-align: center; font-size: 12px; color: #a15d7e; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -160,79 +246,278 @@
       <div class="divider"></div>
     </header>
 
-    <p class="section-label">твой маленький мир</p>
+    <section id="home" class="view active">
+      <p class="section-label">твой маленький мир</p>
+      <div class="menu">
+        <button class="item" data-section="polls">
+          <span class="emoji">🦋</span>
+          <span class="item-text">
+            <span class="item-title">опросы и интересы</span>
+            <span class="item-description">узнай себя немного лучше</span>
+          </span>
+          <span class="arrow">›</span>
+        </button>
 
-    <section class="menu">
-      <button class="item" data-section="polls">
-        <span class="emoji">🦋</span>
-        <span class="item-text">
-          <span class="item-title">опросы и интересы</span>
-          <span class="item-description">узнай себя немного лучше</span>
-        </span>
-        <span class="arrow">›</span>
-      </button>
+        <button class="item" data-section="gallery">
+          <span class="emoji">🌷</span>
+          <span class="item-text">
+            <span class="item-title">моя галерея</span>
+            <span class="item-description">картинки, воспоминания и послания</span>
+          </span>
+          <span class="arrow">›</span>
+        </button>
 
-      <button class="item" data-section="gallery">
-        <span class="emoji">🌷</span>
-        <span class="item-text">
-          <span class="item-title">моя галерея</span>
-          <span class="item-description">картинки, воспоминания и послания</span>
-        </span>
-        <span class="arrow">›</span>
-      </button>
+        <button class="item" data-section="galaxy">
+          <span class="emoji">🌌</span>
+          <span class="item-text">
+            <span class="item-title">моя галактика</span>
+            <span class="item-description">маленькая вселенная с твоими словами</span>
+          </span>
+          <span class="arrow">›</span>
+        </button>
 
-      <button class="item" data-section="galaxy">
-        <span class="emoji">🌌</span>
-        <span class="item-text">
-          <span class="item-title">моя галактика</span>
-          <span class="item-description">маленькая вселенная с твоими словами</span>
-        </span>
-        <span class="arrow">›</span>
-      </button>
+        <button class="item" data-section="daily">
+          <span class="emoji">💌</span>
+          <span class="item-text">
+            <span class="item-title">послание дня</span>
+            <span class="item-description">советы, цитаты и нежные напоминания</span>
+          </span>
+          <span class="arrow">›</span>
+        </button>
 
-      <button class="item" data-section="daily">
-        <span class="emoji">💌</span>
-        <span class="item-text">
-          <span class="item-title">послание дня</span>
-          <span class="item-description">советы, цитаты и нежные напоминания</span>
-        </span>
-        <span class="arrow">›</span>
-      </button>
-
-      <button class="item" data-section="game">
-        <span class="emoji">🎀</span>
-        <span class="item-text">
-          <span class="item-title">маленькая игра</span>
-          <span class="item-description">скоро здесь появится что-то особенное</span>
-        </span>
-        <span class="arrow">›</span>
-      </button>
+        <button class="item" data-section="game">
+          <span class="emoji">🎀</span>
+          <span class="item-text">
+            <span class="item-title">маленькая игра</span>
+            <span class="item-description">скоро здесь появится что-то особенное</span>
+          </span>
+          <span class="arrow">›</span>
+        </button>
+      </div>
     </section>
 
-    <div id="notice" class="notice" role="status"></div>
+    <section id="daily" class="view">
+      <button class="back" id="back-home">← назад к моему миру</button>
+      <h2 class="view-title">послание дня ♡</h2>
+      <p class="view-subtitle">
+        выбери то, что тебе сейчас нужно. возможно,
+        именно здесь найдутся слова для тебя.
+      </p>
 
-    <footer class="footer">
-      сделано с нежностью, для тебя ♡
-    </footer>
+      <div class="categories" id="categories">
+        <button class="category active" data-category="all">✨ всё понемногу</button>
+        <button class="category" data-category="compliment">💗 комплименты</button>
+        <button class="category" data-category="advice">🌷 советы</button>
+        <button class="category" data-category="support">🌙 поддержка</button>
+        <button class="category" data-category="quote">🕯️ мысли</button>
+      </div>
+
+      <article class="letter" aria-live="polite">
+        <div class="letter-icon" id="letter-icon">💌</div>
+        <div class="letter-type" id="letter-type">послание для тебя</div>
+        <div class="letter-text" id="letter-text"></div>
+        <div class="letter-date" id="letter-date"></div>
+      </article>
+
+      <div class="actions">
+        <button class="action primary" id="next-message">✨ получить ещё одно послание</button>
+        <button class="action" id="copy-message">♡ скопировать послание</button>
+      </div>
+      <div class="status" id="status" role="status"></div>
+    </section>
+
+    <section id="other" class="view">
+      <button class="back" id="back-other">← назад к моему миру</button>
+      <h2 class="view-title" id="other-title">скоро ♡</h2>
+      <p class="view-subtitle" id="other-text"></p>
+    </section>
+
+    <footer class="footer">сделано с нежностью, для тебя ♡</footer>
   </main>
 
   <script>
-    const messages = {
-      polls: "🦋 здесь будут мини-опросы о твоих интересах, увлечениях и маленьких радостях.",
-      gallery: "🌷 здесь появится галерея с загруженными картинками и красивыми посланиями.",
-      galaxy: "🌌 здесь будет вращающаяся галактика с текстом, который можно менять.",
-      daily: "💌 здесь будут ежедневные советы, комплименты, цитаты и напоминания.",
-      game: "🎀 маленькую игру оставим на потом — сначала создадим остальные разделы."
+    const messages = [
+      {type:"compliment", icon:"💗", text:"в тебе есть что-то особенное, что невозможно измерить внешностью или чужим мнением. ты — это целый мир, который ещё столько всего может открыть."},
+      {type:"compliment", icon:"🌸", text:"ты не обязан быть идеальным, чтобы быть человеком, которого хочется ценить. несовершенство не отменяет твоей красоты."},
+      {type:"compliment", icon:"🦋", text:"может быть, ты не замечаешь собственный свет, потому что видишь себя каждый день. но привычное для тебя не обязательно обыкновенно для других."},
+      {type:"compliment", icon:"💌", text:"твои мысли, вкусы, странности и мечты складываются в тебя настоящего. тебе не нужно становиться чьей-то копией."},
+      {type:"compliment", icon:"🌷", text:"ты заслуживаешь не только восхищения за свои достижения, но и тепла просто за то, что существуешь."},
+      {type:"compliment", icon:"✨", text:"тебе не нужно уменьшать себя, чтобы кому-то было удобнее рядом. рядом с подходящими людьми можно занимать своё место."},
+      {type:"compliment", icon:"🩷", text:"даже если сегодня ты не видишь в себе ничего особенного, это ещё не значит, что в тебе нечего любить."},
+      {type:"compliment", icon:"🪷", text:"твоя индивидуальность не обязана нравиться всем. ей достаточно быть твоей."},
+      {type:"advice", icon:"🌷", text:"попробуй сегодня сделать одну маленькую вещь не ради результата, а ради удовольствия. послушай любимую песню, приготовь что-то вкусное или выйди ненадолго на воздух."},
+      {type:"advice", icon:"☁️", text:"если задача кажется огромной, уменьши её до первого шага. не нужно заканчивать всё сегодня — достаточно начать с того, что тебе по силам."},
+      {type:"advice", icon:"🕯️", text:"не принимай каждое тревожное предположение за факт. иногда полезно остановиться и спросить себя: «что я действительно знаю, а что только додумал?»"},
+      {type:"advice", icon:"🍓", text:"попробуй оставить себе немного свободного времени без плана. отдых не обязан быть наградой за продуктивность."},
+      {type:"advice", icon:"🌿", text:"если не знаешь, чего хочешь, начни с обратного: что тебе сейчас неприятно, что утомляет, что ты больше не хочешь терпеть? это тоже помогает найти направление."},
+      {type:"advice", icon:"📖", text:"не сравнивай свой первый шаг с чужим десятым годом практики. ты видишь результат другого человека, но не весь путь, который к нему привёл."},
+      {type:"advice", icon:"💧", text:"проверь, не забыл ли ты о простых вещах: попить воды, поесть, немного размяться и дать глазам отдохнуть. иногда забота начинается именно отсюда."},
+      {type:"advice", icon:"🌙", text:"перед сном попробуй записать одну мысль, которую не хочешь нести в завтрашний день. не обязательно решать её сейчас — иногда достаточно вынести её из головы на бумагу."},
+      {type:"support", icon:"🌙", text:"тебе не обязательно превращать каждый тяжёлый день в урок. иногда день просто тяжёлый. можно пережить его, отдохнуть и не требовать от себя великих выводов."},
+      {type:"support", icon:"🫂", text:"если сейчас всё ощущается слишком большим, не пытайся справиться со всем сразу. выбери только следующий небольшой шаг. остальное подождёт."},
+      {type:"support", icon:"☁️", text:"ты можешь скучать по прошлому и всё равно двигаться дальше. тоска не всегда означает, что нужно возвращаться."},
+      {type:"support", icon:"🩷", text:"не нужно объяснять свою усталость идеально, чтобы она считалась настоящей. если тебе трудно, ты можешь признать это без длинного оправдания."},
+      {type:"support", icon:"🌧️", text:"плохое настроение не стирает весь твой прогресс. один тяжёлый день не отменяет того, что ты уже сделал и чему научился."},
+      {type:"support", icon:"🪻", text:"если сегодня ты смог только дожить до вечера, не обесценивай это. иногда именно так и выглядит усилие, которого никто не видит."},
+      {type:"support", icon:"🕊️", text:"тебе можно попросить о помощи. самостоятельность не означает, что ты обязан всё переносить в одиночку."},
+      {type:"support", icon:"🌅", text:"не требуй от себя немедленно почувствовать надежду. достаточно оставить маленькую возможность, что однажды станет иначе."},
+      {type:"quote", icon:"🕯️", text:"«не всё, что растёт медленно, стоит на месте»."},
+      {type:"quote", icon:"🌌", text:"«иногда найти себя — значит перестать играть того, кем тебя привыкли видеть»."},
+      {type:"quote", icon:"🌷", text:"«нежность — это не отсутствие силы, а способ не позволить силе превратиться в жестокость»."},
+      {type:"quote", icon:"☁️", text:"«ты не обязан оставаться прежним только потому, что кто-то научился любить твою старую версию»."},
+      {type:"quote", icon:"🌙", text:"«покой начинается там, где ты перестаёшь объяснять свою ценность каждому встречному»."},
+      {type:"quote", icon:"✨", text:"«даже маленькая жизнь, прожитая по-настоящему, больше, чем большая жизнь, прожитая по чужому сценарию»."},
+      {type:"quote", icon:"🪷", text:"«не каждую дверь нужно открыть. иногда мудрость — заметить, что ты уже можешь уйти»."},
+      {type:"quote", icon:"🦋", text:"«быть собой — не однажды принятое решение, а множество маленьких выборов в свою пользу»."}
+    ];
+
+    const typeNames = {
+      compliment: "нежный комплимент",
+      advice: "маленький совет",
+      support: "слова поддержки",
+      quote: "мысль для размышления"
     };
 
-    const notice = document.getElementById("notice");
+    const typeIcons = {
+      compliment: "💗",
+      advice: "🌷",
+      support: "🌙",
+      quote: "🕯️"
+    };
+
+    const otherSections = {
+      polls: ["опросы и интересы 🦋", "здесь появятся интерактивные опросы, чтобы узнать себя немного лучше."],
+      gallery: ["моя галерея 🌷", "здесь будет место для фотографий, воспоминаний и личных посланий."],
+      galaxy: ["моя галактика 🌌", "здесь появится вращающаяся вселенная, в которой можно будет оставлять свои слова."],
+      game: ["маленькая игра 🎀", "здесь появится небольшая игра. пока готовим для неё что-то особенное."]
+    };
+
+    const home = document.getElementById("home");
+    const daily = document.getElementById("daily");
+    const other = document.getElementById("other");
+    const letterText = document.getElementById("letter-text");
+    const letterIcon = document.getElementById("letter-icon");
+    const letterType = document.getElementById("letter-type");
+    const letterDate = document.getElementById("letter-date");
+    const status = document.getElementById("status");
+
+    let currentCategory = "all";
+    let currentMessage = null;
+    let previousIndex = -1;
+
+    function showView(view) {
+      document.querySelectorAll(".view").forEach(section => {
+        section.classList.remove("active");
+      });
+      view.classList.add("active");
+      window.scrollTo({top: 0, behavior: "smooth"});
+    }
+
+    function todayString() {
+      return new Intl.DateTimeFormat("ru-RU", {
+        day: "numeric", month: "long", year: "numeric"
+      }).format(new Date());
+    }
+
+    function filteredMessages() {
+      if (currentCategory === "all") return messages;
+      return messages.filter(message => message.type === currentCategory);
+    }
+
+    function showMessage(message) {
+      currentMessage = message;
+      letterIcon.textContent = message.icon;
+      letterType.textContent = typeNames[message.type];
+      letterText.textContent = message.text;
+      letterDate.textContent = "с теплом, сегодня · " + todayString();
+      status.textContent = "";
+    }
+
+    function getDailyMessage() {
+      const now = new Date();
+      const dayNumber = Math.floor(
+        Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / 86400000
+      );
+      return messages[dayNumber % messages.length];
+    }
+
+    function randomMessage() {
+      const options = filteredMessages();
+      if (options.length === 0) return;
+
+      let index = Math.floor(Math.random() * options.length);
+      if (options.length > 1) {
+        while (index === previousIndex) {
+          index = Math.floor(Math.random() * options.length);
+        }
+      }
+      previousIndex = index;
+      showMessage(options[index]);
+    }
 
     document.querySelectorAll("[data-section]").forEach(button => {
       button.addEventListener("click", () => {
-        notice.textContent = messages[button.dataset.section];
-        notice.classList.add("show");
-        notice.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        const section = button.dataset.section;
+
+        if (section === "daily") {
+          currentCategory = "all";
+          document.querySelectorAll(".category").forEach(item => {
+            item.classList.toggle("active", item.dataset.category === "all");
+          });
+          showMessage(getDailyMessage());
+          showView(daily);
+        } else {
+          document.getElementById("other-title").textContent = otherSections[section][0];
+          document.getElementById("other-text").textContent = otherSections[section][1];
+          showView(other);
+        }
       });
+    });
+
+    document.getElementById("categories").addEventListener("click", event => {
+      const button = event.target.closest("[data-category]");
+      if (!button) return;
+
+      currentCategory = button.dataset.category;
+      document.querySelectorAll(".category").forEach(item => {
+        item.classList.toggle("active", item === button);
+      });
+      previousIndex = -1;
+      randomMessage();
+    });
+
+    document.getElementById("next-message").addEventListener("click", randomMessage);
+
+    document.getElementById("back-home").addEventListener("click", () => showView(home));
+    document.getElementById("back-other").addEventListener("click", () => showView(home));
+
+    document.getElementById("copy-message").addEventListener("click", async () => {
+      if (!currentMessage) return;
+
+      const text = currentMessage.text + "\n\n— розовое небо ♡";
+
+      try {
+        await navigator.clipboard.writeText(text);
+        status.textContent = "♡ послание скопировано";
+      } catch (error) {
+        const field = document.createElement("textarea");
+        field.value = text;
+        field.style.position = "fixed";
+        field.style.opacity = "0";
+        document.body.appendChild(field);
+        field.select();
+
+        try {
+          const copied = document.execCommand("copy");
+          status.textContent = copied
+            ? "♡ послание скопировано"
+            : "не удалось скопировать — попробуй выделить текст вручную";
+        } catch (copyError) {
+          status.textContent = "не удалось скопировать — попробуй выделить текст вручную";
+        }
+
+        field.remove();
+      }
     });
   </script>
 </body>
