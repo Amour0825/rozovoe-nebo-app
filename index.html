@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#fff0f6">
-  <title>розовое небо ♡</title>
+  <meta name="theme-color" content="#10070a">
+  <title>ÉCLIPSE — un univers à part</title>
   <style>
     * { box-sizing: border-box; }
 
@@ -694,22 +694,296 @@ body.archive-mode .hero, body.archive-mode > .page > .footer { display:none; }
   
 .open-full-dossier { display:block; margin:14px auto 0; padding:10px 14px; border:1px solid rgba(173,190,255,.3); border-radius:999px; background:rgba(117,127,205,.12); color:#e1e6ff; font-size:11px; cursor:pointer; }
 .open-full-dossier[hidden] { display:none; }
+
+
+/* ÉCLIPSE — redesign scoped to the main menu only. Other worlds retain their own styles. */
+body.home-mode {
+  --eclipse-ink: #080709;
+  --eclipse-panel: rgba(24, 10, 15, .88);
+  --eclipse-wine: #641b2b;
+  --eclipse-red: #b52d43;
+  --eclipse-muted: #b7a0a5;
+  margin: 0;
+  min-height: 100vh;
+  color: #f4ecee;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(111, 20, 41, .34), transparent 48%),
+    radial-gradient(ellipse at 100% 75%, rgba(70, 12, 26, .18), transparent 42%),
+    linear-gradient(155deg, #080709 0%, #10090d 48%, #090709 100%);
+  background-attachment: fixed;
+}
+body.home-mode .page {
+  width: min(100% - 36px, 610px);
+  padding: 38px 0 34px;
+}
+body.home-mode .hero {
+  position: relative;
+  padding: 31px 12px 33px;
+  text-align: center;
+}
+body.home-mode .flowers {
+  margin-bottom: 25px;
+  color: #c45a6c;
+  font-family: Georgia, serif;
+  font-size: 17px;
+  letter-spacing: 12px;
+  text-shadow: 0 0 24px rgba(191, 44, 68, .5);
+}
+body.home-mode .flowers span { display: inline-block; font-size: 27px; vertical-align: -3px; }
+body.home-mode .hero h1 {
+  color: #f6e9eb;
+  font-family: Didot, "Bodoni 72", "Bodoni MT", Georgia, serif;
+  font-size: clamp(54px, 12vw, 78px);
+  font-weight: 400;
+  letter-spacing: .14em;
+  line-height: 1.05;
+  padding-left: .14em;
+  text-shadow: 0 5px 35px rgba(170, 35, 57, .2);
+}
+body.home-mode .subtitle {
+  max-width: 370px;
+  margin-top: 20px;
+  color: #bda6ab;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .22em;
+  line-height: 2;
+}
+body.home-mode .divider {
+  width: 84px;
+  height: 1px;
+  margin: 28px auto 0;
+  background: linear-gradient(90deg, transparent, #8c3043, transparent);
+}
+body.home-mode .section-label {
+  margin: 0 0 14px 4px;
+  color: #986c76;
+  font-size: 9px;
+  letter-spacing: .24em;
+}
+body.home-mode .menu { gap: 11px; }
+body.home-mode .item {
+  position: relative;
+  min-height: 83px;
+  gap: 17px;
+  padding: 17px 19px;
+  overflow: hidden;
+  border: 1px solid rgba(149, 62, 80, .3);
+  border-radius: 3px;
+  background: linear-gradient(110deg, rgba(37, 15, 22, .91), rgba(17, 11, 14, .94));
+  color: #f1e6e8;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .12);
+  transition: border-color .25s ease, background .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+body.home-mode .item::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: #8e263b;
+  opacity: .7;
+  transition: width .25s ease, opacity .25s ease;
+}
+body.home-mode .item:hover {
+  border-color: rgba(188, 69, 90, .65);
+  background: linear-gradient(110deg, rgba(57, 17, 28, .97), rgba(23, 11, 16, .98));
+  box-shadow: 0 14px 35px rgba(74, 8, 25, .2);
+  transform: translateY(-2px);
+}
+body.home-mode .item:hover::before { width: 3px; opacity: 1; }
+body.home-mode .item:focus-visible { outline: 2px solid #b94b60; outline-offset: 3px; }
+body.home-mode .emoji {
+  width: 43px; height: 43px;
+  border: 1px solid rgba(161, 66, 84, .27);
+  border-radius: 2px;
+  background: rgba(94, 25, 42, .25);
+  color: #c66a7b;
+  font-size: 20px;
+  filter: grayscale(1);
+}
+body.home-mode .item-text { min-width: 0; }
+body.home-mode .item-title {
+  margin-bottom: 6px;
+  color: #f0e4e7;
+  font-family: Didot, "Bodoni 72", "Bodoni MT", Georgia, serif;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: .025em;
+}
+body.home-mode .item-description {
+  color: #a98f96;
+  font-size: 11px;
+  letter-spacing: .015em;
+  line-height: 1.6;
+}
+body.home-mode .arrow {
+  color: #b34a5e;
+  font-family: Georgia, serif;
+  font-size: 27px;
+  font-weight: 300;
+  transition: transform .25s ease, color .25s ease;
+}
+body.home-mode .item:hover .arrow { color: #f0b6bf; transform: translateX(3px); }
+body.home-mode .footer {
+  margin-top: 31px;
+  color: #76545c;
+  font-family: Didot, "Bodoni 72", Georgia, serif;
+  font-size: 9px;
+  font-style: normal;
+  letter-spacing: .22em;
+}
+body.home-mode .footer span { padding: 0 7px; color: #a53b50; }
+@media (max-width: 480px) {
+  body.home-mode .page { width: min(100% - 28px, 610px); padding-top: 23px; }
+  body.home-mode .hero { padding: 24px 8px 27px; }
+  body.home-mode .hero h1 { font-size: clamp(46px, 13vw, 65px); letter-spacing: .1em; padding-left: .1em; }
+  body.home-mode .subtitle { max-width: 290px; font-size: 8px; letter-spacing: .16em; }
+  body.home-mode .item { min-height: 77px; padding: 14px 13px; gap: 12px; }
+  body.home-mode .emoji { width: 39px; height: 39px; }
+  body.home-mode .item-title { font-size: 16px; }
+  body.home-mode .item-description { font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.home-mode .item, body.home-mode .item::before, body.home-mode .arrow { transition: none; }
+}
+
+
+
+/* ÉCLIPSE — premium inner pages. Archive and galaxy remain deliberately untouched. */
+:root {
+  --eclipse-ink: #09080b;
+  --eclipse-panel: rgba(24, 12, 17, .94);
+  --eclipse-wine: #651d31;
+  --eclipse-red: #b43b52;
+  --eclipse-blue: #7898e8;
+  --eclipse-blue-soft: rgba(105, 139, 220, .16);
+}
+body.home-mode {
+  background:
+    radial-gradient(ellipse at 88% 13%, rgba(55, 88, 160, .17), transparent 30%),
+    radial-gradient(ellipse at 50% 0%, rgba(111, 20, 41, .34), transparent 48%),
+    radial-gradient(ellipse at 100% 75%, rgba(70, 12, 26, .18), transparent 42%),
+    linear-gradient(155deg, #080709 0%, #10090d 48%, #090709 100%);
+}
+body.home-mode .divider {
+  background: linear-gradient(90deg, transparent, #8c3043 42%, #526ca8 72%, transparent);
+}
+body.home-mode .flowers { color: #a9bce9; text-shadow: 0 0 24px rgba(105, 139, 220, .26), 0 0 22px rgba(191,44,68,.25); }
+body.home-mode .hero h1 { text-shadow: 0 5px 35px rgba(170,35,57,.2), 0 0 48px rgba(85,115,185,.09); }
+body.home-mode .item[data-section="archive"] { border-color: rgba(104, 132, 204, .38); }
+body.home-mode .item[data-section="archive"]::before { background: linear-gradient(180deg, #819fe8, #526aa9); }
+body.home-mode .item[data-section="archive"] .emoji { border-color: rgba(120, 152, 232, .34); color: #9db5f2; background: rgba(60, 80, 135, .2); filter: none; }
+body.home-mode .item[data-section="archive"] .arrow { color: #819fe8; }
+body.home-mode .item[data-section="archive"]:hover { border-color: rgba(130, 158, 229, .62); box-shadow: 0 14px 35px rgba(29, 46, 91, .17); }
+body.home-mode .footer span:last-child { color: #7898e8; }
+
+body.eclipse-inner-mode {
+  min-height: 100vh;
+  color: #f0e7e9;
+  background:
+    radial-gradient(ellipse at 92% 8%, rgba(59, 83, 145, .13), transparent 32%),
+    radial-gradient(ellipse at 15% 0%, rgba(107, 27, 48, .25), transparent 42%),
+    linear-gradient(155deg, #09080b 0%, #10090d 52%, #08080c 100%);
+  background-attachment: fixed;
+}
+body.eclipse-inner-mode .page { width: min(100% - 36px, 680px); }
+body.eclipse-inner-mode .back {
+  color: #a8b9e9; padding: 10px 0 20px; font-size: 11px; letter-spacing: .07em;
+  text-transform: uppercase; transition: color .2s ease;
+}
+body.eclipse-inner-mode .back:hover { color: #f0dce1; }
+body.eclipse-inner-mode .view-title {
+  color: #f1e7e9; font-family: Didot, "Bodoni 72", Georgia, serif;
+  font-size: clamp(30px, 7vw, 39px); letter-spacing: .015em; line-height: 1.2;
+  text-shadow: 0 0 34px rgba(113, 37, 59, .18);
+}
+body.eclipse-inner-mode .view-subtitle { color: #b6a4ad; font-size: 12px; line-height: 1.85; }
+
+/* Daily message: dark editorial card, wine highlights, restrained sapphire details. */
+body.eclipse-inner-mode .categories { gap: 7px; }
+body.eclipse-inner-mode .category {
+  border: 1px solid rgba(142, 91, 111, .32); border-radius: 2px;
+  background: rgba(22, 14, 19, .88); color: #c3aab4;
+  padding: 10px 13px; font-size: 10px; letter-spacing: .035em;
+}
+body.eclipse-inner-mode .category.active {
+  border-color: #8c344c; background: linear-gradient(135deg, #682237, #35141f);
+  color: #fff0f2; box-shadow: inset 0 1px rgba(255,255,255,.07), 0 6px 20px rgba(76, 15, 34, .16);
+}
+body.eclipse-inner-mode .letter {
+  border: 1px solid rgba(143, 77, 98, .34); border-radius: 3px;
+  background: linear-gradient(145deg, rgba(30, 16, 23, .98), rgba(12, 11, 16, .98));
+  box-shadow: 0 22px 60px rgba(0,0,0,.2), inset 0 1px rgba(255,255,255,.035);
+}
+body.eclipse-inner-mode .letter::after { color: rgba(126, 151, 217, .48); }
+body.eclipse-inner-mode .letter-type { color: #9eb4ed; font-size: 9px; letter-spacing: .2em; }
+body.eclipse-inner-mode .letter-text { color: #eee2e6; font-family: Didot, "Bodoni 72", Georgia, serif; font-size: clamp(20px, 4.8vw, 24px); line-height: 1.7; }
+body.eclipse-inner-mode .letter-date { color: #9b8791; letter-spacing: .04em; }
+body.eclipse-inner-mode .action {
+  border: 1px solid rgba(139, 82, 101, .35); border-radius: 3px;
+  background: rgba(23, 13, 19, .9); color: #d8c5cc;
+  font-size: 11px; letter-spacing: .035em; transition: border-color .2s, background .2s, transform .2s;
+}
+body.eclipse-inner-mode .action:hover { border-color: rgba(124, 151, 218, .5); background: rgba(35, 29, 47, .94); }
+body.eclipse-inner-mode .action.primary {
+  border-color: #793047; background: linear-gradient(115deg, #672238, #3c1727 74%, #1c1b2c);
+  color: #fff0f2; box-shadow: 0 9px 24px rgba(70, 13, 32, .2);
+}
+body.eclipse-inner-mode .status { color: #a4b6e8; }
+
+/* Polls, interests, gallery and the little game share the same premium shell while their content stays intact. */
+body.eclipse-inner-mode #other {
+  position: relative; min-height: 280px; padding: 23px 22px 30px;
+  border: 1px solid rgba(139, 74, 96, .34); border-radius: 3px;
+  background: linear-gradient(145deg, rgba(28, 15, 22, .97), rgba(10, 10, 15, .98));
+  box-shadow: 0 24px 65px rgba(0,0,0,.2), inset 0 1px rgba(255,255,255,.035);
+}
+body.eclipse-inner-mode #other::before {
+  content: "ÉCLIPSE  /  COLLECTION PRIVÉE"; display: block; margin: 0 0 28px;
+  color: #8fa8e4; font-size: 9px; letter-spacing: .22em;
+}
+body.eclipse-inner-mode #other .back { margin-top: -8px; }
+body.eclipse-inner-mode #other .view-title { margin-top: 0; }
+body.eclipse-inner-mode #other .view-subtitle { max-width: 440px; margin-top: 12px; }
+
+/* Planet universe: same 3D system, elevated framing and a wine/sapphire luxury palette. */
+body.eclipse-inner-mode .planet-universe-shell {
+  border-color: rgba(124, 148, 213, .31);
+  background: radial-gradient(ellipse at 50% 20%, #171b35 0%, #0b0a12 43%, #050508 100%);
+  box-shadow: 0 28px 85px rgba(0,0,0,.35), inset 0 0 70px rgba(71,100,190,.09);
+}
+body.eclipse-inner-mode .planet-universe-shell::before {
+  background: radial-gradient(ellipse at 15% 48%, rgba(90,110,255,.11), transparent 35%), radial-gradient(ellipse at 85% 20%, rgba(151,49,78,.14), transparent 36%);
+}
+body.eclipse-inner-mode .planet-kicker { color: #9eafe0; letter-spacing: .23em; }
+body.eclipse-inner-mode .planet-header h2 { font-family: Didot, "Bodoni 72", Georgia, serif; letter-spacing: .015em; text-shadow: 0 0 28px rgba(145,171,255,.17); }
+body.eclipse-inner-mode .planet-choice { border-radius: 3px; border-color: rgba(150, 133, 161, .2); background: rgba(22, 15, 22, .56); }
+body.eclipse-inner-mode .planet-choice.active { border-color: rgba(130, 157, 226, .65); background: linear-gradient(135deg, rgba(104,42,65,.38), rgba(57,68,115,.28)); box-shadow: 0 0 24px rgba(104,143,255,.1), inset 0 1px rgba(255,255,255,.08); }
+body.eclipse-inner-mode .planet-info-card { border-color: rgba(131, 112, 151, .25); border-radius: 3px; background: linear-gradient(135deg, rgba(29,22,38,.86), rgba(8,9,17,.94)); }
+body.eclipse-inner-mode .planet-tag { border-radius: 2px; border-color: rgba(132, 154, 219, .29); color: #c3d0f2; background: rgba(76, 93, 150, .09); }
+body.eclipse-inner-mode .planet-fact { border-radius: 3px; border-color: rgba(131, 112, 151, .17); background: rgba(255,255,255,.025); }
+body.eclipse-inner-mode .planet-info-detail { border-top-color: rgba(126, 148, 207, .19); }
+body.eclipse-inner-mode .planet-scene-controls button { border-radius: 3px; border-color: rgba(130, 157, 226, .42); }
+@media (max-width: 480px) {
+  body.eclipse-inner-mode #other { padding: 19px 16px 25px; }
+  body.eclipse-inner-mode #other::before { margin-bottom: 24px; font-size: 8px; }
+}
+
 </style> 
 </head>
-<body>
+<body class="home-mode">
   <main class="page">
     <header class="hero">
-      <div class="flowers">🌸 ✧ 🌷</div>
-      <h1>розовое небо</h1>
+      <div class="flowers" aria-hidden="true">✦ <span>☾</span> ✦</div>
+      <h1>ÉCLIPSE</h1>
       <p class="subtitle">
-        маленькое место, где можно выдохнуть,
-        почувствовать нежность и побыть собой ♡
+        UN UNIVERS À PART · UNE INFINITÉ DE MONDES
       </p>
       <div class="divider"></div>
     </header>
 
     <section id="home" class="view active">
-      <p class="section-label">твой маленький мир</p>
+      <p class="section-label">L’UNIVERS PERSONNEL</p>
       <div class="menu">
         <button class="item" data-section="polls">
           <span class="emoji">🦋</span>
@@ -982,7 +1256,7 @@ body.archive-mode .hero, body.archive-mode > .page > .footer { display:none; }
       <button class="back" id="back-to-galaxy-from-planets">← вернуться к галактике</button>
       <div class="planet-universe-shell">
         <header class="planet-header">
-          <p class="planet-kicker">СИСТЕМА РОЗОВОГО НЕБА · НАБЛЮДАТЕЛЬНЫЙ АРХИВ</p>
+          <p class="planet-kicker">ÉCLIPSE · ATLAS PLANÉTAIRE</p>
           <h2>планетная вселенная</h2>
           <p>Это отдельная планетная система — здесь Солнце, реальные планеты и вымышленная Эос. Выбирай объект или вращай систему пальцем.</p>
         </header>
@@ -1024,7 +1298,7 @@ body.archive-mode .hero, body.archive-mode > .page > .footer { display:none; }
       </div>
     </section>
 
-    <footer class="footer">сделано с нежностью, для тебя ♡</footer>
+    <footer class="footer">ÉCLIPSE <span>·</span> UN UNIVERS À PART</footer>
   </main>
 
   <script>
@@ -1411,6 +1685,8 @@ document.getElementById("back-to-galaxy-from-planets").addEventListener("click",
       });
       view.classList.add("active");
       document.body.classList.toggle("archive-mode", view.id === "archive-view");
+      document.body.classList.toggle("home-mode", view.id === "home");
+      document.body.classList.toggle("eclipse-inner-mode", ["daily", "other", "planet-universe-view"].includes(view.id));
       window.scrollTo({top: 0, behavior: "smooth"});
     }
 
