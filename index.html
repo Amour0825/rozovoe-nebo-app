@@ -314,7 +314,79 @@
 .galaxy-back { margin-bottom: 15px; color: #6c719e; }
 @keyframes star-pulse { 0%,100% { opacity:.82; filter:brightness(.95); } 50% { opacity:1; filter:brightness(1.32); } }
 @keyframes planet-float { 0%,100% { margin-top:0; } 50% { margin-top:-4px; } }
+
+/* Star discovery: two luminous halves and swipeable story cards */
+.star-detail-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+.detail-kicker { margin:0 0 5px !important; color:#a7b8ff !important; font-size:9px !important; letter-spacing:.2em; }
+.detail-close { width:32px; height:32px; flex:0 0 32px; border:1px solid rgba(180,195,255,.25); border-radius:50%; background:rgba(255,255,255,.04); color:#e8edff; font-size:23px; line-height:1; cursor:pointer; }
+.detail-instruction { margin:0 0 14px !important; }
+.star-halves { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.star-half { min-height:128px; padding:14px 8px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; overflow:hidden; position:relative; color:#f4f5ff; border:1px solid rgba(173,190,255,.28); background:linear-gradient(145deg,rgba(74,85,156,.32),rgba(12,15,38,.92)); cursor:pointer; transition:transform .22s ease, border-color .22s ease, box-shadow .22s ease; }
+.star-half-message { border-radius:70px 12px 12px 70px; background:radial-gradient(ellipse at 20% 50%,rgba(255,157,218,.24),transparent 65%),linear-gradient(145deg,rgba(91,51,112,.5),rgba(12,15,38,.96)); }
+.star-half-facts { border-radius:12px 70px 70px 12px; background:radial-gradient(ellipse at 80% 50%,rgba(105,176,255,.23),transparent 65%),linear-gradient(145deg,rgba(38,61,112,.5),rgba(12,15,38,.96)); }
+.star-half:active { transform:scale(.97); }
+.star-half:hover, .star-half:focus-visible { border-color:rgba(219,227,255,.8); box-shadow:0 0 25px rgba(143,165,255,.15); outline:none; }
+.half-star-icon { font-size:31px; line-height:1.1; text-shadow:0 0 8px #fff,0 0 22px #9eb4ff; }
+.half-title { font:16px Georgia,serif; }
+.half-subtitle { color:#b9c5e7; font-size:10px; text-align:center; }
+.star-card-panel { margin-top:14px; padding:17px 15px 13px; min-height:190px; border:1px solid rgba(158,177,255,.23); border-radius:16px; background:radial-gradient(ellipse at 50% 0%,rgba(96,112,190,.17),transparent 70%),rgba(3,6,20,.75); touch-action:pan-y; }
+.star-card-panel[hidden] { display:none; }
+.star-card-meta { margin-bottom:9px; color:#a9b9ff; font-size:9px; letter-spacing:.18em; }
+.star-card-panel h4 { margin:0 0 8px; color:#f0eaff; font:500 19px Georgia,serif; }
+.star-card-panel p { min-height:68px; color:#c4cee9; font-size:13px; line-height:1.8; }
+.star-card-controls { display:flex; justify-content:center; align-items:center; gap:18px; margin-top:12px; color:#aebce4; font-size:11px; }
+.star-card-controls button { width:34px; height:34px; border-radius:50%; border:1px solid rgba(173,190,255,.3); background:rgba(255,255,255,.05); color:#eef1ff; font-size:20px; cursor:pointer; }
+.back-to-halves { display:block; margin:12px auto 0; padding:7px 12px; border:0; background:transparent; color:#c6b8ff; font-size:11px; cursor:pointer; }
+.galaxy-zoom-controls { position:absolute; right:15px; bottom:13px; z-index:8; display:flex; flex-direction:column; gap:7px; }
+.galaxy-zoom-controls button { width:36px; height:36px; border:1px solid rgba(206,218,255,.42); border-radius:50%; background:rgba(5,9,25,.78); color:#f1f4ff; font-size:22px; line-height:1; cursor:pointer; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); box-shadow:0 3px 16px rgba(0,0,0,.28); }
+.galaxy-zoom-controls button:active { transform:scale(.94); }
+@media (max-width:520px) { .galaxy-map { height:360px; margin-left:3px; margin-right:3px; } .galaxy-zoom-controls { right:9px; bottom:9px; } .galaxy-zoom-controls button { width:39px; height:39px; } .star-half { min-height:116px; } .galaxy-detail { padding:13px; } }
+
 @media (prefers-reduced-motion: reduce) { .cosmic-star, .cosmic-planet { animation:none !important; transition:none !important; } }
+
+  
+/* Cinematic star discovery overlay */
+.galaxy-detail.cinematic-overlay {
+  position:fixed; inset:0; z-index:10000; width:100%; height:100%; height:100dvh;
+  box-sizing:border-box; margin:0; padding:clamp(20px,4vw,52px) max(16px,env(safe-area-inset-right)) clamp(24px,5vw,54px) max(16px,env(safe-area-inset-left));
+  overflow-y:auto; overscroll-behavior:contain; border:0; border-radius:0; color:#f5f6ff;
+  background:radial-gradient(ellipse at 50% 42%,rgba(37,48,102,.68),rgba(5,7,20,.96) 50%,#010207 100%);
+  backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); isolation:isolate;
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  animation:cosmic-portal-in .82s cubic-bezier(.16,.8,.2,1) both;
+}
+.galaxy-detail.cinematic-overlay[hidden] { display:none; }
+.galaxy-detail.cinematic-overlay::before { content:""; position:fixed; inset:-25%; z-index:-2; pointer-events:none; background:conic-gradient(from 20deg at 50% 48%,transparent 0 20%,rgba(94,132,255,.09) 26%,transparent 35%,rgba(255,128,207,.10) 47%,transparent 58%,rgba(126,174,255,.12) 68%,transparent 82%); filter:blur(24px); animation:cosmic-nebula-turn 28s linear infinite; }
+.galaxy-detail.cinematic-overlay::after { content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; background:radial-gradient(circle at 50% 44%,rgba(255,255,255,.94) 0,rgba(188,212,255,.32) 2px,rgba(130,157,255,.13) 8%,transparent 28%); opacity:0; animation:cosmic-flash 1.05s .06s ease-out both; }
+.galaxy-detail.cinematic-overlay .star-detail-top { width:min(100%,820px); margin-bottom:18px; animation:detail-rise .65s .12s both; }
+.galaxy-detail.cinematic-overlay .detail-kicker { color:#a8c9ff !important; }
+.galaxy-detail.cinematic-overlay h3 { color:#f5f2ff; font-size:clamp(27px,5vw,44px); text-shadow:0 0 28px rgba(160,182,255,.45); }
+.galaxy-detail.cinematic-overlay .detail-instruction { width:min(100%,820px); margin:0 0 22px !important; text-align:center; color:#c7d1f2; letter-spacing:.04em; animation:detail-rise .7s .18s both; }
+.galaxy-detail.cinematic-overlay .star-halves { width:min(100%,820px); gap:clamp(10px,2.6vw,24px); perspective:1000px; }
+.galaxy-detail.cinematic-overlay .star-half { min-height:clamp(180px,30vh,300px); padding:clamp(18px,4vw,38px) 12px; border-radius:22px; border-color:rgba(205,221,255,.32); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); box-shadow:inset 0 1px rgba(255,255,255,.12),0 18px 60px rgba(0,0,0,.24); }
+.galaxy-detail.cinematic-overlay .star-half-message { border-radius:110px 22px 22px 110px; background:radial-gradient(ellipse at 25% 48%,rgba(255,151,222,.28),transparent 65%),linear-gradient(135deg,rgba(111,56,131,.55),rgba(12,15,39,.67)); animation:half-left-arrive .95s .18s cubic-bezier(.16,.9,.2,1) both; }
+.galaxy-detail.cinematic-overlay .star-half-facts { border-radius:22px 110px 110px 22px; background:radial-gradient(ellipse at 78% 48%,rgba(106,183,255,.28),transparent 65%),linear-gradient(135deg,rgba(37,63,122,.58),rgba(9,14,37,.72)); animation:half-right-arrive .95s .18s cubic-bezier(.16,.9,.2,1) both; }
+.galaxy-detail.cinematic-overlay .star-half:hover { transform:translateY(-5px) scale(1.015); box-shadow:inset 0 1px rgba(255,255,255,.18),0 0 35px rgba(147,176,255,.18),0 22px 70px rgba(0,0,0,.3); }
+.galaxy-detail.cinematic-overlay .half-star-icon { font-size:clamp(40px,7vw,66px); margin-bottom:10px; text-shadow:0 0 10px #fff,0 0 30px #9db7ff,0 0 70px #9c8dff; animation:icon-glimmer 3.4s ease-in-out infinite; }
+.galaxy-detail.cinematic-overlay .half-title { font-size:clamp(19px,3vw,27px); }
+.galaxy-detail.cinematic-overlay .half-subtitle { font-size:12px; color:#d3dcfa; margin-top:3px; }
+.galaxy-detail.cinematic-overlay .star-card-panel { width:min(100%,780px); box-sizing:border-box; min-height:260px; margin-top:12px; padding:clamp(20px,4vw,40px); border-radius:24px; border-color:rgba(178,200,255,.32); background:radial-gradient(ellipse at 50% 0,rgba(100,128,231,.23),transparent 70%),rgba(4,7,22,.78); box-shadow:0 20px 80px rgba(0,0,0,.3); animation:detail-rise .45s ease-out both; }
+.galaxy-detail.cinematic-overlay .star-card-panel p { font-size:clamp(14px,2.3vw,17px); line-height:1.9; }
+.galaxy-detail.cinematic-overlay .star-card-panel h4 { font-size:clamp(22px,4vw,30px); }
+.galaxy-detail.cinematic-overlay .star-card-controls button { width:42px;height:42px;background:rgba(255,255,255,.08); }
+.galaxy-detail.cinematic-overlay .detail-close { width:42px;height:42px;flex-basis:42px;font-size:28px;background:rgba(255,255,255,.08); }
+body.cosmic-focus { overflow:hidden; }
+.galaxy-map.cinematic-selected .cosmic-star.selected { animation:selected-star-pulse .8s ease-in-out infinite alternate; }
+@keyframes cosmic-portal-in { from { opacity:0; transform:scale(1.035); filter:brightness(1.8); } 18% { opacity:1; } to { opacity:1; transform:scale(1); filter:brightness(1); } }
+@keyframes cosmic-flash { 0% { opacity:0; transform:scale(.25); } 13% { opacity:.95; } 38% { opacity:.22; transform:scale(1.2); } 100% { opacity:0; transform:scale(1.8); } }
+@keyframes cosmic-nebula-turn { to { transform:rotate(360deg); } }
+@keyframes half-left-arrive { from { opacity:0; transform:translateX(12vw) rotateY(18deg) scale(.86); filter:blur(8px); } to { opacity:1; transform:translateX(0) rotateY(0) scale(1); filter:blur(0); } }
+@keyframes half-right-arrive { from { opacity:0; transform:translateX(-12vw) rotateY(-18deg) scale(.86); filter:blur(8px); } to { opacity:1; transform:translateX(0) rotateY(0) scale(1); filter:blur(0); } }
+@keyframes detail-rise { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+@keyframes icon-glimmer { 0%,100% { filter:brightness(.85); transform:scale(.98); } 50% { filter:brightness(1.4); transform:scale(1.04); } }
+@keyframes selected-star-pulse { from { filter:brightness(1.3) drop-shadow(0 0 12px rgba(215,226,255,.85)); } to { filter:brightness(2.5) drop-shadow(0 0 26px rgba(180,202,255,1)); } }
+@media (max-width:600px) { .galaxy-detail.cinematic-overlay { justify-content:flex-start; padding-top:max(28px,env(safe-area-inset-top)); } .galaxy-detail.cinematic-overlay .star-halves { gap:9px; } .galaxy-detail.cinematic-overlay .star-half { min-height:190px; padding:20px 7px; } .galaxy-detail.cinematic-overlay .star-half-message { border-radius:72px 18px 18px 72px; } .galaxy-detail.cinematic-overlay .star-half-facts { border-radius:18px 72px 72px 18px; } }
+@media (prefers-reduced-motion: reduce) { .galaxy-detail.cinematic-overlay, .galaxy-detail.cinematic-overlay::before, .galaxy-detail.cinematic-overlay::after, .galaxy-detail.cinematic-overlay .star-half, .galaxy-detail.cinematic-overlay .half-star-icon { animation:none !important; transition:none !important; } }
 
   </style> 
 </head>
@@ -485,6 +557,10 @@
             data-cosmic="planet"
             aria-label="Планета">
           </button>
+        <div class="galaxy-zoom-controls" aria-label="Масштаб галактики">
+          <button type="button" data-zoom="in" aria-label="Приблизить галактику">+</button>
+          <button type="button" data-zoom="out" aria-label="Отдалить галактику">−</button>
+        </div>
         </div>
 
         <div class="galaxy-hint">
@@ -493,8 +569,37 @@
         </div>
 
         <article class="galaxy-detail" id="galaxy-detail" hidden>
-          <h3 id="cosmic-title"></h3>
-          <p id="cosmic-description"></p>
+          <div class="star-detail-top">
+            <div>
+              <p class="detail-kicker">ОБЪЕКТ ОБНАРУЖЕН</p>
+              <h3 id="cosmic-title">Звезда</h3>
+            </div>
+            <button type="button" class="detail-close" id="detail-close" aria-label="Закрыть описание">×</button>
+          </div>
+          <p class="detail-instruction">Выбери половинку звезды — у каждой своя тайна.</p>
+          <div class="star-halves" id="star-halves">
+            <button type="button" class="star-half star-half-message" data-cosmic-half="message">
+              <span class="half-star-icon" aria-hidden="true">✦</span>
+              <span class="half-title">Послание</span>
+              <span class="half-subtitle">слова для тебя</span>
+            </button>
+            <button type="button" class="star-half star-half-facts" data-cosmic-half="facts">
+              <span class="half-star-icon" aria-hidden="true">✧</span>
+              <span class="half-title">Исследовать</span>
+              <span class="half-subtitle">история и наука</span>
+            </button>
+          </div>
+          <section class="star-card-panel" id="star-card-panel" hidden aria-live="polite">
+            <div class="star-card-meta" id="star-card-meta">ПОСЛАНИЕ</div>
+            <h4 id="star-card-title"></h4>
+            <p id="star-card-text"></p>
+            <div class="star-card-controls">
+              <button type="button" id="star-card-prev" aria-label="Предыдущая карточка">←</button>
+              <span id="star-card-count">1 / 1</span>
+              <button type="button" id="star-card-next" aria-label="Следующая карточка">→</button>
+            </div>
+            <button type="button" class="back-to-halves" id="back-to-halves">← к двум половинкам</button>
+          </section>
         </article>
       </div>
     </section>
@@ -596,22 +701,228 @@ const galaxyMap = document.getElementById("galaxy-map");
 const cosmicElements = Array.from(galaxyMap.querySelectorAll("[data-cosmic]"));
 let suppressCosmicClickUntil = 0;
 
+const messageCards = [
+  { title: "Твой свет существует", text: "Даже если сегодня ты его не чувствуешь, это не значит, что он исчез. Иногда свету просто нужно время, чтобы пробиться сквозь облака." },
+  { title: "Можно идти медленно", text: "Тебе не нужно успеть всё сразу. Маленький шаг тоже меняет маршрут, а отдых — часть путешествия, а не его провал." },
+  { title: "Ты больше одного дня", text: "Один неудачный момент не определяет всю твою историю. Впереди ещё много страниц, которые ты пока не видел." },
+  { title: "Разреши себе любопытство", text: "Необязательно знать точный путь. Иногда самое важное открытие начинается с простого: «а что, если попробовать?»" },
+  { title: "Ты заслуживаешь доброты", text: "Не только тогда, когда всё получается. Не только когда ты полезен другим. Просто потому, что ты есть." },
+  { title: "У вселенной нет спешки", text: "Некоторые вещи раскрываются постепенно. Дай себе пространство учиться, меняться и становиться ближе к тому, кем хочешь быть." },
+  { title: "Ты не обязан сиять каждый день", text: "Даже звёзды бывают скрыты облаками. Тихий день не отменяет того, что в тебе есть свет." },
+  { title: "Маленькое тоже важно", text: "Ответить на сообщение, выпить воды, выйти на воздух или просто закончить одну задачу — это уже движение." },
+  { title: "Тебе можно передумать", text: "Новые мысли не делают прежнего тебя глупым. Они означают, что ты продолжаешь узнавать мир и себя." },
+  { title: "Не сравнивай маршруты", text: "У каждого своя орбита, своя скорость и свои невидимые трудности. Твой путь не обязан выглядеть как чей-то другой." },
+  { title: "Ты имеешь право на паузу", text: "Не каждую минуту нужно превращать в достижение. Иногда восстановиться — самое разумное, что можно сделать." },
+  { title: "Не всё нужно решать сегодня", text: "Некоторые ответы становятся яснее, когда проходит немного времени. Можно отложить вопрос и вернуться к нему позже." },
+  { title: "Твоя нежность — не слабость", text: "Умение заботиться, замечать детали и быть чутким требует смелости, даже если это не всегда видно со стороны." },
+  { title: "Начать заново разрешено", text: "Необязательно продолжать только потому, что ты уже потратил силы. Ты можешь изменить план и выбрать другой путь." },
+  { title: "Ты не обязан всем нравиться", text: "Тебе не нужно становиться удобной версией себя для каждого человека. Уважение к себе тоже имеет значение." },
+  { title: "Любопытство ведёт далеко", text: "Один вопрос может привести к новому увлечению, знакомству или идее. Не обесценивай то, что тебе интересно." },
+  { title: "Твоя история ещё пишется", text: "Сейчас ты видишь только несколько страниц. Не делай вывод обо всей книге по одной главе." },
+  { title: "Отдых — часть пути", text: "Даже космические аппараты работают в режимах, рассчитанных на ресурсы. Ты тоже не обязан быть бесконечным источником энергии." },
+  { title: "Смелость бывает тихой", text: "Иногда смелость — это задать вопрос, признаться в растерянности или попросить объяснить ещё раз." },
+  { title: "Ты можешь учиться постепенно", text: "Неумение сегодня — не доказательство, что у тебя никогда не получится. Навык складывается из попыток и времени." },
+  { title: "Пусть хорошее будет простым", text: "Тёплый напиток, любимая песня, смешное сообщение или несколько спокойных минут тоже могут стать опорой." },
+  { title: "Не угадывай чужие мысли", text: "Когда что-то важно, ясный вопрос часто бережнее бесконечных догадок. Ты заслуживаешь понятного разговора." },
+  { title: "Тебе можно быть разным", text: "Ты можешь быть уверенным утром и сомневаться вечером. Противоречивые чувства не отменяют друг друга." },
+  { title: "Не каждый день должен быть особенным", text: "Обычные дни тоже составляют жизнь. В них можно просто существовать, не превращая всё в большое событие." },
+  { title: "Замечай, что уже получилось", text: "Мозг легко цепляется за незавершённое. Попробуй заметить хотя бы одну вещь, с которой ты сегодня справился." },
+  { title: "Тебе не нужно заслуживать отдых", text: "Ты не обязан сначала исчерпать все силы, чтобы остановиться. Потребность в паузе сама по себе достаточна." },
+  { title: "Границы — это забота", text: "Можно говорить «нет», просить о времени и объяснять, что тебе подходит. Это помогает отношениям быть честнее." },
+  { title: "Ошибки не равны тебе", text: "Ты можешь признать ошибку, исправить её и продолжить. Один поступок не описывает человека целиком." },
+  { title: "Сохраняй то, что радует", text: "Записывай любимые фразы, фотографии, идеи и смешные моменты. Маленький архив хорошего иногда очень поддерживает." },
+  { title: "Не нужно быть идеальным", text: "Живое и настоящее редко бывает безупречным. Тебе можно пробовать, ошибаться и оставаться достойным уважения." },
+  { title: "Твой интерес имеет значение", text: "Даже если окружающие не разделяют твоё увлечение, оно всё равно может быть важной частью твоего мира." },
+  { title: "Будь к себе справедлив", text: "Попробуй говорить с собой так же честно и бережно, как с человеком, которого ты уважаешь." },
+  { title: "Не все паузы — конец", text: "Иногда процесс просто замедляется. Не торопись считать остановку поражением, пока не понял, что тебе нужно." },
+  { title: "Спроси себя, чего хочешь ты", text: "Среди советов и ожиданий полезно услышать собственный голос. Твои предпочтения тоже заслуживают места." },
+  { title: "Тебе можно просить помощи", text: "Не обязательно разбираться во всём в одиночку. Поддержка — не провал самостоятельности, а один из способов справиться." },
+  { title: "Небольшой шаг всё ещё шаг", text: "Если задача кажется огромной, выбери самый маленький следующий шаг. Иногда так появляется движение." },
+  { title: "Ты не опоздал к собственной жизни", text: "У людей нет единого расписания взросления, дружбы, увлечений или открытий. Твой темп имеет право существовать." },
+  { title: "Сохрани место для удивления", text: "Мир больше наших сегодняшних знаний. Оставляй место вопросам, неожиданным открытиям и новым впечатлениям." },
+  { title: "Ты можешь изменить мнение", text: "Гибкость — не непостоянство. Можно узнать больше, пересмотреть решение и выбрать то, что теперь кажется вернее." },
+  { title: "Хорошее не обязано быть громким", text: "Спокойствие, надёжность и тихая радость не всегда выглядят эффектно, но могут быть очень ценными." },
+  { title: "Не нужно отвечать мгновенно", text: "Ты можешь подумать, прежде чем ответить. Важные слова часто становятся точнее после небольшой паузы." },
+  { title: "Пусть любопытство будет компасом", text: "Выбирай иногда не то, что выглядит впечатляюще со стороны, а то, к чему тебе по-настоящему хочется прикоснуться." },
+  { title: "Ты уже пережил много перемен", text: "Вспомни, сколько вещей, которые когда-то казались новыми, теперь стали частью твоего опыта. Ты умеешь адаптироваться." },
+  { title: "Дай себе шанс удивиться", text: "Не решай заранее, что у тебя не получится или что тебе не понравится. Иногда стоит попробовать в безопасном темпе." },
+  { title: "Покой тоже продуктивен", text: "Тишина помогает замечать мысли и восстанавливать силы. Не каждую минуту нужно заполнять делами." },
+  { title: "Ты заслуживаешь ясности", text: "В отношениях и планах можно задавать прямые вопросы. Неопределённость не всегда нужно нести в одиночку." },
+  { title: "Пусть этот день будет твоим", text: "Не идеальным и не обязательно великим — просто немного твоим. Найди в нём одну вещь, которую выбираешь сам." }
+];
+const factCards = {
+  sirius: [
+    { title: "Самая яркая звезда ночного неба", text: "Сириус находится в созвездии Большого Пса и выглядит особенно ярким благодаря сочетанию собственной светимости и сравнительно небольшого расстояния от Земли — около 8,6 светового года." },
+    { title: "У Сириуса есть спутник", text: "Сириус A и Сириус B образуют двойную систему. Сириус B — белый карлик, очень плотный остаток звезды, которая прошла более ранние этапы эволюции." },
+    { title: "Почему он мерцает?", text: "Цветные вспышки Сириуса у горизонта часто вызваны атмосферной турбулентностью Земли: воздух преломляет свет по-разному, и звезда будто переливается." },
+    { title: "Свет из прошлого", text: "Свет Сириуса добирается до Земли примерно 8,6 года. Мы видим звезду такой, какой она была несколько лет назад." },
+    { title: "Белый карлик-компаньон", text: "Сириус B примерно размером с Землю, но его масса сопоставима с массой Солнца. Поэтому вещество белого карлика чрезвычайно плотное." },
+    { title: "Сириус A и B", text: "Две звезды обращаются вокруг общего центра масс. Их орбитальное движение помогает астрономам определять массы компонентов системы." },
+    { title: "Звезда зимнего неба", text: "В Северном полушарии Сириус особенно заметен зимними вечерами и входит в астеризм Зимнего треугольника." },
+    { title: "Имя из древности", text: "Название Sirius связано с древнегреческим словом со значением «жгучий» или «сверкающий»." }
+  ],
+  vega: [
+    { title: "Вега — звезда Лиры", text: "Вега расположена примерно в 25 световых годах от нас и входит в число самых ярких звёзд земного неба." },
+    { title: "Она вращается очень быстро", text: "Быстрое вращение делает Вегу сплюснутой у полюсов: её экватор заметно выпирает, а температура на разных широтах отличается." },
+    { title: "Звезда, помогавшая астрономам", text: "Вега долгое время использовалась как одна из важных опорных звёзд для калибровки яркости и цвета в астрономии." },
+    { title: "Относительно молодая", text: "Вега намного моложе Солнца: её возраст оценивают примерно в несколько сотен миллионов лет, хотя точная оценка зависит от моделей." },
+    { title: "Пыльный диск", text: "Вокруг Веги обнаружен диск пыли и обломков. Он помогает изучать процессы, похожие на те, что происходили при формировании планетных систем." },
+    { title: "Северная звезда прошлого и будущего", text: "Из-за прецессии земной оси Вега в далёком прошлом была близка к роли полярной звезды и снова окажется рядом с северным небесным полюсом через тысячи лет." },
+    { title: "Голубовато-белый свет", text: "Вега горячее Солнца, поэтому её спектр и цвет смещены в голубовато-белую область." },
+    { title: "Сплюснутая форма", text: "Быстрое вращение делает экватор Веги шире полярного диаметра. Это влияет и на температуру поверхности, и на её видимый блеск." }
+  ],
+  polaris: [
+    { title: "Почти над Северным полюсом", text: "Полярная звезда находится близко к северному небесному полюсу, поэтому её положение на небе почти не меняется в течение ночи." },
+    { title: "Не самая яркая", text: "Полярная звезда заметна, но она не является самой яркой звездой неба. Её главная ценность — положение, удобное для навигации." },
+    { title: "Она тоже не одна", text: "Полярная звезда — многокомпонентная звёздная система. Основной компонент является цефеидой — звездой, чья яркость регулярно меняется." },
+    { title: "Космическая линейка", text: "Цефеиды меняют яркость с регулярным периодом. Связь между периодом и истинной светимостью помогает астрономам измерять расстояния до далёких объектов." },
+    { title: "Полюс не неподвижен", text: "Ось вращения Земли медленно меняет направление. Поэтому роль полярной звезды со временем переходит от одного объекта к другому." },
+    { title: "Ориентир в небе", text: "Найти Полярную звезду можно, мысленно продолжив линию через две крайние звезды чаши Большого Ковша примерно в пять раз." },
+    { title: "Не над самой точкой полюса", text: "Полярная звезда находится близко к северному небесному полюсу, но не точно на нём. Поэтому она описывает на небе очень маленький круг." },
+    { title: "Меняющаяся яркость", text: "Полярная звезда относится к цефеидам, но её пульсации со временем менялись. Это делает её интересным объектом для наблюдений." }
+  ],
+  betelgeuse: [
+    { title: "Красный сверхгигант", text: "Бетельгейзе — огромная прохладная по звёздным меркам звезда в созвездии Ориона. Её поверхность может меняться и пульсировать." },
+    { title: "Звезда с переменным блеском", text: "Бетельгейзе выбрасывает газ и пыль, а её яркость меняется на разных временных масштабах. В 2019–2020 годах она заметно потускнела, в том числе из-за пылевого облака." },
+    { title: "Далёкий финал", text: "Учёные считают, что Бетельгейзе в итоге завершит жизнь взрывом сверхновой, но точный срок неизвестен. Это не событие, которое можно предсказать на конкретную дату." },
+    { title: "Поверхность в движении", text: "Наблюдения показывают крупные конвективные области: горячий газ поднимается, охлаждается и опускается, из-за чего видимая поверхность постоянно меняется." },
+    { title: "Пыль затемняет свет", text: "Звезда выбрасывает вещество в окружающее пространство. Охлаждаясь, часть газа образует пыль, которая может временно заслонять свет звезды." },
+    { title: "Она не идеальный шар", text: "Внешние слои Бетельгейзе разрежены и изменчивы. У звезды нет чёткой твёрдой поверхности, как у каменистой планеты." },
+    { title: "Орион в зимнем небе", text: "Бетельгейзе обозначает плечо Ориона и легко узнаётся по красноватому оттенку рядом с голубоватым Ригелем." },
+    { title: "Размер трудно измерить", text: "Граница атмосферы сверхгиганта размыта, поэтому оценки его радиуса зависят от длины волны и модели. Это одна из причин, почему оценки могут различаться." }
+  ],
+  rigel: [
+    { title: "Голубовато-белый сверхгигант", text: "Ригель — одна из самых ярких звёзд Ориона. Он излучает гораздо больше энергии, чем Солнце, и находится на расстоянии сотен световых лет." },
+    { title: "Звёздная система", text: "Ригель — не одиночный объект: рядом с главным сверхгигантом есть звёзды-компаньоны, которые сложнее различить без приборов." },
+    { title: "Цвет говорит о температуре", text: "Голубоватый оттенок Ригеля указывает на более высокую температуру поверхности по сравнению с жёлтым Солнцем." },
+    { title: "Мощное излучение", text: "Ригель намного ярче Солнца. Его большая светимость связана с высокой температурой и огромным размером." },
+    { title: "Световой путь", text: "Свет Ригеля путешествует до нас сотни лет. Точное расстояние оценивается с некоторой неопределённостью, как часто бывает для далёких звёзд." },
+    { title: "Голубой сверхгигант", text: "Ригель — массивная горячая звезда на позднем этапе эволюции. Такие звёзды расходуют ядерное топливо намного быстрее Солнца." },
+    { title: "Контраст Ориона", text: "В одном созвездии видны очень разные звёзды: голубоватый Ригель и красноватая Бетельгейзе. Их цвета отражают различия в температуре." },
+    { title: "Звёзды-компаньоны", text: "У Ригеля есть звёзды-компаньоны, но они значительно слабее и труднее для наблюдения рядом с ярким главным компонентом." }
+  ],
+  altair: [
+    { title: "Быстрое вращение", text: "Альтаир делает полный оборот примерно за девять часов. Из-за этого он заметно сплюснут у полюсов, а не идеально сферичен." },
+    { title: "Созвездие Орла", text: "Альтаир — одна из трёх ярких звёзд Летнего треугольника вместе с Вегой и Денебом." },
+    { title: "Относительно близкая звезда", text: "Альтаир расположен примерно в 17 световых годах от Земли — по космическим меркам это довольно близко." },
+    { title: "Один из ближайших ярких соседей", text: "Альтаир настолько близок по астрономическим меркам, что его диаметр удалось оценить интерферометрическими наблюдениями." },
+    { title: "Очень сплюснут", text: "Быстрое вращение делает Альтаир заметно шире у экватора. Это один из хорошо известных примеров несферической формы звезды." },
+    { title: "Летний треугольник", text: "Вега, Денеб и Альтаир образуют заметный астеризм Летний треугольник, который хорошо виден летними ночами в Северном полушарии." },
+    { title: "Звезда спектрального класса A", text: "Альтаир горячее Солнца и относится к белым звёздам спектрального класса A." },
+    { title: "Быстрый день", text: "Из-за быстрого вращения звёздная поверхность Альтаира движется с большой скоростью у экватора, что влияет на форму и распределение температуры." }
+  ],
+  planet: [
+    { title: "Новый мир", text: "Эта планета пока вымышленная часть «Розового неба». Мы можем придумать её океаны, атмосферу и спутники, отдельно помечая авторские детали." },
+    { title: "Как изучают экзопланеты", text: "Многие планеты у других звёзд находят по крошечному падению яркости звезды, когда планета проходит перед ней. Этот метод называется транзитным." },
+    { title: "Атмосфера оставляет след", text: "Когда свет звезды проходит через атмосферу экзопланеты, некоторые длины волн поглощаются газами. По этим следам учёные могут оценивать состав атмосферы." },
+    { title: "Гравитация держит орбиту", text: "Планета движется вокруг звезды благодаря гравитации и собственной скорости. Орбита — это постоянное падение вокруг более массивного тела." },
+    { title: "Не все планеты похожи на Землю", text: "Среди экзопланет есть горячие газовые гиганты, суперземли и миры с очень короткими годами. Некоторые не имеют прямых аналогов в Солнечной системе." },
+    { title: "Цвет — не всегда настоящий", text: "На изображениях экзопланет цвет часто условный: учёные используют визуализации, чтобы показать предполагаемые свойства, которые нельзя увидеть напрямую." },
+    { title: "Здесь есть авторская тайна", text: "Наша планета в «Розовом небе» вымышленная. Её ландшафты и история могут быть фантазией, а научные объяснения рядом останутся настоящими." },
+    { title: "Как находят невидимые миры", text: "Некоторые планеты обнаруживают по колебаниям звезды под действием гравитации планеты, даже если саму планету невозможно разглядеть на снимке." }
+  ]
+};
+let activeCardType = "message";
+let activeCards = messageCards;
+let activeCardIndex = 0;
+let activeCosmicKey = "sirius";
+const detail = document.getElementById("galaxy-detail");
+const starCardPanel = document.getElementById("star-card-panel");
+const starCardMeta = document.getElementById("star-card-meta");
+const starCardTitle = document.getElementById("star-card-title");
+const starCardText = document.getElementById("star-card-text");
+const starCardCount = document.getElementById("star-card-count");
+let cinematicOpenTimer = null;
+// The discovery interface is promoted to a viewport-level cinematic overlay.
+document.body.appendChild(detail);
+
+function renderStarCard() {
+  const card = activeCards[activeCardIndex];
+  if (!card) return;
+  starCardMeta.textContent = activeCardType === "message" ? "ПОСЛАНИЕ ДЛЯ ТЕБЯ" : "КОСМИЧЕСКИЙ АРХИВ · НАУКА";
+  starCardTitle.textContent = card.title;
+  starCardText.textContent = card.text;
+  starCardCount.textContent = `${activeCardIndex + 1} / ${activeCards.length}`;
+}
+function showStarHalf(type) {
+  activeCardType = type;
+  activeCards = type === "message" ? messageCards : (factCards[activeCosmicKey] || factCards.planet);
+  activeCardIndex = type === "message" ? Math.floor(Math.random() * messageCards.length) : 0;
+  document.getElementById("star-halves").hidden = true;
+  starCardPanel.hidden = false;
+  renderStarCard();
+}
+document.querySelectorAll("[data-cosmic-half]").forEach(button => {
+  button.addEventListener("click", () => showStarHalf(button.dataset.cosmicHalf));
+});
+document.getElementById("star-card-prev").addEventListener("click", () => {
+  activeCardIndex = (activeCardIndex - 1 + activeCards.length) % activeCards.length;
+  renderStarCard();
+});
+document.getElementById("star-card-next").addEventListener("click", () => {
+  activeCardIndex = (activeCardIndex + 1) % activeCards.length;
+  renderStarCard();
+});
+document.getElementById("back-to-halves").addEventListener("click", () => {
+  starCardPanel.hidden = true;
+  document.getElementById("star-halves").hidden = false;
+});
+function closeCinematicDiscovery() {
+  if (cinematicOpenTimer) { clearTimeout(cinematicOpenTimer); cinematicOpenTimer = null; }
+  detail.hidden = true;
+  detail.classList.remove("cinematic-overlay");
+  document.body.classList.remove("cosmic-focus");
+  galaxyMap.classList.remove("cinematic-selected");
+  document.querySelectorAll(".cosmic-star").forEach(star => star.classList.remove("selected"));
+  if (window.__cosmicZoomTo) window.__cosmicZoomTo(null);
+}
+document.getElementById("detail-close").addEventListener("click", closeCinematicDiscovery);
+document.addEventListener("keydown", event => { if (event.key === "Escape" && !detail.hidden) closeCinematicDiscovery(); });
+// Touch swipes change cards; vertical scrolling remains available for the page.
+let swipeStartX = null;
+starCardPanel.addEventListener("touchstart", e => { swipeStartX = e.changedTouches[0].clientX; }, { passive:true });
+starCardPanel.addEventListener("touchend", e => {
+  if (swipeStartX === null) return;
+  const dx = e.changedTouches[0].clientX - swipeStartX;
+  if (Math.abs(dx) > 45) {
+    activeCardIndex = (activeCardIndex + (dx < 0 ? 1 : -1) + activeCards.length) % activeCards.length;
+    renderStarCard();
+  }
+  swipeStartX = null;
+}, { passive:true });
+
 cosmicElements.forEach(object => {
   object.addEventListener("click", () => {
     if (Date.now() < suppressCosmicClickUntil) return;
     const data = cosmicObjects[object.dataset.cosmic];
     if (!data) return;
+    activeCosmicKey = object.dataset.cosmic;
     document.querySelectorAll(".cosmic-star").forEach(star => star.classList.remove("selected"));
     if (object.classList.contains("cosmic-star")) object.classList.add("selected");
     document.getElementById("cosmic-title").textContent = data.title;
-    document.getElementById("cosmic-description").textContent = data.description;
-    const detail = document.getElementById("galaxy-detail");
-    detail.hidden = false;
-    detail.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    document.getElementById("star-halves").hidden = false;
+    starCardPanel.hidden = true;
+    if (cinematicOpenTimer) clearTimeout(cinematicOpenTimer);
+    detail.hidden = true;
+    detail.classList.remove("cinematic-overlay");
+    galaxyMap.classList.add("cinematic-selected");
+    if (window.__cosmicZoomTo) window.__cosmicZoomTo(activeCosmicKey);
+    // Give the camera a brief moment to rush toward the selected object before the split-screen reveal.
+    cinematicOpenTimer = setTimeout(() => {
+      detail.classList.add("cinematic-overlay");
+      detail.hidden = false;
+      document.body.classList.add("cosmic-focus");
+      detail.style.animation = "none";
+      void detail.offsetWidth;
+      detail.style.animation = "";
+      cinematicOpenTimer = null;
+    }, 480);
   });
 });
 
 document.getElementById("back-galaxy").addEventListener("click", () => {
+  if (cinematicOpenTimer) { clearTimeout(cinematicOpenTimer); cinematicOpenTimer = null; }
+  if (!detail.hidden) closeCinematicDiscovery();
   showView(home);
 });
 
@@ -885,6 +1196,40 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.m
   const currentRotation = new THREE.Vector2(0,0);
   let targetZoom = 19.5;
   let zoom = targetZoom;
+  let activeFocusKey = null;
+  const focusTarget = new THREE.Vector3();
+  window.__cosmicZoomTo = key => {
+    activeFocusKey = key && starVectors[key] ? key : null;
+    targetZoom = activeFocusKey ? 10.8 : 19.5;
+  };
+  map.querySelectorAll('[data-zoom]').forEach(button => {
+    button.addEventListener('click', () => {
+      targetZoom = THREE.MathUtils.clamp(targetZoom + (button.dataset.zoom === 'in' ? -2.4 : 2.4), 10.5, 29);
+    });
+  });
+  // Pinch-to-zoom for phones, plus the visible +/- controls.
+  let pinchStartDistance = null;
+  let pinchStartZoom = targetZoom;
+  let isPinching = false;
+  const touchDistance = touches => Math.hypot(touches[0].clientX - touches[1].clientX, touches[0].clientY - touches[1].clientY);
+  map.addEventListener('touchstart', e => {
+    if (e.touches.length === 2) {
+      isPinching = true;
+      pinchStartDistance = Math.max(1, touchDistance(e.touches));
+      pinchStartZoom = targetZoom;
+      pointer.down = false;
+      map.classList.remove('dragging');
+    }
+  }, { passive:true });
+  map.addEventListener('touchmove', e => {
+    if (!isPinching || e.touches.length !== 2) return;
+    e.preventDefault();
+    const distance = Math.max(1, touchDistance(e.touches));
+    targetZoom = THREE.MathUtils.clamp(pinchStartZoom * pinchStartDistance / distance, 10.5, 29);
+  }, { passive:false });
+  map.addEventListener('touchend', e => {
+    if (e.touches.length < 2) { isPinching = false; pinchStartDistance = null; }
+  }, { passive:true });
   const starVectors = {};
   Object.entries(namedPositions).forEach(([key, vec]) => { starVectors[key] = vec.clone(); });
 
@@ -902,7 +1247,7 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.m
   resize();
 
   map.addEventListener('pointerdown', e => {
-    if (e.target.closest('button[data-cosmic]')) return;
+    if (e.target.closest('button[data-cosmic], [data-zoom]')) return;
     if (e.button !== undefined && e.button !== 0) return;
     pointer.down = true; pointer.dragged = false;
     pointer.x = pointer.lastX = e.clientX; pointer.y = pointer.lastY = e.clientY;
@@ -911,7 +1256,7 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.m
     try { map.setPointerCapture(e.pointerId); } catch (_) {}
   });
   map.addEventListener('pointermove', e => {
-    if (!pointer.down) return;
+    if (!pointer.down || isPinching) return;
     const dx = e.clientX - pointer.lastX, dy = e.clientY - pointer.lastY;
     if (Math.hypot(e.clientX-pointer.x, e.clientY-pointer.y) > 4) pointer.dragged = true;
     if (!pointer.dragged) return;
@@ -930,7 +1275,7 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.m
   map.addEventListener('pointerup', endPointer);
   map.addEventListener('pointercancel', endPointer);
   map.addEventListener('wheel', e => {
-    if (e.target.closest('button[data-cosmic]')) return;
+    if (e.target.closest('button[data-cosmic], [data-zoom]')) return;
     e.preventDefault(); targetZoom = THREE.MathUtils.clamp(targetZoom + e.deltaY * 0.012, 12, 27);
   }, { passive:false });
 
@@ -961,9 +1306,15 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.m
     backgroundStars.rotation.x = currentRotation.y * 0.025;
     zoom += (targetZoom - zoom) * (1-Math.exp(-dt*3));
     camera.position.z += (zoom-camera.position.z) * (1-Math.exp(-dt*4));
-    camera.position.x = Math.sin(currentRotation.x*0.12)*0.5;
-    camera.position.y = 0.8 + Math.sin(currentRotation.y*0.5)*0.3;
-    camera.lookAt(0,0,0);
+    if (activeFocusKey && starVectors[activeFocusKey]) {
+      focusTarget.copy(starVectors[activeFocusKey]);
+      galaxy.localToWorld(focusTarget);
+    } else {
+      focusTarget.set(0,0,0);
+    }
+    camera.position.x = focusTarget.x + Math.sin(currentRotation.x*0.12)*0.18;
+    camera.position.y = focusTarget.y + 0.35 + Math.sin(currentRotation.y*0.5)*0.12;
+    camera.lookAt(focusTarget);
     coreGlow.material.rotation = -t*0.025;
     innerGlow.material.rotation = t*0.06;
     disc.rotation.z = t*0.08;
