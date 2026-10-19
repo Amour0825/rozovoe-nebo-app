@@ -232,7 +232,222 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; }
     }
-  </style>
+ /* ===== ЖИВАЯ ГАЛАКТИКА ===== */
+
+.galaxy-shell {
+  position: relative;
+  overflow: hidden;
+  min-height: 440px;
+  border: 1px solid rgba(190, 151, 255, .3);
+  border-radius: 25px;
+  background:
+    radial-gradient(ellipse at 48% 45%, rgba(116, 66, 171, .38), transparent 36%),
+    radial-gradient(ellipse at 80% 20%, rgba(56, 75, 154, .3), transparent 35%),
+    radial-gradient(ellipse at 20% 80%, rgba(168, 68, 139, .25), transparent 40%),
+    #09091c;
+  box-shadow: inset 0 0 55px rgba(94, 59, 160, .18);
+  isolation: isolate;
+}
+
+.galaxy-shell::before,
+.galaxy-shell::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.galaxy-shell::before {
+  background: conic-gradient(
+    from 20deg at 50% 48%,
+    transparent 0deg,
+    rgba(125, 92, 217, .04) 45deg,
+    rgba(205, 126, 226, .19) 95deg,
+    transparent 155deg,
+    rgba(87, 126, 225, .14) 220deg,
+    transparent 300deg
+  );
+  filter: blur(22px);
+  animation: nebula-drift 35s linear infinite;
+}
+
+.galaxy-shell::after {
+  background-image:
+    radial-gradient(1px 1px at 12% 20%, #fff 98%, transparent),
+    radial-gradient(1px 1px at 75% 13%, #fff 98%, transparent),
+    radial-gradient(2px 2px at 30% 62%, #d9ceff 98%, transparent),
+    radial-gradient(1px 1px at 86% 72%, #fff 98%, transparent),
+    radial-gradient(1px 1px at 60% 88%, #d9ceff 98%, transparent),
+    radial-gradient(2px 2px at 48% 27%, #fff 98%, transparent),
+    radial-gradient(1px 1px at 8% 82%, #fff 98%, transparent);
+  background-size: 230px 220px;
+  opacity: .75;
+}
+
+.galaxy-heading {
+  padding: 22px 18px 4px;
+  color: #eee4ff;
+  text-align: center;
+}
+
+.galaxy-heading h2 {
+  margin: 0;
+  font: 500 30px Georgia, serif;
+  letter-spacing: .3px;
+}
+
+.galaxy-heading p {
+  margin: 9px 0 0;
+  color: #bcb2d9;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.galaxy-map {
+  position: relative;
+  height: 300px;
+  margin: 5px 8px 0;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.cosmic-object {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cosmic-star {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  color: #fff4ff;
+  font-size: 26px;
+  text-shadow: 0 0 8px #fff, 0 0 19px #c4a2ff, 0 0 32px #a47cff;
+  animation: star-pulse 3s ease-in-out infinite;
+}
+
+.cosmic-star::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  background: rgba(202, 170, 255, .1);
+  box-shadow: 0 0 20px 8px rgba(170, 124, 255, .15);
+  z-index: -1;
+}
+
+.cosmic-star:focus-visible,
+.cosmic-planet:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+.cosmic-star.selected {
+  transform: scale(1.25);
+  filter: brightness(1.5);
+}
+
+.cosmic-planet {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 27%, rgba(255,255,255,.9), transparent 10%),
+    radial-gradient(ellipse at 35% 28%, #f3c8ff, #a77de5 38%, #5644a0 72%, #211b50);
+  box-shadow: 0 0 20px rgba(164, 117, 255, .42);
+  animation: planet-float 5s ease-in-out infinite;
+}
+
+.cosmic-planet::after {
+  content: "";
+  position: absolute;
+  width: 77px;
+  height: 23px;
+  border: 2px solid rgba(220, 188, 255, .65);
+  border-radius: 50%;
+  transform: rotate(-24deg);
+}
+
+.cosmic-label {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 50%;
+  width: 105px;
+  transform: translateX(-50%);
+  color: #d9c9f4;
+  font-size: 10px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.galaxy-hint {
+  padding: 0 14px 16px;
+  color: #aaa0ca;
+  font-size: 11px;
+  text-align: center;
+  line-height: 1.7;
+}
+
+.galaxy-detail {
+  margin: 0 12px 15px;
+  padding: 15px;
+  border: 1px solid rgba(190, 151, 255, .23);
+  border-radius: 17px;
+  background: rgba(24, 21, 52, .78);
+  color: #eee4ff;
+}
+
+.galaxy-detail[hidden] { display: none; }
+
+.galaxy-detail h3 {
+  margin: 0 0 8px;
+  color: #e1c9ff;
+  font: 500 20px Georgia, serif;
+}
+
+.galaxy-detail p {
+  margin: 0;
+  color: #c4bbdf;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.galaxy-back {
+  margin-bottom: 15px;
+  color: #c0a2ed;
+}
+
+@keyframes star-pulse {
+  0%, 100% { opacity: .8; filter: brightness(.95); }
+  50% { opacity: 1; filter: brightness(1.45); }
+}
+
+@keyframes planet-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes nebula-drift {
+  from { transform: rotate(0deg) scale(1); }
+  to { transform: rotate(360deg) scale(1.08); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cosmic-star,
+  .cosmic-planet,
+  .galaxy-shell::before {
+    animation: none !important;
+  }
+}
+
+  </style> 
 </head>
 <body>
   <main class="page">
@@ -327,6 +542,94 @@
     </section>
 
     <section id="other" class="view">
+      
+<section id="galaxy-view" class="view">
+  <button class="back galaxy-back" id="back-galaxy">
+    ← назад к моему миру
+  </button>
+
+  <div class="galaxy-shell">
+    <header class="galaxy-heading">
+      <h2>моя галактика</h2>
+      <p>у каждой звезды есть своя история ✧</p>
+    </header>
+
+    <div class="galaxy-map" id="galaxy-map">
+      <button class="cosmic-object cosmic-star"
+        style="left:15%;top:17%"
+        data-cosmic="sirius"
+        aria-label="Сириус">✦
+        <span class="cosmic-label">Сириус</span>
+      </button>
+
+      <button class="cosmic-object cosmic-star"
+        style="left:67%;top:12%;animation-delay:.8s"
+        data-cosmic="vega"
+        aria-label="Вега">✧
+        <span class="cosmic-label">Вега</span>
+      </button>
+
+      <button class="cosmic-object cosmic-star"
+        style="left:39%;top:32%;animation-delay:1.3s"
+        data-cosmic="polaris"
+        aria-label="Полярная звезда">✦
+        <span class="cosmic-label">Полярная</span>
+      </button>
+
+      <button class="cosmic-object cosmic-star"
+        style="left:78%;top:47%;animation-delay:.4s"
+        data-cosmic="betelgeuse"
+        aria-label="Бетельгейзе">✧
+        <span class="cosmic-label">Бетельгейзе</span>
+      </button>
+
+      <button class="cosmic-object cosmic-star"
+        style="left:20%;top:61%;animation-delay:1.7s"
+        data-cosmic="rigel"
+        aria-label="Ригель">✦
+        <span class="cosmic-label">Ригель</span>
+      </button>
+
+      <button class="cosmic-object cosmic-star"
+        style="left:49%;top:72%;animation-delay:1s"
+        data-cosmic="altair"
+        aria-label="Альтаир">✧
+        <span class="cosmic-label">Альтаир</span>
+      </button>
+
+      <button class="cosmic-object cosmic-planet"
+        style="left:72%;top:76%"
+        data-cosmic="planet"
+        aria-label="Планета"> 
+      </button>
+    </div>
+
+    <div class="galaxy-hint">
+      ✧ коснись звезды, чтобы открыть её историю<br>
+      ◉ выбери планету, чтобы начать исследование
+    </div>
+
+    <article class="galaxy-detail" id="galaxy-detail" hidden>
+      <h3 id="cosmic-title"></h3>
+      <p id="cosmic-description"></p>
+    </article>
+  </div>
+</section>
+
+    </div>
+
+    <div class="galaxy-hint">
+      ✧ коснись звезды, чтобы открыть её историю<br>
+      ◉ выбери планету, чтобы начать исследование
+    </div>
+
+    <article class="galaxy-detail" id="galaxy-detail" hidden>
+      <h3 id="cosmic-title"></h3>
+      <p id="cosmic-description"></p>
+    </article>
+  </div>
+</section>
+
       <button class="back" id="back-other">← назад к моему миру</button>
       <h2 class="view-title" id="other-title">скоро ♡</h2>
       <p class="view-subtitle" id="other-text"></p>
@@ -392,7 +695,65 @@
       game: ["маленькая игра 🎀", "здесь появится небольшая игра. пока готовим для неё что-то особенное."]
     };
 
-    const home = document.getElementById("home");
+    const home = document.getElementById("home");{
+    const galaxyView = document.getElementById("galaxy-view");
+const cosmicObjects = };
+  sirius: {
+    title: "Сириус ✦",
+    description: "Сириус — самая яркая звезда ночного неба, видимая с Земли. Это двойная звёздная система в созвездии Большого Пса."
+  },
+  vega: {
+    title: "Вега ✧",
+    description: "Вега — одна из самых ярких звёзд неба. Она быстро вращается, поэтому её форма немного сплюснута у полюсов."
+  },
+  polaris: {
+    title: "Полярная звезда ✦",
+    description: "Полярная звезда находится близко к северному небесному полюсу. На протяжении многих лет её использовали для ориентирования."
+  },
+  betelgeuse: {
+    title: "Бетельгейзе ✧",
+    description: "Бетельгейзе — красный сверхгигант в созвездии Ориона. Она настолько велика, что при размещении на месте Солнца её внешние слои простирались бы далеко за орбиту Земли."
+  },
+  rigel: {
+    title: "Ригель ✦",
+    description: "Ригель — яркий голубовато-белый сверхгигант в созвездии Ориона. Несмотря на то что он выглядит как одна звезда, это система с несколькими компонентами."
+  },
+  altair: {
+    title: "Альтаир ✧",
+    description: "Альтаир — яркая звезда созвездия Орла. Он вращается очень быстро, поэтому его форма заметно отличается от идеального шара."
+  },
+  planet: {
+    title: "Новая планета ◉",
+    description: "Это пока условный мир нашей авторской галактики. Позже здесь можно будет исследовать реальные планеты, их атмосферы, спутники и необычные научные открытия."
+  }
+};
+
+document.querySelectorAll("[data-cosmic]").forEach(object => {
+  object.addEventListener("click", () => {
+    const data = cosmicObjects[object.dataset.cosmic];
+    if (!data) return;
+
+    document.querySelectorAll(".cosmic-star").forEach(star => {
+      star.classList.remove("selected");
+    });
+
+    if (object.classList.contains("cosmic-star")) {
+      object.classList.add("selected");
+    }
+
+    document.getElementById("cosmic-title").textContent = data.title;
+    document.getElementById("cosmic-description").textContent = data.description;
+
+    const detail = document.getElementById("galaxy-detail");
+    detail.hidden = false;
+    detail.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
+});
+
+document.getElementById("back-galaxy").addEventListener("click", () => {
+  showView(home);
+});
+
     const daily = document.getElementById("daily");
     const other = document.getElementById("other");
     const letterText = document.getElementById("letter-text");
@@ -459,14 +820,21 @@
       button.addEventListener("click", () => {
         const section = button.dataset.section;
 
-        if (section === "daily") {
-          currentCategory = "all";
-          document.querySelectorAll(".category").forEach(item => {
-            item.classList.toggle("active", item.dataset.category === "all");
-          });
-          showMessage(getDailyMessage());
-          showView(daily);
-        } else {
+          if (section === "daily") {
+  currentCategory = "all";
+  document.querySelectorAll(".category").forEach(item => {
+    item.classList.toggle("active", item.dataset.category === "all");
+  });
+  showMessage(getDailyMessage());
+  showView(daily);
+} else if (section === "galaxy") {
+  showView(galaxyView);
+} else {
+  document.getElementById("other-title").textContent = otherSections[section][0];
+  document.getElementById("other-text").textContent = otherSections[section][1];
+  showView(other);
+}
+       } else { 
           document.getElementById("other-title").textContent = otherSections[section][0];
           document.getElementById("other-text").textContent = otherSections[section][1];
           showView(other);
