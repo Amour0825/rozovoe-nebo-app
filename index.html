@@ -438,7 +438,263 @@ body.cosmic-focus { overflow:hidden; }
 @media(max-width:520px) { .planet-header { padding:20px 13px 9px; } .planet-scene-wrap { height:340px; margin:0 5px; } .planet-selector { padding-left:9px; padding-right:9px; } .planet-choice { min-width:77px; padding:9px 10px; } .planet-info-card { margin-left:8px; margin-right:8px; padding:15px; } .planet-facts-grid { gap:6px; } .planet-fact { padding:9px 7px; } .planet-fact strong { font-size:10px; } }
 @media(prefers-reduced-motion:reduce) { .planet-choice { transition:none; } }
 
-  </style> 
+  
+
+/* ===== ЕДИНЫЙ ВИЗУАЛЬНЫЙ ЯЗЫК С НАУЧНЫМ АРХИВОМ =====
+/* Scoped to the galaxy view: the approved archive and message content stay untouched. */
+body:has(#galaxy-view.active) {
+  background: #05060d;
+  color: #e8eaf5;
+  min-height: 100svh;
+}
+body:has(#galaxy-view.active) .page {
+  width: 100%; max-width: none; margin: 0; padding: 0 0 28px;
+}
+#galaxy-view.active {
+  min-height: 100svh;
+  color: #e8eaf5;
+  background:
+    radial-gradient(ellipse at 75% 5%,rgba(82,71,157,.17),transparent 31%),
+    radial-gradient(ellipse at 4% 42%,rgba(126,65,121,.12),transparent 35%),
+    #05060d;
+  animation: archive-galaxy-arrive .65s ease both;
+}
+@keyframes archive-galaxy-arrive { from {opacity:0;filter:brightness(.78)} to {opacity:1;filter:brightness(1)} }
+#galaxy-view .galaxy-back {
+  display: inline-flex; align-items: center; gap: 9px;
+  margin: 18px clamp(20px,5vw,76px) 0; padding: 10px 15px;
+  border: 1px solid rgba(189,197,255,.22); border-radius: 999px;
+  color: #e3e5fa; background: rgba(255,255,255,.035);
+  font-size: 11px; letter-spacing: .03em;
+  transition: background .2s,border-color .2s,transform .2s;
+}
+#galaxy-view .galaxy-back:hover { background:rgba(255,255,255,.09);border-color:rgba(189,197,255,.5); }
+#galaxy-view .galaxy-shell {
+  width: 100%; max-width: 1440px; min-height: calc(100svh - 66px); margin: 0 auto;
+  border: 0; border-radius: 0; box-shadow: none; overflow: hidden;
+  background:
+    radial-gradient(ellipse at 75% 8%,rgba(82,71,157,.14),transparent 32%),
+    radial-gradient(ellipse at 8% 48%,rgba(126,65,121,.10),transparent 36%),
+    #05060d;
+}
+#galaxy-view .galaxy-shell::before {
+  background: radial-gradient(ellipse at 50% 38%,rgba(123,119,220,.08),transparent 52%),
+              linear-gradient(180deg,rgba(5,6,13,.02),rgba(5,6,13,.2));
+}
+#galaxy-view .galaxy-shell::after {
+  background: radial-gradient(ellipse at center,transparent 46%,rgba(0,2,10,.28) 100%);
+}
+#galaxy-view .galaxy-heading {
+  width: min(100%,1320px); margin: 0 auto; padding: clamp(28px,5vw,54px) clamp(20px,7vw,100px) 8px;
+  text-align: left;
+}
+#galaxy-view .galaxy-heading::before {
+  content: "STELLAR FIELD  /  01"; display: flex; align-items: center; gap: 10px;
+  margin-bottom: 18px; color: #a5aac8; font-size: 9px; letter-spacing: .21em; line-height: 1.7;
+}
+#galaxy-view .galaxy-heading h2 {
+  font: 400 clamp(44px,7vw,78px)/.98 Georgia,'Times New Roman',serif;
+  letter-spacing: -.045em; color: #f0efff; text-shadow: 0 0 30px rgba(160,156,255,.16);
+}
+#galaxy-view .galaxy-heading p {
+  max-width: 560px; margin: 17px 0 0; color: #aeb3ce; font-size: 12px; line-height: 1.95; letter-spacing: .035em;
+}
+#galaxy-view .galaxy-map {
+  width: min(100% - 24px,1320px); height: clamp(390px,61vh,760px); margin: 8px auto 0;
+  border: 1px solid rgba(177,188,255,.10); border-radius: 22px; overflow: hidden;
+  background:
+    radial-gradient(ellipse at 52% 45%,rgba(82,71,157,.12),transparent 40%),
+    radial-gradient(ellipse at 20% 75%,rgba(126,65,121,.09),transparent 35%),
+    #05060d;
+  box-shadow: inset 0 1px rgba(255,255,255,.035),0 22px 80px rgba(0,0,0,.18);
+}
+#galaxy-view .galaxy-map::before {
+  width: 82%; height: 58%; left: 9%; top: 20%;
+  background: radial-gradient(ellipse,rgba(190,185,255,.12) 0%,rgba(139,124,213,.09) 24%,rgba(190,120,196,.07) 42%,rgba(61,75,145,.035) 58%,transparent 74%);
+  filter: blur(16px);
+}
+#galaxy-view .galaxy-map::after {
+  box-shadow: 0 0 7px 3px rgba(255,255,255,.75),0 0 22px 10px rgba(184,179,240,.28),0 0 60px 28px rgba(184,120,196,.12);
+}
+#galaxy-view .cosmic-star { text-shadow:0 0 4px #fff,0 0 12px #d9d7ff,0 0 26px #b8b3f0; }
+#galaxy-view .cosmic-star::before {
+  background: radial-gradient(circle,rgba(255,255,255,.56),rgba(184,179,240,.13) 48%,transparent 72%);
+  box-shadow: 0 0 18px 6px rgba(184,179,240,.17);
+}
+#galaxy-view .cosmic-star.selected { filter:brightness(2.1) drop-shadow(0 0 18px rgba(210,205,255,.9)) drop-shadow(0 0 38px rgba(184,120,196,.26)); }
+#galaxy-view .galaxy-hint {
+  width: min(100%,1320px); margin: 0 auto; padding: 17px clamp(20px,7vw,100px) 28px;
+  color: #858ba9; font-size: 10px; line-height: 1.9; letter-spacing: .035em;
+}
+#galaxy-view .galaxy-detail:not(.cinematic-overlay) {
+  width: min(calc(100% - 40px),1160px); margin: 0 auto 28px; padding: clamp(20px,4vw,34px);
+  border: 1px solid rgba(177,188,255,.16); border-radius: 18px;
+  color: #e8eaf5; background: linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018));
+  box-shadow: inset 0 1px rgba(255,255,255,.04),0 22px 70px rgba(0,0,0,.16);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+}
+#galaxy-view .galaxy-detail:not(.cinematic-overlay) h3 { color:#f0efff; }
+#galaxy-view .galaxy-detail:not(.cinematic-overlay) p { color:#aeb3ce; }
+#galaxy-view .galaxy-detail.cinematic-overlay {
+  background: radial-gradient(ellipse at 75% 8%,rgba(82,71,157,.25),transparent 34%),
+              radial-gradient(ellipse at 8% 65%,rgba(126,65,121,.16),transparent 36%),
+              rgba(5,6,13,.97);
+  border: 0;
+}
+#galaxy-view .galaxy-detail.cinematic-overlay::before {
+  background: conic-gradient(from 20deg at 50% 48%,transparent 0 20%,rgba(184,179,240,.10) 26%,transparent 35%,rgba(230,178,228,.09) 47%,transparent 58%,rgba(167,173,255,.11) 68%,transparent 82%);
+}
+#galaxy-view .galaxy-detail.cinematic-overlay .detail-kicker { color:#b8b3f0 !important; }
+#galaxy-view .galaxy-detail.cinematic-overlay .star-half {
+  border-color: rgba(177,188,255,.19); background-color: rgba(255,255,255,.025);
+  box-shadow: inset 0 1px rgba(255,255,255,.07),0 18px 60px rgba(0,0,0,.24);
+}
+#galaxy-view .galaxy-detail.cinematic-overlay .star-half-message {
+  background: radial-gradient(ellipse at 25% 48%,rgba(230,178,228,.19),transparent 65%),linear-gradient(135deg,rgba(67,47,91,.58),rgba(5,6,13,.78));
+}
+#galaxy-view .galaxy-detail.cinematic-overlay .star-half-facts {
+  background: radial-gradient(ellipse at 78% 48%,rgba(167,173,255,.17),transparent 65%),linear-gradient(135deg,rgba(35,43,83,.62),rgba(5,6,13,.78));
+}
+#galaxy-view .galaxy-detail.cinematic-overlay .star-card-panel {
+  border-color: rgba(177,188,255,.18);
+  background: radial-gradient(ellipse at 50% 0,rgba(123,119,220,.15),transparent 70%),rgba(5,6,13,.72);
+}
+#galaxy-view .galaxy-detail.cinematic-overlay .star-card-meta { color:#b8b3f0; }
+#galaxy-view .galaxy-detail.cinematic-overlay .back-to-halves { color:#c2b2ed; }
+#galaxy-view .galaxy-zoom-controls button {
+  border-color:rgba(189,197,255,.22); background:rgba(5,6,13,.66); color:#e3e5fa;
+  box-shadow:0 6px 22px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.06);
+}
+@media (max-width:700px) {
+  #galaxy-view .galaxy-back { margin: 14px 16px 0; }
+  #galaxy-view .galaxy-heading { padding: 28px 22px 8px; }
+  #galaxy-view .galaxy-heading h2 { font-size: clamp(42px,12vw,62px); }
+  #galaxy-view .galaxy-map { width:calc(100% - 20px); height: min(58svh,560px); min-height:350px; margin-top:10px; border-radius:16px; }
+  #galaxy-view .galaxy-hint { padding:15px 22px 24px; }
+  #galaxy-view .galaxy-detail:not(.cinematic-overlay) { width:calc(100% - 24px); padding:18px; }
+  #galaxy-view .galaxy-detail.cinematic-overlay { padding-top:max(24px,env(safe-area-inset-top)); padding-bottom:max(24px,env(safe-area-inset-bottom)); }
+  #galaxy-view .galaxy-detail.cinematic-overlay .star-halves { gap:10px; }
+  #galaxy-view .galaxy-detail.cinematic-overlay .star-half { min-height:190px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #galaxy-view.active { animation:none; }
+}
+
+
+
+/* ===== IMMERSIVE STELLAR ARCHIVE ===== */
+body.archive-mode { background:#05060d; color:#e9eaf5; }
+body.archive-mode .page { width:100%; max-width:none; margin:0; padding:0; }
+body.archive-mode .hero, body.archive-mode > .page > .footer { display:none; }
+.archive-view { min-height:100svh; background:#05060d; color:#e8eaf5; overflow:hidden; }
+.archive-world { --archive-ink:#e8eaf5; --archive-muted:#9399b7; --archive-line:rgba(177,188,255,.16); position:relative; min-height:100svh; isolation:isolate; overflow:hidden; background:radial-gradient(ellipse at 75% 8%,rgba(82,71,157,.19),transparent 30%),radial-gradient(ellipse at 4% 35%,rgba(126,65,121,.13),transparent 34%),#05060d; }
+.archive-world::before { content:""; position:absolute; z-index:-1; inset:0; pointer-events:none; opacity:.5; background-image:radial-gradient(1px 1px at 12% 14%,#fff 40%,transparent 100%),radial-gradient(1px 1px at 79% 24%,#cbd6ff 40%,transparent 100%),radial-gradient(1px 1px at 34% 46%,#fff 40%,transparent 100%),radial-gradient(1px 1px at 92% 62%,#fff 40%,transparent 100%),radial-gradient(1px 1px at 63% 81%,#c6caff 40%,transparent 100%),radial-gradient(1px 1px at 8% 88%,#fff 40%,transparent 100%); background-size:310px 260px,390px 330px,270px 300px,420px 340px,350px 290px,460px 380px; }
+.archive-topbar { display:flex; align-items:center; justify-content:space-between; gap:14px; max-width:1320px; margin:auto; padding:23px clamp(20px,5vw,76px); border-bottom:1px solid rgba(177,188,255,.10); }
+.archive-back { padding:9px 13px; border:1px solid rgba(189,197,255,.22); border-radius:999px; color:#e3e5fa; background:rgba(255,255,255,.035); cursor:pointer; font-size:11px; letter-spacing:.03em; transition:background .2s,border-color .2s,transform .2s; }
+.archive-back:hover { background:rgba(255,255,255,.09); border-color:rgba(189,197,255,.5); }
+.archive-status { display:flex; align-items:center; gap:9px; color:#858ba9; font-size:9px; letter-spacing:.18em; }
+.archive-status-dot { width:6px; height:6px; border-radius:50%; background:#b7e7d2; box-shadow:0 0 12px rgba(145,255,213,.8); animation:archive-status-pulse 2.2s ease-in-out infinite; }
+@keyframes archive-status-pulse { 0%,100%{opacity:.5} 50%{opacity:1} }
+.archive-hero { position:relative; display:grid; grid-template-columns:minmax(0,1fr) minmax(300px,.85fr); align-items:center; gap:20px; max-width:1320px; min-height:460px; margin:auto; padding:64px clamp(20px,7vw,100px) 56px; }
+.archive-hero-copy { position:relative; z-index:2; max-width:610px; }
+.archive-eyebrow { display:flex; align-items:center; gap:10px; margin:0 0 23px; color:#a5aac8; font-size:9px; letter-spacing:.21em; line-height:1.7; }
+.archive-eyebrow span { color:#e5b9df; }
+.archive-eyebrow i { width:26px; height:1px; background:#8c85ba; }
+.archive-hero h2 { margin:0; font:400 clamp(54px,8vw,104px)/.94 Georgia,'Times New Roman',serif; letter-spacing:-.055em; color:#f0efff; text-wrap:balance; }
+.archive-hero h2 em { color:#b8b3f0; font-weight:400; }
+.archive-intro { max-width:470px; margin:25px 0 0; color:#aeb3ce; font-size:13px; line-height:1.95; }
+.archive-hero-meta { display:flex; flex-wrap:wrap; gap:9px 18px; margin-top:28px; color:#9b9fbd; font-size:9px; letter-spacing:.07em; }
+.archive-hero-meta span:first-child { color:#e2c2e8; }
+.archive-hero-art { position:relative; min-height:330px; display:grid; place-items:center; isolation:isolate; }
+.archive-hero-art::before { content:""; position:absolute; width:72%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle,rgba(123,119,220,.16),rgba(107,80,166,.08) 35%,transparent 70%); filter:blur(20px); }
+.star-art { --star-core:#f6f7ff; --star-halo:rgba(164,185,255,.48); position:relative; flex:0 0 auto; width:82px; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 36% 32%,#fff 0 2%,var(--star-core) 9%,color-mix(in srgb,var(--star-core),#7782c9 22%) 22%,var(--star-halo) 48%,transparent 73%); box-shadow:0 0 25px var(--star-halo),0 0 75px color-mix(in srgb,var(--star-halo),transparent 35%); }
+.star-art::before { content:""; position:absolute; inset:-15%; border-radius:50%; background:radial-gradient(circle,transparent 48%,rgba(255,255,255,.07) 54%,transparent 68%); }
+.star-art::after { content:""; position:absolute; left:-70%; right:-70%; top:49%; height:1px; background:linear-gradient(90deg,transparent,rgba(221,227,255,.45),#fff,rgba(221,227,255,.45),transparent); box-shadow:0 0 16px rgba(190,205,255,.35); transform:rotate(-22deg); }
+.star-art--blue { --star-core:#d8e9ff; --star-halo:rgba(100,156,255,.53); }
+.star-art--white { --star-core:#fff8f0; --star-halo:rgba(218,225,255,.48); }
+.star-art--yellow { --star-core:#fff0bd; --star-halo:rgba(255,190,105,.46); }
+.star-art--orange { --star-core:#ffcb8e; --star-halo:rgba(255,112,66,.42); }
+.star-art--red { --star-core:#ffb4a2; --star-halo:rgba(255,72,75,.45); }
+.archive-hero-star { z-index:1; width:clamp(110px,18vw,190px); animation:archive-star-float 7s ease-in-out infinite; }
+@keyframes archive-star-float { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-8px) scale(1.025)} }
+.archive-orbit { position:absolute; width:86%; height:39%; border:1px solid rgba(167,173,255,.17); border-radius:50%; transform:rotate(-32deg); }
+.archive-orbit-two { width:78%; height:59%; transform:rotate(52deg); border-color:rgba(230,178,228,.12); }
+.archive-art-label { position:absolute; z-index:2; color:#a6accd; font-size:8px; letter-spacing:.2em; }
+.archive-label-a { top:22%; right:6%; } .archive-label-b { bottom:18%; left:4%; color:#d5a9d3; }
+.archive-cross { position:absolute; color:#c4c9ff; text-shadow:0 0 14px #b2b9ff; } .archive-cross-a{top:15%;left:20%;font-size:20px}.archive-cross-b{bottom:21%;right:12%;font-size:14px;color:#e6b9df}
+.archive-catalog { max-width:1320px; margin:auto; padding:30px clamp(20px,7vw,100px) 74px; }
+.archive-section-heading { display:flex; justify-content:space-between; align-items:end; gap:20px; margin-bottom:26px; padding-top:14px; border-top:1px solid var(--archive-line); }
+.archive-section-heading .archive-eyebrow { margin:0 0 11px; }
+.archive-section-heading h3 { margin:0; color:#e8e9fb; font:400 clamp(32px,4.6vw,50px)/1.1 Georgia,serif; letter-spacing:-.035em; }
+.archive-section-heading h3 em { color:#c2b2ed; font-weight:400; }
+.archive-section-note { margin:0 0 3px; color:#7f86a6; font-size:10px; line-height:1.8; text-align:right; }
+.archive-tools { display:flex; flex-direction:column; gap:16px; margin-bottom:23px; }
+.archive-search { display:flex; align-items:center; gap:12px; width:min(100%,550px); min-height:46px; padding:0 14px; border:1px solid rgba(180,190,255,.2); border-radius:12px; background:rgba(255,255,255,.035); color:#c7cbed; }
+.archive-search>span { font-size:24px; line-height:1; color:#bdb7eb; }
+.archive-search input { flex:1; width:100%; min-width:0; border:0; outline:0; background:transparent; color:#f1f0ff; font:12px inherit; font-size:12px; }
+.archive-search input::placeholder { color:#7e85a5; }
+.archive-search kbd { padding:3px 6px; border:1px solid rgba(190,197,255,.16); border-radius:5px; color:#8f95b5; font-size:10px; }
+.archive-filters { display:flex; flex-wrap:wrap; gap:7px; }
+.archive-filter { padding:8px 12px; border:1px solid rgba(180,190,255,.17); border-radius:999px; background:rgba(255,255,255,.025); color:#9ea5c4; font-size:10px; cursor:pointer; transition:.2s; }
+.archive-filter:hover { border-color:rgba(196,183,245,.5); color:#e4e1ff; }
+.archive-filter.active { color:#fff1ff; border-color:rgba(196,155,221,.55); background:linear-gradient(120deg,rgba(142,104,174,.36),rgba(92,100,172,.27)); box-shadow:inset 0 0 18px rgba(194,155,227,.07); }
+.archive-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:13px; }
+.archive-star-card { position:relative; display:flex; flex-direction:column; align-items:stretch; min-width:0; min-height:242px; overflow:hidden; padding:17px; border:1px solid rgba(168,179,238,.15); border-radius:17px; background:linear-gradient(150deg,rgba(24,27,53,.78),rgba(9,11,24,.92)); color:#e8eaf7; text-align:left; cursor:pointer; isolation:isolate; transition:transform .25s,border-color .25s,background .25s,box-shadow .25s; }
+.archive-star-card::before { content:""; position:absolute; z-index:-1; width:170px; height:170px; right:-78px; top:-86px; border-radius:50%; background:var(--card-glow,rgba(130,145,255,.14)); filter:blur(32px); opacity:.8; transition:opacity .25s; }
+.archive-star-card:hover { transform:translateY(-4px); border-color:rgba(192,194,255,.38); background:linear-gradient(150deg,rgba(30,31,63,.9),rgba(10,12,28,.96)); box-shadow:0 14px 35px rgba(0,0,0,.18); }
+.archive-star-card:hover::before { opacity:1; }
+.archive-card-top { display:flex; align-items:center; justify-content:space-between; gap:8px; color:#777f9f; font-size:8px; letter-spacing:.13em; }
+.archive-card-type { padding:5px 7px; border:1px solid rgba(180,190,255,.13); border-radius:99px; color:#aeb4d2; letter-spacing:.06em; }
+.archive-card-visual { display:grid; place-items:center; height:98px; margin:2px 0 7px; position:relative; }
+.archive-card-visual::before { content:""; position:absolute; width:110px; height:72px; border-radius:50%; background:radial-gradient(ellipse,var(--card-glow,rgba(130,145,255,.15)),transparent 70%); filter:blur(10px); }
+.archive-card-visual .star-art { width:45px; z-index:1; }
+.archive-card-name { margin:0 0 5px; color:#f1efff; font:400 23px/1.1 Georgia,serif; }
+.archive-card-latin { margin:0; color:#8f96b5; font-size:10px; }
+.archive-card-bottom { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:auto; padding-top:15px; color:#9da4c3; font-size:9px; }
+.archive-card-arrow { display:grid; place-items:center; width:25px; height:25px; flex:0 0 25px; border:1px solid rgba(181,191,255,.2); border-radius:50%; color:#e5d7f6; font-size:14px; }
+.archive-empty { grid-column:1/-1; padding:45px 15px; text-align:center; border:1px dashed rgba(180,190,255,.2); border-radius:16px; color:#a7aecb; font-size:13px; }
+.archive-footnote { max-width:850px; margin:22px 0 0; color:#69718f; font-size:9px; line-height:1.8; }
+.archive-dossier { max-width:1320px; margin:auto; padding:28px clamp(20px,7vw,100px) 65px; animation:archive-dossier-in .55s cubic-bezier(.2,.8,.2,1) both; }
+.archive-dossier[hidden], .archive-catalog[hidden], .archive-hero[hidden] { display:none; }
+@keyframes archive-dossier-in { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.archive-back-dossier { margin-bottom:24px; }
+.archive-dossier-hero { display:grid; grid-template-columns:minmax(0,1fr) minmax(260px,.9fr); gap:35px; align-items:center; padding:18px 0 38px; }
+.archive-dossier-kicker { margin:0 0 14px; color:#c3a7df; font-size:9px; letter-spacing:.21em; }
+.archive-dossier-title { margin:0; color:#f0efff; font:400 clamp(48px,8vw,94px)/.95 Georgia,serif; letter-spacing:-.055em; }
+.archive-dossier-latin { margin:13px 0 0; color:#a1a7c5; font-size:12px; letter-spacing:.08em; }
+.archive-dossier-description { max-width:600px; margin:22px 0 0; color:#b8bed7; font-size:13px; line-height:1.95; }
+.archive-dossier-art { display:grid; place-items:center; position:relative; min-height:260px; overflow:hidden; border:1px solid rgba(174,184,244,.12); border-radius:22px; background:radial-gradient(ellipse at center,rgba(101,95,166,.14),rgba(7,9,20,.3) 66%); }
+.archive-dossier-art::before { content:""; position:absolute; width:80%; height:70%; border:1px solid rgba(172,177,241,.14); border-radius:50%; transform:rotate(-24deg); }
+.archive-dossier-art::after { content:""; position:absolute; width:68%; height:50%; border:1px solid rgba(221,176,226,.1); border-radius:50%; transform:rotate(48deg); }
+.archive-dossier-art .star-art { width:clamp(105px,17vw,170px); z-index:1; }
+.archive-dossier-art .archive-art-caption { position:absolute; bottom:15px; left:17px; color:#737b9a; font-size:8px; letter-spacing:.16em; }
+.archive-stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin:0 0 22px; }
+.archive-stat { padding:17px; border:1px solid rgba(171,183,244,.15); border-radius:13px; background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.015)); }
+.archive-stat span { display:block; margin-bottom:9px; color:#858dab; font-size:8px; letter-spacing:.12em; text-transform:uppercase; }
+.archive-stat strong { display:block; color:#f0eaff; font:400 clamp(17px,2.3vw,25px)/1.25 Georgia,serif; overflow-wrap:anywhere; }
+.archive-stat small { display:block; margin-top:6px; color:#747d9c; font-size:9px; }
+.archive-dossier-lower { display:grid; grid-template-columns:1.15fr .85fr; gap:13px; }
+.archive-panel { padding:22px; border:1px solid rgba(171,183,244,.14); border-radius:15px; background:rgba(255,255,255,.025); }
+.archive-panel-label { margin:0 0 13px; color:#b7a5dc; font-size:9px; letter-spacing:.18em; }
+.archive-panel h4 { margin:0 0 11px; color:#eeedff; font:400 25px Georgia,serif; }
+.archive-panel p { margin:0; color:#aeb5d0; font-size:12px; line-height:1.9; }
+.archive-constellation { display:flex; align-items:center; gap:13px; margin-top:18px; padding-top:15px; border-top:1px solid rgba(171,183,244,.12); color:#b9bfd9; font-size:11px; }
+.archive-constellation-mark { display:grid; place-items:center; width:38px; height:38px; border:1px solid rgba(189,179,240,.25); border-radius:50%; color:#d6c5ef; font-size:18px; }
+.archive-dossier-nav { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:25px; padding-top:18px; border-top:1px solid rgba(171,183,244,.14); }
+.archive-dossier-nav button { padding:10px 13px; border:1px solid rgba(181,191,255,.19); border-radius:999px; background:rgba(255,255,255,.035); color:#cbd0e9; cursor:pointer; font-size:10px; }
+.archive-dossier-nav button:hover { border-color:rgba(205,182,237,.5); }
+.archive-dossier-nav span { color:#777f9e; font-size:9px; letter-spacing:.12em; white-space:nowrap; }
+.open-full-dossier { display:block; margin:14px auto 0; padding:10px 14px; border:1px solid rgba(173,190,255,.3); border-radius:999px; background:rgba(117,127,205,.12); color:#e1e6ff; font-size:11px; cursor:pointer; }
+.open-full-dossier[hidden] { display:none; }
+.archive-footer { display:flex; justify-content:space-between; gap:15px; max-width:1320px; margin:auto; padding:19px clamp(20px,7vw,100px) 25px; border-top:1px solid rgba(177,188,255,.1); color:#616987; font-size:8px; letter-spacing:.15em; }
+@media(max-width:760px) { .archive-hero { grid-template-columns:1fr .7fr; min-height:390px; padding-top:48px; padding-bottom:38px; gap:0; } .archive-hero-art { min-height:250px; margin-left:-35px; } .archive-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .archive-star-card { min-height:225px; padding:14px; } .archive-dossier-hero { grid-template-columns:1fr; gap:20px; } .archive-dossier-art { min-height:210px; } .archive-stats { grid-template-columns:repeat(2,minmax(0,1fr)); } .archive-dossier-lower { grid-template-columns:1fr; } }
+@media(max-width:480px) { .archive-topbar { padding:16px 16px; } .archive-status { font-size:7px; letter-spacing:.12em; } .archive-hero { display:block; min-height:0; padding:46px 22px 38px; } .archive-hero h2 { font-size:clamp(54px,15vw,76px); } .archive-intro { max-width:360px; font-size:12px; } .archive-hero-meta { gap:8px 12px; font-size:8px; } .archive-hero-art { position:absolute; width:180px; min-height:180px; right:-40px; top:35px; opacity:.38; pointer-events:none; } .archive-hero-star { width:90px; } .archive-orbit { width:95%; } .archive-catalog { padding:24px 16px 48px; } .archive-section-heading { align-items:start; } .archive-section-heading h3 { font-size:34px; } .archive-section-note { font-size:9px; } .archive-search { min-height:44px; } .archive-filters { gap:6px; } .archive-filter { padding:8px 10px; font-size:9px; } .archive-grid { gap:8px; } .archive-star-card { min-height:207px; padding:12px; border-radius:13px; } .archive-card-visual { height:78px; } .archive-card-visual .star-art { width:38px; } .archive-card-name { font-size:20px; } .archive-card-latin { font-size:9px; line-height:1.5; } .archive-card-bottom { font-size:8px; } .archive-dossier { padding:22px 16px 45px; } .archive-dossier-title { font-size:58px; } .archive-dossier-art { min-height:185px; } .archive-dossier-art .star-art { width:105px; } .archive-stat { padding:13px; } .archive-stat strong { font-size:19px; } .archive-panel { padding:17px; } .archive-dossier-nav { gap:6px; } .archive-dossier-nav button { padding:9px 10px; font-size:9px; } .archive-footer { flex-direction:column; padding:17px 16px 22px; font-size:7px; } }
+@media(prefers-reduced-motion:reduce) { .archive-status-dot,.archive-hero-star { animation:none!important; } .archive-star-card,.archive-back,.archive-filter { transition:none!important; } }
+
+  
+.open-full-dossier { display:block; margin:14px auto 0; padding:10px 14px; border:1px solid rgba(173,190,255,.3); border-radius:999px; background:rgba(117,127,205,.12); color:#e1e6ff; font-size:11px; cursor:pointer; }
+.open-full-dossier[hidden] { display:none; }
+</style> 
 </head>
 <body>
   <main class="page">
@@ -478,6 +734,15 @@ body.cosmic-focus { overflow:hidden; }
           <span class="item-text">
             <span class="item-title">моя галактика</span>
             <span class="item-description">маленькая вселенная с твоими словами</span>
+          </span>
+          <span class="arrow">›</span>
+        </button>
+
+        <button class="item" data-section="archive">
+          <span class="emoji">🔭</span>
+          <span class="item-text">
+            <span class="item-title">научный архив</span>
+            <span class="item-description">исследуй звёзды и их истории</span>
           </span>
           <span class="arrow">›</span>
         </button>
@@ -653,11 +918,64 @@ body.cosmic-focus { overflow:hidden; }
               <button type="button" id="star-card-next" aria-label="Следующая карточка">→</button>
             </div>
             <button type="button" class="back-to-halves" id="back-to-halves">← к двум половинкам</button>
+            <button type="button" class="open-full-dossier" id="open-full-star-dossier" hidden>Открыть полное научное досье ↗</button>
           </section>
         </article>
       </div>
     </section>
 
+
+
+    <section id="archive-view" class="view archive-view">
+      <div class="archive-world">
+        <header class="archive-topbar">
+          <button class="archive-back" id="archive-back-home" type="button">← мой мир</button>
+          <div class="archive-status"><span class="archive-status-dot"></span> OBSERVATORY ONLINE</div>
+        </header>
+
+        <section class="archive-hero" id="archive-hero">
+          <div class="archive-hero-copy">
+            <p class="archive-eyebrow"><span>РОЗОВОЕ НЕБО</span><i></i> STELLAR ARCHIVE · 001</p>
+            <h2>Вселенная<br><em>в деталях.</em></h2>
+            <p class="archive-intro">Каждая звезда — отдельная история материи, света и времени. Открой досье и посмотри на ночное небо как исследователь.</p>
+            <div class="archive-hero-meta"><span>✦ 11 объектов</span><span>✦ научные данные</span><span>✦ интерактивный каталог</span></div>
+          </div>
+          <div class="archive-hero-art" aria-hidden="true">
+            <div class="archive-orbit archive-orbit-one"></div><div class="archive-orbit archive-orbit-two"></div>
+            <div class="archive-hero-star star-art star-art--blue"></div>
+            <span class="archive-art-label archive-label-a">A · 01</span><span class="archive-art-label archive-label-b">LIGHT / MATTER</span>
+            <span class="archive-cross archive-cross-a">✧</span><span class="archive-cross archive-cross-b">+</span>
+          </div>
+        </section>
+
+        <section class="archive-catalog" id="archive-catalog">
+          <div class="archive-section-heading">
+            <div><p class="archive-eyebrow">THE FIELD GUIDE</p><h3>Каталог <em>звёзд</em></h3></div>
+            <p class="archive-section-note">Выбери объект.<br>Начни исследование.</p>
+          </div>
+          <div class="archive-tools">
+            <label class="archive-search"><span aria-hidden="true">⌕</span><input id="archive-search" type="search" placeholder="Найти звезду или созвездие…" autocomplete="off" aria-label="Найти звезду или созвездие"><kbd>↵</kbd></label>
+            <div class="archive-filters" id="archive-filters" aria-label="Фильтр звёзд">
+              <button class="archive-filter active" data-filter="all" type="button">Все объекты</button>
+              <button class="archive-filter" data-filter="blue" type="button">Голубые</button>
+              <button class="archive-filter" data-filter="white" type="button">Белые</button>
+              <button class="archive-filter" data-filter="yellow" type="button">Жёлтые</button>
+              <button class="archive-filter" data-filter="red" type="button">Красные</button>
+              <button class="archive-filter" data-filter="orange" type="button">Оранжевые</button>
+            </div>
+          </div>
+          <div class="archive-grid" id="archive-grid" aria-live="polite"></div>
+          <p class="archive-footnote">Значения округлены: расстояния и характеристики некоторых звёзд уточняются по мере новых наблюдений. Изображения звёзд в интерфейсе — художественные визуализации, не фотографии поверхности.</p>
+        </section>
+
+        <section class="archive-dossier" id="archive-dossier" hidden aria-live="polite">
+          <button class="archive-back archive-back-dossier" id="archive-back-catalog" type="button">← ко всем звёздам</button>
+          <div id="archive-dossier-content"></div>
+          <div class="archive-dossier-nav"><button type="button" id="archive-prev-star">← предыдущая звезда</button><span id="archive-dossier-count">01 / 10</span><button type="button" id="archive-next-star">следующая звезда →</button></div>
+        </section>
+        <footer class="archive-footer"><span>ROZOVOE NEBO / DEEP SKY DIVISION</span><span>LOOK CLOSER. WONDER MORE. ✧</span></footer>
+      </div>
+    </section>
 
 
     <section id="planet-universe-view" class="view">
@@ -1092,6 +1410,7 @@ document.getElementById("back-to-galaxy-from-planets").addEventListener("click",
         section.classList.remove("active");
       });
       view.classList.add("active");
+      document.body.classList.toggle("archive-mode", view.id === "archive-view");
       window.scrollTo({top: 0, behavior: "smooth"});
     }
 
@@ -1137,6 +1456,118 @@ document.getElementById("back-to-galaxy-from-planets").addEventListener("click",
       showMessage(options[index]);
     }
 
+    // Scientific stellar archive: independent of the galaxy's starfield and the planet universe.
+    const archiveStars = [
+      {id:"sirius",name:"Сириус",latin:"Sirius A",type:"Белая звезда главной последовательности",shortType:"A1V · белая",color:"white",className:"white",constellation:"Большой Пёс",distance:"8,6 св. года",temperature:"≈ 9 940 K",radius:"≈ 1,7 R☉",luminosity:"≈ 25 L☉",spectral:"A1V",mass:"≈ 2,0 M☉",description:"Сириус A — самая яркая звезда ночного неба, видимая невооружённым глазом. Это не одиночная звезда: рядом с ней обращается Сириус B — очень плотный белый карлик.",factTitle:"У неё есть звезда-компаньон",fact:"Сириус B — остаток звезды, которая уже прошла основные этапы своей жизни. Он примерно размером с Землю, но содержит значительную долю массы Солнца.",note:"Расстояние и параметры округлены; видимая яркость Сириуса связана и с его собственной светимостью, и с близостью к Земле."},
+      {id:"vega",name:"Вега",latin:"Vega",type:"Белая звезда главной последовательности",shortType:"A0V · белая",color:"white",className:"white",constellation:"Лира",distance:"≈ 25 св. лет",temperature:"≈ 9 600 K",radius:"≈ 2,4 R☉",luminosity:"≈ 40 L☉",spectral:"A0V",mass:"≈ 2,1 M☉",description:"Вега — одна из самых ярких звёзд северного неба. Она вращается очень быстро, поэтому её форма немного сплюснута, а температура на разных широтах отличается.",factTitle:"Вега вращается стремительно",fact:"Из-за быстрого вращения Вега не идеально сферическая: её экваториальная область выпуклее полюсов. Это влияет на то, как измеряются её температура и яркость.",note:"Характеристики округлены; быстрый спин делает оценки некоторых параметров зависимыми от модели наблюдений."},
+      {id:"polaris",name:"Полярная звезда",latin:"Polaris",type:"Жёлто-белый сверхгигант и цефеида",shortType:"F7 · цефеида",color:"yellow",className:"yellow",constellation:"Малая Медведица",distance:"≈ 440 св. лет",temperature:"≈ 6 000 K",radius:"≈ 37 R☉",luminosity:"≈ 1 000 L☉",spectral:"F7Ib",mass:"≈ 5 M☉",description:"Полярная звезда расположена близко к северному небесному полюсу, поэтому кажется почти неподвижной на ночном небе. На самом деле это яркая переменная звезда в многократной системе.",factTitle:"Она немного меняет яркость",fact:"Полярная звезда относится к цефеидам — звёздам, которые пульсируют. Связь периода пульсаций со светимостью помогает астрономам измерять расстояния во Вселенной.",note:"Расстояние приводится приблизительно: оценки Полярной звезды уточнялись благодаря астрометрии и анализу её системы."},
+      {id:"betelgeuse",name:"Бетельгейзе",latin:"Betelgeuse",type:"Красный сверхгигант",shortType:"M1–M2 Ia · красная",color:"red",className:"red",constellation:"Орион",distance:"≈ 550 св. лет",temperature:"≈ 3 500 K",radius:"сотни R☉",luminosity:"десятки тысяч L☉",spectral:"M1–M2 Ia-ab",mass:"≈ 15–20 M☉",description:"Бетельгейзе — холодный по звёздным меркам красный сверхгигант. Его внешние слои огромны и изменчивы; звезда теряет вещество и заметно меняет яркость со временем.",factTitle:"Её размеры трудно выразить одним числом",fact:"Бетельгейзе пульсирует, имеет сложную атмосферу и большие конвективные структуры. Поэтому оценки её радиуса различаются в зависимости от метода и состояния звезды.",note:"Радиус и расстояние указаны без ложной точности: у Бетельгейзе эти оценки имеют заметную неопределённость."},
+      {id:"rigel",name:"Ригель",latin:"Rigel",type:"Голубой сверхгигант",shortType:"B8 Ia · голубая",color:"blue",className:"blue",constellation:"Орион",distance:"≈ 860 св. лет",temperature:"≈ 12 000 K",radius:"≈ 70 R☉",luminosity:"десятки тысяч L☉",spectral:"B8 Ia",mass:"≈ 20 M☉",description:"Ригель — голубовато-белый сверхгигант и один из самых ярких объектов созвездия Ориона. Его светимость колоссальна: если бы он находился на месте Солнца, Земля получила бы совершенно иные условия.",factTitle:"Очень яркий, несмотря на расстояние",fact:"Ригель излучает намного больше энергии, чем Солнце. Его голубоватый цвет указывает на высокую температуру внешних слоёв.",note:"Расстояние и параметры Ригеля приблизительны; система включает несколько звёздных компонентов."},
+      {id:"altair",name:"Альтаир",latin:"Altair",type:"Белая звезда главной последовательности",shortType:"A7V · белая",color:"white",className:"white",constellation:"Орёл",distance:"≈ 16,7 св. лет",temperature:"≈ 7 600 K",radius:"≈ 1,8 R☉",luminosity:"≈ 11 L☉",spectral:"A7V",mass:"≈ 1,8 M☉",description:"Альтаир — близкая и яркая звезда, входящая в астеризм Летнего треугольника. Он вращается так быстро, что его экватор заметно расширен.",factTitle:"Звезда, сплюснутая вращением",fact:"Альтаир совершает оборот вокруг своей оси за несколько часов. Центробежный эффект делает его экваториальный радиус больше полярного.",note:"Параметры округлены; быстрый спин необходимо учитывать при моделировании формы звезды."},
+      {id:"sun",name:"Солнце",latin:"The Sun",type:"Жёлтый карлик · звезда главной последовательности",shortType:"G2V · жёлтая",color:"yellow",className:"yellow",constellation:"Созвездие меняется в течение года",distance:"1 а.е. от Земли",temperature:"≈ 5 778 K",radius:"≈ 696 340 км",luminosity:"1 L☉",spectral:"G2V",mass:"1 M☉",description:"Солнце — звезда в центре нашей системы и источник света и тепла для Земли. В его ядре водород превращается в гелий, высвобождая энергию, которая постепенно выходит наружу.",factTitle:"Солнечный свет уже в пути",fact:"Свету от Солнца до Земли требуется около 8 минут 20 секунд. Мы видим Солнце таким, каким оно было чуть больше восьми минут назад.",note:"Солнце включено в архив как эталон для сравнения: R☉ означает радиус Солнца, L☉ — светимость Солнца, M☉ — массу Солнца."},
+      {id:"procyon",name:"Процион",latin:"Procyon A",type:"Жёлто-белая звезда субгигантского типа",shortType:"F5 IV–V · бело-жёлтая",color:"yellow",className:"yellow",constellation:"Малый Пёс",distance:"≈ 11,5 св. лет",temperature:"≈ 6 500 K",radius:"≈ 2 R☉",luminosity:"≈ 7 L☉",spectral:"F5 IV–V",mass:"≈ 1,5 M☉",description:"Процион — одна из ближайших ярких звёзд. Он уже начинает отходить от обычной стадии главной последовательности; у него есть тусклый белый карлик-компаньон.",factTitle:"Система из двух разных миров",fact:"Процион A — яркая звезда, а Процион B — компактный белый карлик. Такие пары помогают изучать, как меняются звёзды с течением времени.",note:"Параметры даны для Проциона A и округлены."},
+      {id:"aldebaran",name:"Альдебаран",latin:"Aldebaran",type:"Оранжевый гигант",shortType:"K5 III · оранжевая",color:"orange",className:"orange",constellation:"Телец",distance:"≈ 65 св. лет",temperature:"≈ 3 900 K",radius:"≈ 44 R☉",luminosity:"≈ 400 L☉",spectral:"K5 III",mass:"≈ 1,2 M☉",description:"Альдебаран — оранжевый гигант, который выделяется на фоне звёздного скопления Гиады. На самом деле он расположен гораздо ближе к нам, чем само скопление.",factTitle:"Яркая звезда рядом с Гиадами — но не участник скопления",fact:"На небе Альдебаран кажется частью рисунка Гиад, однако он находится на другом расстоянии и не является членом этого скопления.",note:"Характеристики округлены; Альдебаран — эволюционировавшая звезда, заметно больше Солнца."},
+      {id:"antares",name:"Антарес",latin:"Antares",type:"Красный сверхгигант",shortType:"M1.5 Iab · красная",color:"red",className:"red",constellation:"Скорпион",distance:"≈ 550 св. лет",temperature:"≈ 3 600 K",radius:"сотни R☉",luminosity:"десятки тысяч L☉",spectral:"M1.5 Iab",mass:"≈ 12 M☉",description:"Антарес — красный сверхгигант с насыщенным оранжево-красным оттенком. Его название часто переводят как «соперник Марса» из-за похожего цвета на небе.",factTitle:"Соперник Марса по цвету",fact:"Когда Марс проходит неподалёку на небесной сфере, его красноватый цвет напоминает Антарес. Название связано именно с этим визуальным сходством.",note:"Размеры красных сверхгигантов трудно определить точно; приведены качественные, округлённые характеристики."},
+      {id:"deneb",name:"Денеб",latin:"Deneb",type:"Белый сверхгигант",shortType:"A2 Ia · белая",color:"white",className:"white",constellation:"Лебедь",distance:"тысячи св. лет",temperature:"≈ 8 500 K",radius:"сотни R☉",luminosity:"очень высокая",spectral:"A2 Ia",mass:"много M☉",description:"Денеб — один из вершин Летнего треугольника и очень мощный белый сверхгигант. Он выглядит ярким, хотя находится на огромном расстоянии.",factTitle:"Расстояние всё ещё уточняется",fact:"Денеб настолько далёк, что точная оценка его расстояния и светимости сложна. Даже при консервативных оценках это чрезвычайно яркая звезда.",note:"Для Денеба намеренно не указано одно точное расстояние: опубликованные оценки существенно различаются."}
+    ];
+    let archiveFilter = "all";
+    let archiveSelectedId = "sirius";
+    const archiveView = document.getElementById("archive-view");
+    const archiveGrid = document.getElementById("archive-grid");
+    const archiveSearch = document.getElementById("archive-search");
+    const archiveCatalog = document.getElementById("archive-catalog");
+    const archiveHero = document.getElementById("archive-hero");
+    const archiveDossier = document.getElementById("archive-dossier");
+    const archiveDossierContent = document.getElementById("archive-dossier-content");
+    const archiveOpenFull = document.getElementById("open-full-star-dossier");
+
+    function archiveArtClass(star) { return `star-art--${star.className}`; }
+    function renderArchiveCards() {
+      const query = (archiveSearch.value || "").trim().toLocaleLowerCase("ru-RU");
+      const filtered = archiveStars.filter(star => {
+        const matchesFilter = archiveFilter === "all" || star.color === archiveFilter;
+        const haystack = `${star.name} ${star.latin} ${star.constellation} ${star.type} ${star.spectral}`.toLocaleLowerCase("ru-RU");
+        return matchesFilter && haystack.includes(query);
+      });
+      archiveGrid.innerHTML = filtered.length ? filtered.map((star, index) => `
+        <button type="button" class="archive-star-card" data-archive-star="${star.id}" style="--card-glow:${({blue:"rgba(91,147,255,.26)",white:"rgba(195,205,255,.22)",yellow:"rgba(255,192,110,.22)",orange:"rgba(255,134,80,.22)",red:"rgba(255,79,94,.22)"})[star.color]}" aria-label="Открыть досье: ${star.name}">
+          <div class="archive-card-top"><span>STELLAR FILE · ${String(archiveStars.indexOf(star)+1).padStart(2,"0")}</span><span class="archive-card-type">${star.shortType.split(" · ")[0]}</span></div>
+          <div class="archive-card-visual"><span class="star-art ${archiveArtClass(star)}"></span></div>
+          <h4 class="archive-card-name">${star.name}</h4><p class="archive-card-latin">${star.latin} · ${star.constellation}</p>
+          <div class="archive-card-bottom"><span>${star.distance}</span><span class="archive-card-arrow">↗</span></div>
+        </button>`).join("") : `<div class="archive-empty">Ничего не найдено. Попробуй другое название или фильтр.</div>`;
+    }
+    function renderArchiveDossier(id, scroll=true) {
+      const index = archiveStars.findIndex(star => star.id === id);
+      if (index < 0) return;
+      archiveSelectedId = id;
+      const star = archiveStars[index];
+      archiveCatalog.hidden = true;
+      archiveHero.hidden = true;
+      archiveDossier.hidden = false;
+      archiveDossierContent.innerHTML = `
+        <div class="archive-dossier-hero">
+          <div><p class="archive-dossier-kicker">STELLAR FILE · ${String(index+1).padStart(2,"0")} / ${String(archiveStars.length).padStart(2,"0")} · ${star.spectral}</p>
+          <h3 class="archive-dossier-title">${star.name}</h3><p class="archive-dossier-latin">${star.latin.toUpperCase()} · ${star.type}</p>
+          <p class="archive-dossier-description">${star.description}</p></div>
+          <div class="archive-dossier-art"><span class="star-art ${archiveArtClass(star)}"></span><span class="archive-art-caption">ARTISTIC STELLAR VISUALIZATION · NOT TO SCALE</span></div>
+        </div>
+        <div class="archive-stats">
+          <div class="archive-stat"><span>Расстояние</span><strong>${star.distance}</strong><small>от Солнечной системы</small></div>
+          <div class="archive-stat"><span>Температура поверхности</span><strong>${star.temperature}</strong><small>приблизительное значение</small></div>
+          <div class="archive-stat"><span>Радиус</span><strong>${star.radius}</strong><small>R☉ = радиус Солнца</small></div>
+          <div class="archive-stat"><span>Светимость</span><strong>${star.luminosity}</strong><small>относительно Солнца, если указано</small></div>
+        </div>
+        <div class="archive-dossier-lower">
+          <article class="archive-panel"><p class="archive-panel-label">FIELD NOTES / 01</p><h4>${star.factTitle}</h4><p>${star.fact}</p><div class="archive-constellation"><span class="archive-constellation-mark">✧</span><span><strong>${star.constellation}</strong><br>Созвездие, в котором находится звезда на земном небе</span></div></article>
+          <article class="archive-panel"><p class="archive-panel-label">OBSERVATION DATA / 02</p><h4>Параметры объекта</h4><p><strong>Спектральный класс:</strong> ${star.spectral}<br><strong>Оценка массы:</strong> ${star.mass}<br><br>${star.note}</p></article>
+        </div>`;
+      document.getElementById("archive-dossier-count").textContent = `${String(index+1).padStart(2,"0")} / ${String(archiveStars.length).padStart(2,"0")}`;
+      if (scroll) window.scrollTo({top:0,behavior:"smooth"});
+    }
+    function showArchiveCatalog() {
+      archiveDossier.hidden = true;
+      archiveCatalog.hidden = false;
+      archiveHero.hidden = false;
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+    function openArchive(id=null) {
+      archiveFilter = "all";
+      document.querySelectorAll(".archive-filter").forEach(button => button.classList.toggle("active",button.dataset.filter === "all"));
+      archiveSearch.value = "";
+      renderArchiveCards();
+      showView(archiveView);
+      if (id && archiveStars.some(star => star.id === id)) renderArchiveDossier(id,false);
+      else showArchiveCatalog();
+    }
+    archiveGrid.addEventListener("click", event => {
+      const card = event.target.closest("[data-archive-star]");
+      if (card) renderArchiveDossier(card.dataset.archiveStar);
+    });
+    archiveSearch.addEventListener("input", renderArchiveCards);
+    document.getElementById("archive-filters").addEventListener("click", event => {
+      const button = event.target.closest("[data-filter]");
+      if (!button) return;
+      archiveFilter = button.dataset.filter;
+      document.querySelectorAll(".archive-filter").forEach(item => item.classList.toggle("active",item === button));
+      renderArchiveCards();
+    });
+    document.getElementById("archive-back-home").addEventListener("click", () => showView(home));
+    document.getElementById("archive-back-catalog").addEventListener("click", showArchiveCatalog);
+    document.getElementById("archive-prev-star").addEventListener("click", () => {
+      const i = archiveStars.findIndex(star => star.id === archiveSelectedId);
+      renderArchiveDossier(archiveStars[(i - 1 + archiveStars.length) % archiveStars.length].id);
+    });
+    document.getElementById("archive-next-star").addEventListener("click", () => {
+      const i = archiveStars.findIndex(star => star.id === archiveSelectedId);
+      renderArchiveDossier(archiveStars[(i + 1) % archiveStars.length].id);
+    });
+    archiveOpenFull.addEventListener("click", () => {
+      closeCinematicDiscovery();
+      openArchive(activeCosmicKey);
+    });
+    renderArchiveCards();
+
     document.querySelectorAll("[data-section]").forEach(button => {
       button.addEventListener("click", () => {
         const section = button.dataset.section;
@@ -1153,6 +1584,8 @@ document.getElementById("back-to-galaxy-from-planets").addEventListener("click",
         } else if (section === "planets") {
           showView(planetUniverseView);
           requestAnimationFrame(() => { if (window.__resizePlanetScene) window.__resizePlanetScene(); });
+        } else if (section === "archive") {
+          openArchive();
         } else if (otherSections[section]) {
           document.getElementById("other-title").textContent = otherSections[section][0];
           document.getElementById("other-text").textContent = otherSections[section][1];
