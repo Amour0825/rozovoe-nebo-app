@@ -969,6 +969,36 @@ body.eclipse-inner-mode .planet-scene-controls button { border-radius: 3px; bord
   body.eclipse-inner-mode #other::before { margin-bottom: 24px; font-size: 8px; }
 }
 
+
+/* ÉCLIPSE — DOSSIER PERSONNEL: isolated styling, preserving the approved site design. */
+#dossier-app{margin-top:28px;color:#e9e2e8;--dossier-blue:#8fa8e4}
+#dossier-app .dossier-frame{border:1px solid rgba(153,115,139,.28);background:linear-gradient(145deg,rgba(28,15,23,.92),rgba(8,8,13,.96));padding:clamp(18px,5vw,30px);position:relative;overflow:hidden;box-shadow:0 22px 65px rgba(0,0,0,.2)}
+#dossier-app .dossier-frame:before{content:"";position:absolute;inset:0 auto 0 0;width:2px;background:linear-gradient(#8fa8e4,#6b263d,transparent)}
+#dossier-app .dossier-kicker{font-size:9px;letter-spacing:.24em;color:#9b8ca0;text-transform:uppercase}
+#dossier-app .dossier-title{font:500 clamp(27px,7vw,42px)/1.1 Didot,"Bodoni 72",Georgia,serif;letter-spacing:.015em;color:#f2eaf0;margin:14px 0 12px}
+#dossier-app .dossier-copy{font-size:13px;line-height:1.8;color:#bdb0bc;max-width:510px}
+#dossier-app .dossier-rule{height:1px;background:linear-gradient(90deg,rgba(143,168,228,.45),rgba(128,71,94,.3),transparent);margin:22px 0}
+#dossier-app .dossier-meta{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0}
+#dossier-app .dossier-chip{border:1px solid rgba(143,168,228,.23);padding:7px 9px;color:#b9c7ec;font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+#dossier-app .dossier-button{font:inherit;cursor:pointer;border:1px solid rgba(143,168,228,.42);background:linear-gradient(110deg,rgba(100,34,56,.55),rgba(31,37,65,.55));color:#f3edf2;padding:13px 17px;letter-spacing:.08em;font-size:11px;text-transform:uppercase;transition:transform .2s,border-color .2s}
+#dossier-app .dossier-button:hover{border-color:#9caddd}#dossier-app .dossier-button:active{transform:scale(.985)}
+#dossier-app .dossier-button.secondary{background:transparent;border-color:rgba(190,164,184,.22);color:#c5b9c4}
+#dossier-app .dossier-progress-wrap{height:2px;background:rgba(255,255,255,.08);margin:15px 0 23px}#dossier-app .dossier-progress{height:100%;width:0;background:linear-gradient(90deg,#7d3049,#8fa8e4);transition:width .3s}
+#dossier-app .dossier-question{font:500 clamp(22px,5.5vw,31px)/1.28 Didot,"Bodoni 72",Georgia,serif;color:#f0e8ef;margin:16px 0 10px}
+#dossier-app .dossier-note{font-size:11px;line-height:1.65;color:#a89aa9;margin-bottom:20px}
+#dossier-app .dossier-options{display:grid;gap:9px;margin:18px 0 24px}
+#dossier-app .dossier-option{display:flex;align-items:flex-start;gap:12px;text-align:left;width:100%;padding:14px;border:1px solid rgba(178,147,169,.2);background:rgba(255,255,255,.025);color:#ded4df;cursor:pointer;font:inherit;font-size:13px;line-height:1.55;transition:background .2s,border-color .2s}
+#dossier-app .dossier-option:before{content:"";width:12px;height:12px;border:1px solid #887a91;flex:0 0 12px;margin-top:3px}
+#dossier-app .dossier-option.selected{border-color:rgba(143,168,228,.72);background:linear-gradient(100deg,rgba(102,36,58,.28),rgba(53,62,102,.2))}
+#dossier-app .dossier-option.selected:before{background:#8fa8e4;box-shadow:inset 0 0 0 3px #111019;border-color:#8fa8e4}
+#dossier-app .dossier-nav{display:flex;gap:9px;justify-content:space-between;flex-wrap:wrap}
+#dossier-app .dossier-result-card{padding:18px;border:1px solid rgba(143,168,228,.24);margin:13px 0;background:rgba(255,255,255,.025)}
+#dossier-app .dossier-result-card h4{font:500 21px Georgia,serif;margin:0 0 9px;color:#eee4ed}
+#dossier-app .dossier-result-card p{font-size:13px;line-height:1.8;color:#bfb2c0;margin:0}
+#dossier-app .dossier-stat{margin:15px 0}.dossier-stat-head{display:flex;justify-content:space-between;gap:10px;font-size:11px;color:#cbbdcb;margin-bottom:7px}.dossier-stat-track{height:3px;background:rgba(255,255,255,.08)}.dossier-stat-fill{height:100%;background:linear-gradient(90deg,#783047,#8fa8e4)}
+#dossier-app .dossier-seal{font-size:10px;letter-spacing:.18em;color:#9baddf;text-transform:uppercase}
+@media(max-width:480px){#dossier-app .dossier-nav .dossier-button{flex:1}#dossier-app .dossier-option{padding:12px}}
+
 </style> 
 </head>
 <body class="home-mode">
@@ -1086,6 +1116,7 @@ body.eclipse-inner-mode .planet-scene-controls button { border-radius: 3px; bord
       </button>
       <h2 class="view-title" id="other-title">скоро ♡</h2>
       <p class="view-subtitle" id="other-text"></p>
+      <div id="dossier-app" hidden aria-live="polite"></div>
     </section>
 
     <section id="galaxy-view" class="view">
@@ -1862,7 +1893,14 @@ document.getElementById("back-to-galaxy-from-planets").addEventListener("click",
           requestAnimationFrame(() => { if (window.__resizePlanetScene) window.__resizePlanetScene(); });
         } else if (section === "archive") {
           openArchive();
+        } else if (section === "polls") {
+          document.getElementById("other-title").textContent = "DOSSIER PERSONNEL";
+          document.getElementById("other-text").textContent = "ÉCLIPSE · accès aux archives intérieures";
+          document.getElementById("dossier-app").hidden = false;
+          showView(other);
+          document.dispatchEvent(new CustomEvent("eclipse:open-dossier"));
         } else if (otherSections[section]) {
+          document.getElementById("dossier-app").hidden = true;
           document.getElementById("other-title").textContent = otherSections[section][0];
           document.getElementById("other-text").textContent = otherSections[section][1];
           showView(other);
@@ -2418,6 +2456,94 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.m
   }
   selectPlanet('earth'); requestAnimationFrame(animate);
 })();
+
+
+
+    // ÉCLIPSE DOSSIER PERSONNEL — self-reflection quiz with locally calculated, descriptive results.
+    const dossierQuestions = [
+      {chapter:"I · ЛИЧНОСТЬ", prompt:"Какую версию себя ты показываешь людям чаще всего?", note:"Здесь нет правильного ответа. Выбери то, что чаще совпадает с реальностью.", options:["Ту, с которой проще взаимодействовать","Почти настоящую — мне нечего скрывать","Разным людям — разные версии меня","Я и сам(а) не всегда понимаю, какой я"], scores:[{mask:2},{open:2},{adaptive:2},{reflect:2}]},
+      {chapter:"I · ЛИЧНОСТЬ", prompt:"Когда остаёшься один на один с собой, что происходит чаще?", options:["Наконец-то чувствую спокойствие","Начинаю прокручивать разговоры и детали","Ищу занятие, чтобы не застревать в мыслях","Настроение меняется — зависит от дня"], scores:[{independent:2},{reflect:2},{guard:1},{sensitive:2}]},
+      {chapter:"I · ЛИЧНОСТЬ", prompt:"Что люди чаще всего понимают в тебе неправильно?", options:["Моё молчание принимают за холодность","Юмор принимают за то, что мне всё равно","Мою прямоту принимают за грубость","Кажется, меня редко пытаются понять глубже"], scores:[{guard:2},{mask:2},{direct:2},{reflect:2}]},
+      {chapter:"I · ЛИЧНОСТЬ", prompt:"Что тебе сложнее всего показать?", options:["Растерянность","Насколько сильно меня что-то задело","Что мне нужна поддержка","Что я изменил(а) своё мнение"], scores:[{control:2},{guard:2},{open:1,sensitive:1},{reflect:1}]},
+      {chapter:"I · ЛИЧНОСТЬ", prompt:"Как ты обычно принимаешь важные решения?", options:["Собираю факты и взвешиваю варианты","Слушаю интуицию","Обсуждаю с тем, кому доверяю","Долго сомневаюсь, пока не станет яснее"], scores:[{control:2},{instinct:2},{connected:2},{reflect:2}]},
+      {chapter:"I · ЛИЧНОСТЬ", prompt:"Что для тебя неприятнее?", options:["Когда меня недооценивают","Когда мной пытаются управлять","Когда меня не замечают","Когда меня видят не таким человеком, какой я есть"], scores:[{ambition:2},{independent:2},{connected:2},{open:2}]},
+      {chapter:"I · ЛИЧНОСТЬ", prompt:"Если планы резко меняются, ты…", options:["Быстро перестраиваюсь","Сначала раздражаюсь, потом адаптируюсь","Пытаюсь вернуть контроль","Принимаю перемены, если понимаю причину"], scores:[{adaptive:2},{sensitive:1,control:1},{control:2},{direct:1,adaptive:1}]},
+      {chapter:"I · ЛИЧНОСТЬ", prompt:"Какой комплимент запомнился бы тебе сильнее?", options:["«С тобой я могу быть собой»","«Ты замечаешь то, чего не видят другие»","«На тебя можно положиться»","«Ты удивительно самостоятельный человек»"], scores:[{connected:2},{reflect:2},{loyal:2},{independent:2}]},
+      {chapter:"II · ВНУТРЕННИЙ МИР", prompt:"Когда что-то тревожит, что ты делаешь первым делом?", options:["Пытаюсь разобраться самостоятельно","Ищу человека, с которым можно поговорить","Отвлекаюсь, чтобы дать себе время","Делаю вид, что всё нормально, пока не разберусь"], scores:[{independent:1,control:1},{connected:2},{adaptive:1,guard:1},{mask:2}]},
+      {chapter:"II · ВНУТРЕННИЙ МИР", prompt:"Как ты реагируешь на критику от близкого человека?", options:["Слушаю, даже если неприятно","Сначала защищаюсь, потом обдумываю","Мне важно, как именно это сказано","Могу закрыться, если чувствую несправедливость"], scores:[{reflect:2},{guard:1,control:1},{sensitive:2},{guard:2}]},
+      {chapter:"II · ВНУТРЕННИЙ МИР", prompt:"Что чаще помогает тебе восстановиться после тяжёлого дня?", options:["Тишина и личное пространство","Разговор с близким человеком","Музыка, творчество или любимое занятие","План действий — когда понимаю, что делать дальше"], scores:[{independent:2},{connected:2},{sensitive:1,adaptive:1},{control:2}]},
+      {chapter:"II · ВНУТРЕННИЙ МИР", prompt:"Если ты понимаешь, что был(а) неправ(а)…", options:["Признаю это прямо","Мне нужно время, чтобы переварить","Извиняюсь, если понимаю, что задел(а) человека","Мне трудно признать это вслух, даже если внутри я согласен(на)"], scores:[{direct:2},{reflect:2},{loyal:1,direct:1},{mask:1,guard:1}]},
+      {chapter:"II · ВНУТРЕННИЙ МИР", prompt:"Что ближе к твоему отношению к будущему?", options:["Мне спокойнее, когда есть план","Мне нравится оставлять место неожиданному","Я часто представляю разные сценарии","Я стараюсь решать то, что важно сейчас"], scores:[{control:2},{adaptive:2},{reflect:2},{grounded:2}]},
+      {chapter:"II · ВНУТРЕННИЙ МИР", prompt:"Как ты понимаешь, что человеку можно доверять?", options:["Его слова совпадают с поступками","Я могу говорить с ним без страха осуждения","Он уважает мои границы","Доверие появляется постепенно, через время"], scores:[{loyal:2},{open:2},{independent:1,loyal:1},{guard:1,reflect:1}]},
+      {chapter:"II · ВНУТРЕННИЙ МИР", prompt:"Какое противоречие тебе знакомо?", options:["Хочу близости, но берегу независимость","Хочу ясности, но боюсь неудобного разговора","Хочу перемен, но держусь за привычное","Выгляжу уверенно, хотя часто сомневаюсь"], scores:[{independent:1,connected:1},{direct:1,guard:1},{adaptive:1,control:1},{mask:1,reflect:1}]},
+      {chapter:"III · ОТНОШЕНИЯ", prompt:"Человек, который тебе нравится, стал отвечать заметно реже. Ты…", options:["Спрошу, всё ли в порядке и изменилось ли что-то","Понаблюдаю за поступками, не делая вывод сразу","Отзеркалю его дистанцию","Начну переживать, но не покажу этого"], scores:[{direct:2},{reflect:2},{guard:2},{sensitive:2}]},
+      {chapter:"III · ОТНОШЕНИЯ", prompt:"Что для тебя убедительнее всего говорит о симпатии?", options:["Прямые слова и ясность","Постоянство и внимание в мелочах","Инициатива и желание проводить время вместе","Чувство, что рядом со мной человек настоящий"], scores:[{direct:2},{loyal:2},{connected:2},{open:2}]},
+      {chapter:"III · ОТНОШЕНИЯ", prompt:"Если между вами возникло недопонимание…", options:["Хочу обсудить всё, пока не прояснится","Мне нужно остыть, потом поговорю","Сначала пытаюсь понять позицию другого","Жду, проявит ли человек инициативу сам"], scores:[{direct:2},{control:1,guard:1},{reflect:2},{loyal:1,guard:1}]},
+      {chapter:"III · ОТНОШЕНИЯ", prompt:"Что тяжелее переносить в отношениях?", options:["Неопределённость","Недостаток личного пространства","Ощущение, что вкладываюсь только я","Когда важные вещи замалчивают"], scores:[{control:1,sensitive:1},{independent:2},{loyal:2},{direct:2}]},
+      {chapter:"III · ОТНОШЕНИЯ", prompt:"Как ты обычно показываешь, что человек тебе дорог?", options:["Стараюсь быть рядом и находить время","Запоминаю детали и маленькие предпочтения","Говорю об этом прямо","Помогаю делом, даже без больших слов"], scores:[{connected:2},{reflect:1,loyal:1},{open:2},{loyal:2}]},
+      {chapter:"III · ОТНОШЕНИЯ", prompt:"Что ты скорее сделаешь, если твои границы нарушили?", options:["Скажу об этом сразу","Попробую объяснить мягко, чтобы не ранить","Отдалюсь, если это повторяется","Сначала усомнюсь, имею ли право возражать"], scores:[{direct:2},{connected:1,open:1},{independent:2},{mask:1,sensitive:1}]},
+      {chapter:"III · ОТНОШЕНИЯ", prompt:"Как тебе комфортнее сближаться?", options:["Постепенно, без давления","Через откровенные разговоры","Через совместные дела и опыт","Когда есть взаимная инициатива и ясность"], scores:[{guard:1,loyal:1},{open:2},{connected:2},{direct:1,loyal:1}]},
+      {chapter:"III · ОТНОШЕНИЯ", prompt:"Если тебе нужна поддержка, ты…", options:["Прошу о ней прямо","Надеюсь, что близкий человек сам заметит","Сначала пытаюсь справиться сам(а)","Могу попросить, но только у очень проверенных людей"], scores:[{direct:2},{connected:1,sensitive:1},{independent:2},{guard:1,loyal:1}]},
+      {chapter:"III · ОТНОШЕНИЯ", prompt:"Как ты понимаешь здоровую близость?", options:["Можно быть вместе и оставаться собой","Можно говорить о сложном без унижения","Оба вкладываются, а не соревнуются","Есть доверие, но не требуется постоянный контроль"], scores:[{independent:1,connected:1},{open:1,direct:1},{loyal:2},{independent:1,loyal:1}]},
+      {chapter:"IV · СЕРАЯ ЗОНА", prompt:"Человек говорит: «Я пока не знаю, чего хочу». Что для тебя важнее?", options:["Уточнить, что это означает для нас сейчас","Дать время, но договориться о честности","Решить, подходит ли мне такая неопределённость","Смотреть на поведение, а не обещания"], scores:[{direct:2},{connected:1,loyal:1},{independent:2},{reflect:1,loyal:1}]},
+      {chapter:"IV · СЕРАЯ ЗОНА", prompt:"Какой выбор тебе ближе?", options:["Неприятная правда вместо удобной иллюзии","Мягкая правда в подходящий момент","Мне нужны факты, прежде чем делать вывод","Иногда лучше не знать всё, если это ничего не изменит"], scores:[{direct:2},{connected:1,sensitive:1},{control:1,reflect:1},{guard:1,adaptive:1}]},
+      {chapter:"IV · СЕРАЯ ЗОНА", prompt:"Что может заставить тебя отдалиться от человека?", options:["Повторяющееся неуважение","Слова, которые расходятся с поступками","Чувство, что меня пытаются ограничить","Когда невозможно поговорить честно"], scores:[{independent:1,direct:1},{loyal:2},{independent:2},{open:1,direct:1}]},
+      {chapter:"IV · СЕРАЯ ЗОНА", prompt:"Когда ревность или тревога появляется, ты скорее…", options:["Пытаюсь отделить факты от предположений","Хочу поговорить о том, что чувствую","Скрываю это, пока не пойму причину","Мне нужно время, чтобы не реагировать импульсивно"], scores:[{control:1,reflect:1},{open:2},{mask:1,guard:1},{control:1,sensitive:1}]},
+      {chapter:"IV · СЕРАЯ ЗОНА", prompt:"Что сложнее принять?", options:["Что нельзя заставить другого выбрать тебя","Что хорошие отношения тоже требуют усилий","Что иногда люди хотят разного","Что ясность не всегда означает желаемый ответ"], scores:[{independent:1,sensitive:1},{loyal:2},{adaptive:2},{direct:1,reflect:1}]},
+      {chapter:"IV · СЕРАЯ ЗОНА", prompt:"Если отношения важны, но вы постоянно не понимаете друг друга…", options:["Попробую найти другой способ разговаривать","Предложу конкретно обсудить, что не работает","Посмотрю, готовы ли оба что-то менять","Не буду сохранять связь в одиночку"], scores:[{adaptive:1,open:1},{direct:2},{loyal:1,reflect:1},{independent:1,loyal:1}]},
+      {chapter:"V · ЗАКЛЮЧЕНИЕ", prompt:"Какое описание тебе хотелось бы услышать от близкого человека?", options:["«С тобой спокойно и надёжно»","«Ты видишь меня настоящего»","«Ты помогаешь мне расти»","«Рядом с тобой я чувствую свободу»"], scores:[{loyal:2},{open:2},{reflect:1,adaptive:1},{independent:2}]},
+      {chapter:"V · ЗАКЛЮЧЕНИЕ", prompt:"Какой навык общения тебе хотелось бы развить?", options:["Говорить о потребностях без чувства вины","Не додумывать за других","Не брать всю ответственность на себя","Сохранять открытость, не отказываясь от границ"], scores:[{direct:2},{grounded:2},{independent:2},{open:1,guard:1}]},
+      {chapter:"V · ЗАКЛЮЧЕНИЕ", prompt:"Что для тебя сейчас важнее всего понять о себе?", options:["Как я устроен(а) внутри","Что мне нужно от близости и общения","Почему я повторяю некоторые реакции","Как принимать решения с большей уверенностью"], scores:[{reflect:2},{connected:2},{reflect:1,guard:1},{control:1,grounded:1}]}
+    ];
+    const dossierTraits = {
+      open:{name:"Открытость",desc:"Тебе важно, чтобы между словами и настоящими чувствами было меньше расстояния. Откровенность может помогать тебе строить близость, особенно там, где есть уважение и взаимность."},
+      guard:{name:"Осторожность",desc:"Ты не обязательно закрыт(а) — скорее, тебе важно понять, безопасно ли раскрываться. Время и последовательность поступков могут значить для тебя больше громких обещаний."},
+      direct:{name:"Прямота",desc:"Тебе легче ориентироваться, когда важное можно назвать своими именами. Ясность помогает не застревать в догадках, хотя не каждый человек умеет говорить так же прямо."},
+      connected:{name:"Ориентация на близость",desc:"Контакт, совместность и ощущение взаимного присутствия могут быть для тебя значимыми. При этом здоровая близость не требует отказываться от собственных интересов и границ."},
+      independent:{name:"Самостоятельность",desc:"Личное пространство и право выбирать свой темп имеют для тебя вес. Самостоятельность становится особенно полезной, когда оставляет место не только для автономии, но и для принятия поддержки."},
+      reflect:{name:"Рефлексивность",desc:"Ты склонен(на) замечать нюансы и искать смысл в происходящем. Это помогает видеть разные стороны ситуации; иногда полезно отличать продуктивное осмысление от бесконечного прокручивания одного и того же."},
+      loyal:{name:"Надёжность и взаимность",desc:"Последовательность и реальное участие могут быть для тебя важнее красивых слов. Тебе может быть особенно важно чувствовать, что отношения поддерживают оба человека, а не кто-то один."},
+      control:{name:"Потребность в ясности",desc:"Понятные договорённости и возможность ориентироваться в ситуации помогают тебе чувствовать устойчивость. Не всё можно предсказать, но вопросы и честные границы часто возвращают ощущение опоры."},
+      sensitive:{name:"Чуткость к сигналам",desc:"Тон, перемены в поведении и атмосфера общения могут быть для тебя заметными. Эта внимательность бывает полезна, если проверять впечатления фактами, а не считать каждую догадку доказательством."},
+      adaptive:{name:"Гибкость",desc:"Ты способен(на) учитывать обстоятельства и менять подход, когда это имеет смысл. Гибкость не означает соглашаться со всем: собственные ценности помогают понять, где адаптироваться, а где обозначить границу."},
+      mask:{name:"Избирательное самораскрытие",desc:"Возможно, ты показываешь разные стороны себя в зависимости от контекста. Это естественная часть общения; полезно замечать, с кем можно быть более настоящим(ей), не чувствуя необходимости постоянно играть роль."},
+      instinct:{name:"Интуитивный подход",desc:"Первое внутреннее ощущение может быть для тебя важным ориентиром. Особенно надёжным оно становится, когда ты позволяешь себе сверять впечатление с фактами и реальными действиями."},
+      ambition:{name:"Потребность в признании вклада",desc:"Тебе может быть важно, чтобы усилия и способности замечали. Признание приятно, но твоя ценность не сводится к тому, насколько окружающие умеют её оценить."},
+      grounded:{name:"Ориентация на настоящее",desc:"Тебе может помогать фокус на конкретном следующем шаге вместо попытки предсказать всё сразу. Это не отменяет планирования — просто возвращает внимание к тому, на что действительно можно повлиять."}
+    };
+    let dossierIndex = 0;
+    let dossierAnswers = [];
+    function dossierEscape(text){return String(text).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+    function renderDossierIntro(){
+      const app=document.getElementById('dossier-app'); if(!app)return;
+      app.hidden=false;
+      app.innerHTML=`<div class="dossier-frame"><div class="dossier-kicker">ЗАКРЫТЫЙ АРХИВ · ÉCLIPSE</div><h3 class="dossier-title">Личное досье</h3><p class="dossier-copy">Некоторые материалы не хранятся в открытом доступе. Это исследование — не попытка определить тебя одним ярлыком, а возможность заметить собственные привычки, реакции и то, что для тебя важно в отношениях.</p><div class="dossier-meta"><span class="dossier-chip">34 вопроса</span><span class="dossier-chip">5 глав</span><span class="dossier-chip">персональный отчёт</span></div><div class="dossier-rule"></div><div class="dossier-kicker">ПРОТОКОЛ · ПЕРЕД НАЧАЛОМ</div><p class="dossier-copy">Отвечай так, как чаще бывает на самом деле, а не так, как «правильно». Здесь нет плохих типов личности. Итог — ориентир для саморефлексии, не клиническая диагностика. Ответы обрабатываются в этой странице и не отправляются на сервер этим опросником.</p><div style="margin-top:23px"><button class="dossier-button" id="dossier-start">Открыть дело&nbsp; ↗</button></div></div>`;
+      document.getElementById('dossier-start').addEventListener('click',()=>{dossierIndex=0;dossierAnswers=[];renderDossierQuestion();});
+    }
+    document.addEventListener('eclipse:open-dossier', renderDossierIntro);
+
+    function renderDossierQuestion(){
+      const app=document.getElementById('dossier-app');const q=dossierQuestions[dossierIndex];const pct=Math.round(dossierIndex/dossierQuestions.length*100);
+      app.innerHTML=`<div class="dossier-frame"><div class="dossier-kicker">${dossierEscape(q.chapter)} · FICHIER ${String(dossierIndex+1).padStart(2,'0')}</div><div class="dossier-progress-wrap"><div class="dossier-progress" style="width:${pct}%"></div></div><div class="dossier-kicker">Вопрос ${dossierIndex+1} из ${dossierQuestions.length}</div><h3 class="dossier-question">${dossierEscape(q.prompt)}</h3><p class="dossier-note">${dossierEscape(q.note||'Выбери вариант, который ближе всего к твоей обычной реакции. Можно не искать идеальный ответ.')}</p><div class="dossier-options">${q.options.map((o,i)=>`<button class="dossier-option ${dossierAnswers[dossierIndex]===i?'selected':''}" data-answer="${i}" aria-pressed="${dossierAnswers[dossierIndex]===i}">${dossierEscape(o)}</button>`).join('')}</div><div class="dossier-nav"><button class="dossier-button secondary" id="dossier-prev" ${dossierIndex===0?'disabled':''}>← Назад</button><button class="dossier-button" id="dossier-next" ${Number.isInteger(dossierAnswers[dossierIndex])?'':'disabled'}>${dossierIndex===dossierQuestions.length-1?'Сформировать досье ↗':'Следующий вопрос →'}</button></div></div>`;
+      app.querySelectorAll('[data-answer]').forEach(b=>b.addEventListener('click',()=>{dossierAnswers[dossierIndex]=Number(b.dataset.answer);renderDossierQuestion();}));
+      document.getElementById('dossier-prev').addEventListener('click',()=>{if(dossierIndex>0){dossierIndex--;renderDossierQuestion();}});
+      document.getElementById('dossier-next').addEventListener('click',()=>{if(!Number.isInteger(dossierAnswers[dossierIndex]))return;if(dossierIndex<dossierQuestions.length-1){dossierIndex++;renderDossierQuestion();}else renderDossierResult();});
+    }
+    function renderDossierResult(){
+      const totals={}; dossierQuestions.forEach((q,i)=>{const sc=q.scores[dossierAnswers[i]]||{};Object.entries(sc).forEach(([k,v])=>totals[k]=(totals[k]||0)+v);});
+      const ranked=Object.entries(totals).sort((a,b)=>b[1]-a[1]);const max=Math.max(1,...ranked.map(x=>x[1]));const top=ranked.slice(0,3);const traitNames=top.map(x=>dossierTraits[x[0]]?.name).filter(Boolean);
+      const answerAt=(n)=>dossierQuestions[n].options[dossierAnswers[n]];
+      const relationAnswers=[15,16,17,18,19,20,21,22,23,24,25,26,27,28].map(answerAt);
+      const openness=(totals.open||0)+(totals.connected||0);const boundaries=(totals.independent||0)+(totals.direct||0);const reflection=(totals.reflect||0)+(totals.guard||0);
+      let relationText=openness>boundaries?'Твои ответы чаще подчёркивают значимость контакта, взаимности и возможности говорить о важном. Полезный ориентир — сохранять близость, не теряя собственных границ.':boundaries>openness?'В ответах заметна ценность самостоятельности, ясности и права на собственный темп. В близких отношениях это может помогать сохранять себя; при желании можно также давать другим понятные сигналы о своих чувствах.':'В твоих ответах сочетаются стремление к контакту и потребность в личном пространстве. Контекст и надёжность конкретного человека, вероятно, имеют большое значение.';
+      let tension=reflection> (totals.direct||0)?'В неоднозначных ситуациях ты можешь сначала собирать сигналы и обдумывать их. Проверяй предположения прямым разговором, если это безопасно и уместно.':'Когда что-то важно, тебе может быть полезнее прояснять ситуацию, чем долго оставаться в догадках. Выбирай момент и формулировку, с которыми тебе комфортно.';
+      const strengths=top.map(([k])=>dossierTraits[k]).filter(Boolean);
+      const archiveNote=traitNames.length?`В материалах повторяются три темы: ${traitNames.join(', ').toLowerCase()}. Это не исчерпывает твою личность — скорее, показывает мотивы, которые чаще появлялись в выбранных ответах.`:'Твои ответы образуют индивидуальное сочетание. Попробуй обратить внимание на вопросы, где было труднее выбрать один вариант.';
+      const app=document.getElementById('dossier-app');
+      app.innerHTML=`<div class="dossier-frame"><div class="dossier-kicker">ЗАСЕКРЕЧЕННОЕ ДЕЛО · ИТОГОВЫЙ ОТЧЁТ</div><div class="dossier-seal">✦ ДОСТУП РАЗРЕШЁН · ÉCLIPSE</div><h3 class="dossier-title">Материалы о тебе</h3><p class="dossier-copy">По итогам твоих ответов проявились несколько повторяющихся ориентиров. Это не окончательный вердикт и не диагноз — только карта наблюдений, которую ты можешь сверить с собственным опытом.</p><div class="dossier-rule"></div><div class="dossier-kicker">01 · ВЕДУЩИЕ ЧЕРТЫ</div>${top.map(([k,v])=>{const t=dossierTraits[k];return t?`<div class="dossier-stat"><div class="dossier-stat-head"><span>${dossierEscape(t.name)}</span><span>${Math.round(v/max*100)} / 100</span></div><div class="dossier-stat-track"><div class="dossier-stat-fill" style="width:${Math.max(8,v/max*100)}%"></div></div></div>`:''}).join('')}<div class="dossier-result-card"><h4>Профиль наблюдений</h4><p>${dossierEscape(archiveNote)}</p></div><div class="dossier-kicker">02 · СИЛЬНЫЕ СТОРОНЫ</div>${strengths.slice(0,2).map(t=>`<div class="dossier-result-card"><h4>${dossierEscape(t.name)}</h4><p>${dossierEscape(t.desc)}</p></div>`).join('')}<div class="dossier-kicker">03 · ОТНОШЕНИЯ И ОБЩЕНИЕ</div><div class="dossier-result-card"><h4>Как ты строишь контакт</h4><p>${dossierEscape(relationText)}</p></div><div class="dossier-result-card"><h4>В неоднозначных ситуациях</h4><p>${dossierEscape(tension)}</p></div><div class="dossier-kicker">04 · ЗАМЕТКА АРХИВАРИУСА</div><div class="dossier-result-card"><h4>Что стоит забрать с собой</h4><p>Твои ответы — снимок привычных реакций в этот момент, а не неизменная инструкция к тебе. Отметь один вывод, который откликнулся, и один, который хочется оспорить: оба могут помочь узнать себя точнее.</p></div><p class="dossier-copy">Досье сформировано на основе выбранных вариантов. Свободные ответы не запрашивались, а интерпретации намеренно осторожны: один тест не может знать о тебе всё.</p><div class="dossier-nav" style="margin-top:22px"><button class="dossier-button" id="dossier-restart">Пройти заново ↻</button><button class="dossier-button secondary" id="dossier-copy">Скопировать отчёт</button></div><p class="dossier-note" id="dossier-copy-status" role="status"></p></div>`;
+      document.getElementById('dossier-restart').addEventListener('click',renderDossierIntro);
+      document.getElementById('dossier-copy').addEventListener('click',async()=>{const report='ÉCLIPSE — DOSSIER PERSONNEL\n'+traitNames.join(' · ')+'\n\n'+archiveNote+'\n\n'+relationText+'\n\n'+tension+'\n\n— личное досье';try{await navigator.clipboard.writeText(report);document.getElementById('dossier-copy-status').textContent='Отчёт скопирован.';}catch(e){document.getElementById('dossier-copy-status').textContent='Копирование недоступно в этом браузере — можно выделить текст вручную.';}});
+    }
 
 </script>
 
