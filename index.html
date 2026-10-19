@@ -295,17 +295,19 @@
   box-shadow: 0 0 18px 6px rgba(145,168,255,.16); z-index: -1;
 }
 .cosmic-star:focus-visible, .cosmic-planet:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
-.cosmic-star.selected { filter: brightness(1.8) drop-shadow(0 0 9px rgba(210,224,255,.85)); }
-.cosmic-planet {
-  width: 57px; height: 57px; border-radius: 50%;
-  background: radial-gradient(ellipse at 28% 22%, rgba(255,255,255,.98), transparent 8%),
-              radial-gradient(ellipse at 30% 27%, #c4d7f3 0%, #829dc9 18%, #536b9e 36%, #28385f 62%, #0b122a 83%, #030611 100%);
-  box-shadow: inset -12px -7px 19px rgba(0,0,0,.82), inset 4px 3px 9px rgba(255,255,255,.25), 0 0 25px rgba(125,153,228,.30);
-  animation: planet-float 8s ease-in-out infinite;
+.cosmic-star.selected {
+  width: min(34vw, 176px); height: min(34vw, 176px);
+  font-size: clamp(68px, 15vw, 132px);
+  filter: brightness(2.25) drop-shadow(0 0 18px rgba(210,224,255,.98)) drop-shadow(0 0 46px rgba(140,166,255,.78));
+  z-index: 99 !important;
+  transition: width .78s cubic-bezier(.16,.9,.2,1), height .78s cubic-bezier(.16,.9,.2,1), font-size .78s cubic-bezier(.16,.9,.2,1), filter .35s ease;
 }
-.cosmic-planet::before { content:""; position:absolute; inset: 7px 2px 19px 4px; border-radius:50%; background:linear-gradient(145deg, transparent 24%, rgba(230,235,255,.19) 25% 29%, transparent 31% 53%, rgba(15,25,54,.32) 54% 63%, transparent 64%); transform:rotate(-22deg); }
-.cosmic-planet::after { content: ""; position: absolute; width: 82px; height: 25px; border: 2px solid rgba(183,202,245,.58); border-left-color:rgba(183,202,245,.24); border-radius: 50%; transform: rotate(-24deg); box-shadow: 0 0 9px rgba(157,185,255,.18); }
-.cosmic-label { position: absolute; top: calc(100% + 3px); left: 50%; width: 112px; transform: translateX(-50%); color: #d5def8; font-size: 10px; text-align: center; white-space: nowrap; text-shadow: 0 1px 7px #000, 0 0 9px #050714; pointer-events: none; }
+.cosmic-star.selected::before {
+  inset: 20%;
+  background: radial-gradient(circle,rgba(255,255,255,.98) 0,rgba(206,224,255,.65) 18%,rgba(164,185,255,.24) 48%,transparent 74%);
+  box-shadow: 0 0 35px 18px rgba(180,204,255,.4),0 0 85px 38px rgba(146,125,255,.23);
+}
+.cosmic-star:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
 .galaxy-hint { position: relative; z-index: 5; padding: 0 14px 17px; color: #aeb9df; font-size: 11px; text-align: center; line-height: 1.8; }
 .galaxy-detail { position: relative; z-index: 5; margin: 0 12px 15px; padding: 15px; border: 1px solid rgba(148,170,255,.23); border-radius: 17px; background: rgba(7,10,26,.94); color: #e5eaff; }
 .galaxy-detail[hidden] { display: none; }
@@ -342,6 +344,7 @@
 .galaxy-zoom-controls button:active { transform:scale(.94); }
 @media (max-width:520px) { .galaxy-map { height:360px; margin-left:3px; margin-right:3px; } .galaxy-zoom-controls { right:9px; bottom:9px; } .galaxy-zoom-controls button { width:39px; height:39px; } .star-half { min-height:116px; } .galaxy-detail { padding:13px; } }
 
+@media (max-width:520px) { .cosmic-star.selected { width: min(38vw, 142px); height: min(38vw, 142px); font-size: clamp(62px, 17vw, 100px); } }
 @media (prefers-reduced-motion: reduce) { .cosmic-star, .cosmic-planet { animation:none !important; transition:none !important; } }
 
   
@@ -377,16 +380,63 @@
 .galaxy-detail.cinematic-overlay .detail-close { width:42px;height:42px;flex-basis:42px;font-size:28px;background:rgba(255,255,255,.08); }
 body.cosmic-focus { overflow:hidden; }
 .galaxy-map.cinematic-selected .cosmic-star.selected { animation:selected-star-pulse .8s ease-in-out infinite alternate; }
-@keyframes cosmic-portal-in { from { opacity:0; transform:scale(1.035); filter:brightness(1.8); } 18% { opacity:1; } to { opacity:1; transform:scale(1); filter:brightness(1); } }
-@keyframes cosmic-flash { 0% { opacity:0; transform:scale(.25); } 13% { opacity:.95; } 38% { opacity:.22; transform:scale(1.2); } 100% { opacity:0; transform:scale(1.8); } }
+@keyframes cosmic-portal-in { from { opacity:0; transform:scale(1.055); filter:brightness(2.15) blur(5px); } 14% { opacity:1; } 42% { filter:brightness(1.25) blur(0); } to { opacity:1; transform:scale(1); filter:brightness(1); } }
+@keyframes cosmic-flash { 0% { opacity:0; transform:scale(.12); } 10% { opacity:1; } 24% { opacity:.7; transform:scale(.82); } 46% { opacity:.18; transform:scale(1.3); } 100% { opacity:0; transform:scale(1.9); } }
 @keyframes cosmic-nebula-turn { to { transform:rotate(360deg); } }
 @keyframes half-left-arrive { from { opacity:0; transform:translateX(12vw) rotateY(18deg) scale(.86); filter:blur(8px); } to { opacity:1; transform:translateX(0) rotateY(0) scale(1); filter:blur(0); } }
 @keyframes half-right-arrive { from { opacity:0; transform:translateX(-12vw) rotateY(-18deg) scale(.86); filter:blur(8px); } to { opacity:1; transform:translateX(0) rotateY(0) scale(1); filter:blur(0); } }
 @keyframes detail-rise { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
 @keyframes icon-glimmer { 0%,100% { filter:brightness(.85); transform:scale(.98); } 50% { filter:brightness(1.4); transform:scale(1.04); } }
-@keyframes selected-star-pulse { from { filter:brightness(1.3) drop-shadow(0 0 12px rgba(215,226,255,.85)); } to { filter:brightness(2.5) drop-shadow(0 0 26px rgba(180,202,255,1)); } }
+@keyframes selected-star-pulse { from { filter:brightness(1.8) drop-shadow(0 0 18px rgba(215,226,255,.9)) drop-shadow(0 0 42px rgba(151,172,255,.48)); } to { filter:brightness(2.8) drop-shadow(0 0 30px rgba(180,202,255,1)) drop-shadow(0 0 70px rgba(151,172,255,.75)); } }
+@keyframes star-approach-ring { 0% { opacity:0; transform:translate(-50%,-50%) scale(.15); } 24% { opacity:.85; } 100% { opacity:0; transform:translate(-50%,-50%) scale(2.8); } }
+.galaxy-map.cinematic-selected .cosmic-star.selected::after {
+  content:""; position:absolute; left:50%; top:50%; width:140%; height:140%; border:1px solid rgba(216,229,255,.82); border-radius:50%;
+  box-shadow:0 0 22px rgba(163,194,255,.55),inset 0 0 18px rgba(192,211,255,.24);
+  pointer-events:none; animation:star-approach-ring .82s ease-out both;
+}
 @media (max-width:600px) { .galaxy-detail.cinematic-overlay { justify-content:flex-start; padding-top:max(28px,env(safe-area-inset-top)); } .galaxy-detail.cinematic-overlay .star-halves { gap:9px; } .galaxy-detail.cinematic-overlay .star-half { min-height:190px; padding:20px 7px; } .galaxy-detail.cinematic-overlay .star-half-message { border-radius:72px 18px 18px 72px; } .galaxy-detail.cinematic-overlay .star-half-facts { border-radius:18px 72px 72px 18px; } }
 @media (prefers-reduced-motion: reduce) { .galaxy-detail.cinematic-overlay, .galaxy-detail.cinematic-overlay::before, .galaxy-detail.cinematic-overlay::after, .galaxy-detail.cinematic-overlay .star-half, .galaxy-detail.cinematic-overlay .half-star-icon { animation:none !important; transition:none !important; } }
+
+  
+/* ===== PLANETARY UNIVERSE: CINEMATIC SCIENTIFIC ATLAS ===== */
+.planet-universe-shell {
+  position:relative; overflow:hidden; isolation:isolate; color:#e8eeff;
+  border:1px solid rgba(158,183,255,.25); border-radius:26px;
+  background:radial-gradient(ellipse at 50% 20%,#14224a 0%,#070b1b 42%,#02040b 100%);
+  box-shadow:0 24px 80px rgba(4,7,25,.25),inset 0 0 70px rgba(71,100,190,.1);
+}
+.planet-universe-shell::before { content:""; position:absolute; inset:0; z-index:-1; pointer-events:none; background:radial-gradient(ellipse at 15% 48%,rgba(90,110,255,.12),transparent 35%),radial-gradient(ellipse at 85% 20%,rgba(205,103,255,.11),transparent 36%); }
+.planet-header { position:relative; z-index:2; padding:23px 20px 10px; text-align:center; }
+.planet-kicker { margin:0 0 9px; color:#8faeff; font-size:9px; letter-spacing:.2em; }
+.planet-header h2 { margin:0; color:#f1f3ff; font:500 clamp(25px,5vw,36px) Georgia,serif; text-shadow:0 0 28px rgba(145,171,255,.28); }
+.planet-header p:last-child { max-width:470px; margin:10px auto 0; color:#aebcde; font-size:12px; line-height:1.7; }
+.planet-scene-wrap { position:relative; height:clamp(310px,56vw,450px); margin:0 8px; overflow:hidden; border-radius:19px; background:radial-gradient(ellipse at 50% 52%,rgba(36,60,122,.2),transparent 55%); touch-action:none; }
+#planet-system-canvas { position:absolute; inset:0; width:100%; height:100%; display:block; outline:none; touch-action:none; }
+.planet-scene-overlay { position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg,rgba(3,6,17,.18),transparent 23%,transparent 72%,rgba(3,6,17,.48)); }
+.planet-scene-caption { position:absolute; left:14px; top:13px; color:#b9c8f1; font-size:9px; letter-spacing:.13em; text-shadow:0 1px 10px #02040b; pointer-events:none; }
+.planet-scene-controls { position:absolute; right:12px; bottom:12px; display:flex; flex-direction:column; gap:7px; z-index:3; }
+.planet-scene-controls button { width:38px; height:38px; border:1px solid rgba(196,213,255,.34); border-radius:50%; color:#eef2ff; background:rgba(5,10,27,.76); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); font-size:21px; cursor:pointer; }
+.planet-scene-controls button:active { transform:scale(.94); }
+.planet-scene-hint { margin:0; padding:0 18px 13px; color:#8f9fc9; text-align:center; font-size:10px; line-height:1.7; }
+.planet-selector { display:flex; gap:8px; padding:5px 14px 15px; overflow-x:auto; scrollbar-width:thin; scrollbar-color:rgba(130,156,223,.35) transparent; }
+.planet-choice { flex:0 0 auto; min-width:85px; padding:10px 12px; border:1px solid rgba(148,171,238,.22); border-radius:14px; color:#c9d5f7; background:rgba(255,255,255,.035); cursor:pointer; font-size:11px; transition:background .2s,border-color .2s,transform .2s; }
+.planet-choice span { display:block; margin-bottom:4px; font-size:20px; filter:drop-shadow(0 0 8px rgba(158,184,255,.5)); }
+.planet-choice.active { border-color:rgba(175,201,255,.7); background:linear-gradient(135deg,rgba(91,122,201,.28),rgba(83,57,145,.2)); box-shadow:0 0 24px rgba(104,143,255,.12),inset 0 1px rgba(255,255,255,.08); color:#fff; }
+.planet-choice:active { transform:scale(.97); }
+.planet-info-card { margin:0 13px 14px; padding:18px; border:1px solid rgba(150,177,245,.23); border-radius:20px; background:linear-gradient(135deg,rgba(21,31,65,.76),rgba(5,9,24,.88)); box-shadow:inset 0 1px rgba(255,255,255,.06); }
+.planet-info-card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+.planet-info-kicker { margin:0 0 6px; color:#91adf4; font-size:9px; letter-spacing:.17em; }
+.planet-info-card h3 { margin:0; color:#f0f2ff; font:500 clamp(24px,4vw,32px) Georgia,serif; }
+.planet-tag { flex:0 0 auto; padding:6px 9px; border:1px solid rgba(155,181,246,.25); border-radius:99px; color:#b9c9f5; font-size:9px; background:rgba(114,142,217,.08); }
+.planet-info-summary { margin:13px 0 16px; color:#c3cee9; font-size:13px; line-height:1.85; }
+.planet-facts-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+.planet-fact { min-width:0; padding:11px 10px; border:1px solid rgba(151,173,231,.13); border-radius:12px; background:rgba(255,255,255,.035); }
+.planet-fact span { display:block; margin-bottom:6px; color:#8499ca; font-size:8px; letter-spacing:.1em; }
+.planet-fact strong { display:block; color:#e4eaff; font-size:11px; font-weight:500; line-height:1.45; overflow-wrap:anywhere; }
+.planet-info-detail { margin:14px 0 0; padding-top:13px; border-top:1px solid rgba(151,173,231,.15); color:#aebddd; font-size:12px; line-height:1.85; }
+.planet-disclaimer { margin:0; padding:0 17px 20px; color:#7f8db4; text-align:center; font-size:9px; line-height:1.7; }
+@media(max-width:520px) { .planet-header { padding:20px 13px 9px; } .planet-scene-wrap { height:340px; margin:0 5px; } .planet-selector { padding-left:9px; padding-right:9px; } .planet-choice { min-width:77px; padding:9px 10px; } .planet-info-card { margin-left:8px; margin-right:8px; padding:15px; } .planet-facts-grid { gap:6px; } .planet-fact { padding:9px 7px; } .planet-fact strong { font-size:10px; } }
+@media(prefers-reduced-motion:reduce) { .planet-choice { transition:none; } }
 
   </style> 
 </head>
@@ -428,6 +478,15 @@ body.cosmic-focus { overflow:hidden; }
           <span class="item-text">
             <span class="item-title">моя галактика</span>
             <span class="item-description">маленькая вселенная с твоими словами</span>
+          </span>
+          <span class="arrow">›</span>
+        </button>
+
+        <button class="item" data-section="planets">
+          <span class="emoji">🪐</span>
+          <span class="item-text">
+            <span class="item-title">планетная вселенная</span>
+            <span class="item-description">Солнце, Земля, планеты и Эос</span>
           </span>
           <span class="arrow">›</span>
         </button>
@@ -501,7 +560,7 @@ body.cosmic-focus { overflow:hidden; }
           <p>у каждой звезды есть своя история ✧</p>
         </header>
 
-        <div class="galaxy-map" id="galaxy-map" role="group" aria-label="Интерактивная галактика. Перетаскивай, чтобы вращать звёздное поле на 360 градусов.">
+        <div class="galaxy-map" id="galaxy-map" role="group" aria-label="Интерактивная галактика со звёздами. Перетаскивай, чтобы вращать звёздное поле на 360 градусов.">
           <canvas id="galaxy-canvas" aria-hidden="true"></canvas>
           <canvas id="galaxy-3d-canvas" aria-hidden="true"></canvas>
           <button class="cosmic-object cosmic-star"
@@ -552,11 +611,6 @@ body.cosmic-focus { overflow:hidden; }
             <span class="cosmic-label">Альтаир</span>
           </button>
 
-          <button class="cosmic-object cosmic-planet"
-            style="left:72%;top:76%"
-            data-cosmic="planet"
-            aria-label="Планета">
-          </button>
         <div class="galaxy-zoom-controls" aria-label="Масштаб галактики">
           <button type="button" data-zoom="in" aria-label="Приблизить галактику">+</button>
           <button type="button" data-zoom="out" aria-label="Отдалить галактику">−</button>
@@ -564,7 +618,7 @@ body.cosmic-focus { overflow:hidden; }
         </div>
 
         <div class="galaxy-hint">
-          ✧ нажми на звезду или планету, чтобы изучить её<br>
+          ✧ нажми на звезду, чтобы открыть её историю<br>
           ↔ перетаскивай поле пальцем или мышью, чтобы вращать галактику на 360°
         </div>
 
@@ -601,6 +655,54 @@ body.cosmic-focus { overflow:hidden; }
             <button type="button" class="back-to-halves" id="back-to-halves">← к двум половинкам</button>
           </section>
         </article>
+      </div>
+    </section>
+
+
+
+    <section id="planet-universe-view" class="view">
+      <button class="back" id="back-to-galaxy-from-planets">← вернуться к галактике</button>
+      <div class="planet-universe-shell">
+        <header class="planet-header">
+          <p class="planet-kicker">СИСТЕМА РОЗОВОГО НЕБА · НАБЛЮДАТЕЛЬНЫЙ АРХИВ</p>
+          <h2>планетная вселенная</h2>
+          <p>Это отдельная планетная система — здесь Солнце, реальные планеты и вымышленная Эос. Выбирай объект или вращай систему пальцем.</p>
+        </header>
+        <div class="planet-scene-wrap" id="planet-scene-wrap">
+          <canvas id="planet-system-canvas" aria-label="Интерактивная трёхмерная планетная система"></canvas>
+          <div class="planet-scene-overlay"></div>
+          <div class="planet-scene-caption">LIVE ORBIT VIEW · SCHEMATIC</div>
+          <div class="planet-scene-controls" aria-label="Масштаб планетной системы">
+            <button type="button" data-planet-zoom="in" aria-label="Приблизить">+</button>
+            <button type="button" data-planet-zoom="out" aria-label="Отдалить">−</button>
+          </div>
+        </div>
+        <p class="planet-scene-hint">↔ перетаскивай, чтобы вращать систему · используй + / − для приближения</p>
+        <nav class="planet-selector" aria-label="Выбрать небесное тело">
+          <button type="button" class="planet-choice" data-planet-id="sun"><span>☀️</span>Солнце</button>
+          <button type="button" class="planet-choice active" data-planet-id="earth"><span>🌍</span>Земля</button>
+          <button type="button" class="planet-choice" data-planet-id="mars"><span>🔴</span>Марс</button>
+          <button type="button" class="planet-choice" data-planet-id="saturn"><span>🪐</span>Сатурн</button>
+          <button type="button" class="planet-choice" data-planet-id="neptune"><span>🔵</span>Нептун</button>
+          <button type="button" class="planet-choice" data-planet-id="eos"><span>✧</span>Эос</button>
+        </nav>
+        <article class="planet-info-card" aria-live="polite">
+          <div class="planet-info-card-top">
+            <div>
+              <p class="planet-info-kicker" id="planet-info-kicker">ОБЪЕКТ · СОЛНЕЧНАЯ СИСТЕМА</p>
+              <h3 id="planet-info-name">Земля</h3>
+            </div>
+            <span class="planet-tag" id="planet-info-tag">КАМЕНИСТАЯ</span>
+          </div>
+          <p class="planet-info-summary" id="planet-info-summary">Наш дом — планета с жидкой водой на поверхности и защитной атмосферой.</p>
+          <div class="planet-facts-grid">
+            <div class="planet-fact"><span>ТИП</span><strong id="planet-fact-type">Каменистая</strong></div>
+            <div class="planet-fact"><span>ГОД</span><strong id="planet-fact-year">365,25 суток</strong></div>
+            <div class="planet-fact"><span>РАССТОЯНИЕ ОТ СОЛНЦА</span><strong id="planet-fact-distance">1 а.е.</strong></div>
+          </div>
+          <p class="planet-info-detail" id="planet-info-detail">Земля — единственная известная планета, на которой существует жизнь. Её океаны, атмосфера и магнитное поле помогают поддерживать условия на поверхности.</p>
+        </article>
+        <p class="planet-disclaimer">Схема создана для исследования и не отображает реальные масштабы расстояний и размеров. Эос — вымышленный мир; остальные карточки описывают реальные планеты.</p>
       </div>
     </section>
 
@@ -666,6 +768,7 @@ body.cosmic-focus { overflow:hidden; }
 
     const home = document.getElementById("home");
     const galaxyView = document.getElementById("galaxy-view");
+    const planetUniverseView = document.getElementById("planet-universe-view");
 const cosmicObjects = {
   sirius: {
     title: "Сириус ✦",
@@ -691,6 +794,13 @@ const cosmicObjects = {
     title: "Альтаир ✧",
     description: "Альтаир — яркая звезда созвездия Орла. Он вращается очень быстро, поэтому его форма заметно отличается от идеального шара."
   },
+  sun: { title: "Солнце ☀", description: "Солнце — звезда в центре Солнечной системы. Его гравитация удерживает планеты на орбитах, а свет и тепло делают возможной жизнь на Земле." },
+  earth: { title: "Земля 🌍", description: "Земля — наш дом: каменистая планета с океанами жидкой воды, атмосферой и магнитным полем. Пока это единственный известный мир, где существует жизнь." },
+  mars: { title: "Марс 🔴", description: "Марс — холодная каменистая планета с тонкой атмосферой, гигантским вулканом Олимп и следами древней воды." },
+  jupiter: { title: "Юпитер 🟤", description: "Юпитер — крупнейшая планета Солнечной системы. Это газовый гигант с мощными штормами и многочисленными спутниками." },
+  saturn: { title: "Сатурн 🪐", description: "Сатурн известен своей системой колец из ледяных и каменистых частиц. Среди его спутников есть Энцелад, из которого выбрасываются вода и лёд." },
+  neptune: { title: "Нептун 🔵", description: "Нептун — далёкий ледяной гигант с очень холодной атмосферой и чрезвычайно быстрыми ветрами." },
+  moon: { title: "Луна 🌙", description: "Луна — естественный спутник Земли. Её притяжение влияет на океанские приливы, а фазы меняются по мере движения Луны вокруг нашей планеты." },
   planet: {
     title: "Новая планета ◉",
     description: "Это пока условный мир нашей авторской галактики. Позже здесь можно будет исследовать реальные планеты, их атмосферы, спутники и необычные научные открытия."
@@ -811,6 +921,41 @@ const factCards = {
     { title: "Звезда спектрального класса A", text: "Альтаир горячее Солнца и относится к белым звёздам спектрального класса A." },
     { title: "Быстрый день", text: "Из-за быстрого вращения звёздная поверхность Альтаира движется с большой скоростью у экватора, что влияет на форму и распределение температуры." }
   ],
+  sun: [
+    { title: "Звезда в центре нашей системы", text: "Солнце — горячий шар плазмы, в ядре которого водород превращается в гелий и выделяет энергию." },
+    { title: "Солнечный свет не мгновенный", text: "Свету от Солнца до Земли требуется около 8 минут 20 секунд." },
+    { title: "Гравитационный центр", text: "Солнце содержит почти всю массу Солнечной системы, поэтому его притяжение определяет движение планет." }
+  ],
+  earth: [
+    { title: "Наш космический дом", text: "Земля — единственная известная планета с подтверждённой жизнью. Её поверхность постоянно меняется из-за движения тектонических плит, воды и атмосферы." },
+    { title: "Один год", text: "Земле нужно примерно 365,25 суток, чтобы совершить оборот вокруг Солнца. Дополнительная четверть суток учитывается високосными годами." },
+    { title: "Защитное магнитное поле", text: "Магнитосфера отклоняет значительную часть заряженных частиц солнечного ветра." }
+  ],
+  mars: [
+    { title: "Красная планета", text: "Ржавый оттенок Марса связан с оксидами железа в пыли на его поверхности." },
+    { title: "Гора-великан", text: "Олимп на Марсе — огромный щитовой вулкан, возвышающийся примерно на 22 километра над окружающей местностью." },
+    { title: "Древняя вода", text: "Русла и минералы на поверхности показывают, что в прошлом на Марсе существовала жидкая вода." }
+  ],
+  jupiter: [
+    { title: "Самая большая планета", text: "Юпитер настолько велик, что его масса превышает суммарную массу всех остальных планет Солнечной системы более чем вдвое." },
+    { title: "Большое красное пятно", text: "Это гигантский атмосферный шторм, который наблюдают уже несколько столетий." },
+    { title: "Миры у Юпитера", text: "У Юпитера много спутников; Европа особенно интересна учёным из-за океана жидкой воды, который может находиться под ледяной корой." }
+  ],
+  saturn: [
+    { title: "Кольца из частиц", text: "Кольца Сатурна состоят преимущественно из водяного льда с примесью каменистого материала." },
+    { title: "Низкая средняя плотность", text: "Средняя плотность Сатурна меньше плотности воды, хотя это не означает, что существует реальный океан, в котором планета могла бы плавать." },
+    { title: "Активный Энцелад", text: "Из трещин на южном полюсе Энцелада вырываются струи водяного пара и ледяных частиц." }
+  ],
+  neptune: [
+    { title: "Далёкий ледяной гигант", text: "Нептун обращается вокруг Солнца примерно за 165 земных лет." },
+    { title: "Очень быстрые ветры", text: "В атмосфере Нептуна наблюдаются ветры, скорость которых может превышать 1 000 километров в час." },
+    { title: "Спутник Тритон", text: "Тритон движется вокруг Нептуна в обратном направлении по сравнению с вращением планеты, что указывает на необычную историю его захвата." }
+  ],
+  moon: [
+    { title: "Единственный естественный спутник Земли", text: "Луна обращается вокруг Земли и помогает стабилизировать наклон земной оси." },
+    { title: "Приливы и отливы", text: "Гравитация Луны — главный фактор приливов в океанах Земли, хотя Солнце тоже влияет на них." },
+    { title: "Свет отражённый", text: "Луна не светится сама по себе: мы видим солнечный свет, отражённый её поверхностью." }
+  ],
   planet: [
     { title: "Новый мир", text: "Эта планета пока вымышленная часть «Розового неба». Мы можем придумать её океаны, атмосферу и спутники, отдельно помечая авторские детали." },
     { title: "Как изучают экзопланеты", text: "Многие планеты у других звёзд находят по крошечному падению яркости звезды, когда планета проходит перед ней. Этот метод называется транзитным." },
@@ -907,7 +1052,7 @@ cosmicElements.forEach(object => {
     detail.classList.remove("cinematic-overlay");
     galaxyMap.classList.add("cinematic-selected");
     if (window.__cosmicZoomTo) window.__cosmicZoomTo(activeCosmicKey);
-    // Give the camera a brief moment to rush toward the selected object before the split-screen reveal.
+    // Let the selected star swell and the camera rush in before the two halves reveal.
     cinematicOpenTimer = setTimeout(() => {
       detail.classList.add("cinematic-overlay");
       detail.hidden = false;
@@ -916,7 +1061,7 @@ cosmicElements.forEach(object => {
       void detail.offsetWidth;
       detail.style.animation = "";
       cinematicOpenTimer = null;
-    }, 480);
+    }, 820);
   });
 });
 
@@ -924,6 +1069,10 @@ document.getElementById("back-galaxy").addEventListener("click", () => {
   if (cinematicOpenTimer) { clearTimeout(cinematicOpenTimer); cinematicOpenTimer = null; }
   if (!detail.hidden) closeCinematicDiscovery();
   showView(home);
+});
+
+document.getElementById("back-to-galaxy-from-planets").addEventListener("click", () => {
+  showView(galaxyView);
 });
 
     const daily = document.getElementById("daily");
@@ -1001,6 +1150,9 @@ document.getElementById("back-galaxy").addEventListener("click", () => {
           showView(daily);
         } else if (section === "galaxy") {
           showView(galaxyView);
+        } else if (section === "planets") {
+          showView(planetUniverseView);
+          requestAnimationFrame(() => { if (window.__resizePlanetScene) window.__resizePlanetScene(); });
         } else if (otherSections[section]) {
           document.getElementById("other-title").textContent = otherSections[section][0];
           document.getElementById("other-text").textContent = otherSections[section][1];
@@ -1086,8 +1238,7 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.m
     polaris: new THREE.Vector3(-2.1, 1.2, 0.35),
     betelgeuse: new THREE.Vector3(6.0, -0.1, 0.25),
     rigel: new THREE.Vector3(-4.6, -2.0, -0.2),
-    altair: new THREE.Vector3(1.2, -3.0, 0.35),
-    planet: new THREE.Vector3(5.0, -3.5, 1.0)
+    altair: new THREE.Vector3(1.2, -3.0, 0.35)
   };
 
   // Deterministic pseudo-random numbers keep the star map stable across visits.
@@ -1187,6 +1338,38 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.m
   const disc = new THREE.Mesh(new THREE.RingGeometry(0.48, 1.6, 96), new THREE.MeshBasicMaterial({ color:0xffd7bd, transparent:true, opacity:0.25, side:THREE.DoubleSide, blending:THREE.AdditiveBlending, depthWrite:false }));
   disc.position.z=0.72; disc.scale.y=0.35; galaxy.add(disc);
 
+  // Small moons/satellites circling through the galaxy add scale and life without covering the labels.
+  const satelliteGroups = [];
+  const satelliteSpecs = [
+    { center:new THREE.Vector3(-3.4,-1.4,0.6), radius:0.62, speed:0.9, color:0xc7d8ff, size:0.045 },
+    { center:new THREE.Vector3(3.7,0.9,-0.35), radius:0.78, speed:-0.55, color:0xffdfb0, size:0.055 },
+    { center:new THREE.Vector3(0.4,2.0,0.5), radius:0.52, speed:0.72, color:0xd6b8ff, size:0.035 }
+  ];
+  satelliteSpecs.forEach((spec,i) => {
+    const orbit = new THREE.Group(); orbit.position.copy(spec.center); galaxy.add(orbit);
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(spec.radius,0.008,4,72),new THREE.MeshBasicMaterial({color:spec.color,transparent:true,opacity:0.23,depthWrite:false}));
+    ring.rotation.x = 0.45 + i*0.22; orbit.add(ring);
+    const satellite = new THREE.Mesh(new THREE.SphereGeometry(spec.size,10,8),new THREE.MeshBasicMaterial({color:spec.color}));
+    satellite.position.x=spec.radius; orbit.add(satellite);
+    const panelMat = new THREE.MeshBasicMaterial({color:0x6c8dce});
+    const panel1 = new THREE.Mesh(new THREE.BoxGeometry(spec.size*2.8,spec.size*.55,spec.size*.15),panelMat);
+    panel1.position.set(spec.radius,spec.size*1.5,0); orbit.add(panel1);
+    satelliteGroups.push({orbit,speed:spec.speed,phase:i*2.1});
+  });
+
+  // Comets streak across the camera view in repeating, staggered passes.
+  const cometGroup = new THREE.Group(); scene.add(cometGroup);
+  const comets = [];
+  for (let i=0;i<4;i++) {
+    const head = new THREE.Mesh(new THREE.SphereGeometry(0.055 + i*0.009,10,8),new THREE.MeshBasicMaterial({color:i%2?0xbfd8ff:0xffe6d0}));
+    const trailGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(-1.15,0.38,0)]);
+    const trail = new THREE.Line(trailGeometry,new THREE.LineBasicMaterial({color:i%2?0x91baff:0xffc7db,transparent:true,opacity:0.72}));
+    const glow = new THREE.Sprite(new THREE.SpriteMaterial({map:glowTexture('rgba(255,255,255,.95)','rgba(145,185,255,.34)','rgba(120,150,255,0)'),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false}));
+    glow.scale.set(0.65,0.65,1);
+    const group = new THREE.Group(); group.add(trail,head,glow); cometGroup.add(group);
+    comets.push({group,offset:i*0.27,speed:0.07+i*0.012,phase:i*1.7});
+  }
+
   // The clickable labels stay HTML buttons for accessibility; their positions are projected from 3D.
   const pointer = { down:false, dragged:false, x:0, y:0, lastX:0, lastY:0, lastTime:0, vx:0, vy:0 };
   let suppressClickUntil = 0;
@@ -1200,7 +1383,15 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.m
   const focusTarget = new THREE.Vector3();
   window.__cosmicZoomTo = key => {
     activeFocusKey = key && starVectors[key] ? key : null;
-    targetZoom = activeFocusKey ? 10.8 : 19.5;
+    // Pull the camera close enough for the selected star to feel like a destination,
+    // then hold the galaxy steady while the cinematic split-screen opens.
+    if (activeFocusKey) {
+      targetRotation.copy(currentRotation);
+      pointer.vx = 0; pointer.vy = 0;
+      targetZoom = 5.2;
+    } else {
+      targetZoom = 19.5;
+    }
   };
   map.querySelectorAll('[data-zoom]').forEach(button => {
     button.addEventListener('click', () => {
@@ -1291,7 +1482,14 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.m
     requestAnimationFrame(animate);
     const dt = Math.min(0.04, clock.getDelta());
     const t = now * 0.001;
-    if (!pointer.down) {
+    satelliteGroups.forEach(item => { item.orbit.rotation.z = t*item.speed + item.phase; item.orbit.rotation.x = Math.sin(t*0.18+item.phase)*0.18; });
+    comets.forEach((item,i) => {
+      const phase = ((t*item.speed + item.offset) % 1 + 1) % 1;
+      item.group.position.set(-15 + phase*30, 8 - phase*16 + Math.sin(t*0.7+item.phase)*0.45, -3.5 + i*1.7);
+      item.group.rotation.z = -0.48;
+      item.group.visible = phase > 0.02 && phase < 0.96;
+    });
+    if (!activeFocusKey && !pointer.down) {
       targetRotation.x += pointer.vx * dt * 0.72;
       targetRotation.y = THREE.MathUtils.clamp(targetRotation.y + pointer.vy * dt * 0.62, -0.72, 0.72);
       pointer.vx *= Math.pow(0.055, dt);
@@ -1299,8 +1497,8 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.m
     }
     currentRotation.x += (targetRotation.x-currentRotation.x) * (1-Math.exp(-dt*8));
     currentRotation.y += (targetRotation.y-currentRotation.y) * (1-Math.exp(-dt*8));
-    galaxy.rotation.z = currentRotation.x * 0.22 + Math.sin(t*0.035)*0.018;
-    galaxy.rotation.x = -0.18 + currentRotation.y + Math.sin(t*0.11)*0.008;
+    galaxy.rotation.z = currentRotation.x * 0.22 + (activeFocusKey ? 0 : Math.sin(t*0.035)*0.018);
+    galaxy.rotation.x = -0.18 + currentRotation.y + (activeFocusKey ? 0 : Math.sin(t*0.11)*0.008);
     galaxy.rotation.y = Math.sin(currentRotation.x*0.45)*0.14;
     backgroundStars.rotation.z = currentRotation.x * 0.018;
     backgroundStars.rotation.x = currentRotation.y * 0.025;
@@ -1338,6 +1536,180 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.m
   }
   requestAnimationFrame(animate);
 })();
+
+
+/* ===== SECOND SCENE: INTERACTIVE PLANETARY UNIVERSE ===== */
+(() => {
+  const canvas = document.getElementById('planet-system-canvas');
+  const wrap = document.getElementById('planet-scene-wrap');
+  if (!canvas || !wrap) return;
+
+  const info = {
+    sun: { name:'Солнце', kicker:'ОБЪЕКТ · СОЛНЕЧНАЯ СИСТЕМА', tag:'ЗВЕЗДА', type:'Звезда главной последовательности', year:'около 225–250 млн лет на оборот вокруг центра Галактики', distance:'центр Солнечной системы', summary:'Звезда, чьё излучение освещает и нагревает планеты Солнечной системы.', detail:'Солнце — звезда типа G2V, состоящая преимущественно из водорода и гелия. Энергия выделяется в ядре благодаря термоядерному синтезу. Его гравитация удерживает планеты и другие тела на орбитах.', color:0xffc56d, size:0.82, orbit:0, speed:0 },
+    earth: { name:'Земля', kicker:'ОБЪЕКТ · СОЛНЕЧНАЯ СИСТЕМА', tag:'КАМЕНИСТАЯ', type:'Каменистая', year:'365,25 суток', distance:'1 а.е.', summary:'Наш дом — планета с жидкой водой на поверхности и защитной атмосферой.', detail:'Земля — единственная известная планета, на которой существует жизнь. Океаны покрывают большую часть её поверхности, а атмосфера и магнитное поле помогают защищать среду обитания. У Земли один естественный спутник — Луна.', color:0x4c91ff, size:0.48, orbit:4.0, speed:0.19 },
+    mars: { name:'Марс', kicker:'ОБЪЕКТ · СОЛНЕЧНАЯ СИСТЕМА', tag:'КАМЕНИСТАЯ', type:'Каменистая', year:'687 земных суток', distance:'1,52 а.е.', summary:'Красный мир с гигантскими вулканами, древними долинами и тонкой атмосферой.', detail:'На Марсе находится Олимп — один из крупнейших известных вулканов Солнечной системы. Сегодня поверхность холодная и сухая, но следы древних русел указывают, что в прошлом жидкая вода играла заметную роль. У Марса два небольших спутника — Фобос и Деймос.', color:0xd66a48, size:0.36, orbit:5.35, speed:0.13 },
+    saturn: { name:'Сатурн', kicker:'ОБЪЕКТ · СОЛНЕЧНАЯ СИСТЕМА', tag:'ГАЗОВЫЙ ГИГАНТ', type:'Газовый гигант', year:'около 29,4 года', distance:'9,58 а.е.', summary:'Огромная планета, окружённая яркой системой колец из льда и каменистых частиц.', detail:'Кольца Сатурна выглядят сплошными издалека, но состоят из огромного количества частиц разного размера. Средняя плотность планеты ниже плотности воды, хотя это не означает, что существует океан, способный вместить Сатурн. Спутник Энцелад выбрасывает в космос водяной пар и ледяные частицы.', color:0xe3c58b, size:0.62, orbit:7.15, speed:0.085, rings:true },
+    neptune: { name:'Нептун', kicker:'ОБЪЕКТ · СОЛНЕЧНАЯ СИСТЕМА', tag:'ЛЕДЯНОЙ ГИГАНТ', type:'Ледяной гигант', year:'около 165 лет', distance:'30,1 а.е.', summary:'Далёкий синий мир с очень холодной атмосферой и одними из самых быстрых ветров планет.', detail:'Нептун получает очень мало солнечного света и совершает один оборот вокруг Солнца примерно за 165 земных лет. Его синий оттенок связан с особенностями атмосферы, а ветры могут достигать скоростей свыше 1 000 км/ч. Крупнейший спутник Тритон движется вокруг планеты в обратном направлении относительно её вращения.', color:0x477dff, size:0.52, orbit:8.8, speed:0.055 },
+    eos: { name:'Эос', kicker:'ОБЪЕКТ · АВТОРСКАЯ ВСЕЛЕННАЯ', tag:'ВЫМЫШЛЕННЫЙ МИР', type:'Авторская планета', year:'условный цикл', distance:'вымышленная орбита', summary:'Эос — придуманный мир «Розового неба»: океаны под сияющей атмосферой и два маленьких спутника.', detail:'Эос не является реальной астрономической планетой. Мы можем постепенно создать для неё карту, историю, климат и спутники. Все её свойства — художественный вымысел; научные объяснения в других карточках относятся к реальным объектам.', color:0xb78cff, size:0.58, orbit:10.45, speed:0.04 }
+  };
+  let selectedId = 'earth';
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true, powerPreference:'high-performance' });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.18;
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x030714, 0.008);
+  const camera = new THREE.PerspectiveCamera(44, 1, 0.1, 120);
+  let targetZoom = 17.5, currentZoom = 17.5;
+  camera.position.set(0, 7, currentZoom);
+  camera.lookAt(0,0,0);
+
+  const system = new THREE.Group();
+  scene.add(system);
+  const ambient = new THREE.AmbientLight(0x8395d8, 1.0); scene.add(ambient);
+  const sunLight = new THREE.PointLight(0xffd8a2, 180, 55, 1.7); sunLight.position.set(0,0,0); scene.add(sunLight);
+
+  function radialTexture(inner, middle, outer) {
+    const c=document.createElement('canvas'); c.width=c.height=256;
+    const ctx=c.getContext('2d');
+    const g=ctx.createRadialGradient(128,128,1,128,128,126);
+    g.addColorStop(0,inner); g.addColorStop(.22,middle); g.addColorStop(1,outer);
+    ctx.fillStyle=g; ctx.fillRect(0,0,256,256);
+    const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; return t;
+  }
+  function surfaceTexture(base, stripe, seed) {
+    const c=document.createElement('canvas'); c.width=512; c.height=256;
+    const ctx=c.getContext('2d');
+    ctx.fillStyle=base; ctx.fillRect(0,0,c.width,c.height);
+    let state=seed;
+    const rand=()=>{ state=(state*1664525+1013904223)>>>0; return state/4294967296; };
+    for(let i=0;i<110;i++) {
+      const y=rand()*256, h=1+rand()*14, x=rand()*512, w=15+rand()*180;
+      ctx.globalAlpha=.035+rand()*.12; ctx.fillStyle=rand()>.5?stripe:'#ffffff';
+      ctx.beginPath(); ctx.ellipse(x,y,w,h,rand()*.12,0,Math.PI*2); ctx.fill();
+    }
+    for(let i=0;i<75;i++) {
+      ctx.globalAlpha=.035+rand()*.1; ctx.fillStyle='#020615';
+      ctx.beginPath(); ctx.arc(rand()*512,rand()*256,1+rand()*9,0,Math.PI*2); ctx.fill();
+    }
+    ctx.globalAlpha=1;
+    const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; t.wrapS=THREE.RepeatWrapping; return t;
+  }
+
+  // Starfield at several depths creates a soft parallax impression around the planetary system.
+  const starCount=2200, starPositions=new Float32Array(starCount*3), starColors=new Float32Array(starCount*3);
+  for(let i=0;i<starCount;i++) {
+    const r=28+Math.random()*48, theta=Math.random()*Math.PI*2, u=Math.random()*2-1;
+    const q=Math.sqrt(1-u*u); starPositions[i*3]=r*q*Math.cos(theta); starPositions[i*3+1]=r*u; starPositions[i*3+2]=r*q*Math.sin(theta);
+    const tint=Math.random(); starColors[i*3]=0.64+tint*.35; starColors[i*3+1]=0.72+tint*.22; starColors[i*3+2]=0.9+Math.random()*.1;
+  }
+  const starGeo=new THREE.BufferGeometry(); starGeo.setAttribute('position',new THREE.BufferAttribute(starPositions,3)); starGeo.setAttribute('color',new THREE.BufferAttribute(starColors,3));
+  const starMat=new THREE.PointsMaterial({size:.11,vertexColors:true,transparent:true,opacity:.9,depthWrite:false,sizeAttenuation:true});
+  const backgroundStars=new THREE.Points(starGeo,starMat); scene.add(backgroundStars);
+
+  const sun = new THREE.Mesh(new THREE.SphereGeometry(.82,48,48),new THREE.MeshBasicMaterial({color:0xffd8a1}));
+  sun.userData.planetId='sun';
+  system.add(sun);
+  const sunGlow = new THREE.Sprite(new THREE.SpriteMaterial({map:radialTexture('rgba(255,255,238,1)','rgba(255,188,100,.7)','rgba(255,112,40,0)'),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false}));
+  sunGlow.scale.set(6.8,6.8,1); sunGlow.position.set(0,0,0); system.add(sunGlow);
+  const corona = new THREE.Mesh(new THREE.SphereGeometry(.98,40,40),new THREE.MeshBasicMaterial({color:0xffc56d,transparent:true,opacity:.12,wireframe:true})); system.add(corona);
+
+  const planetMeshes = {};
+  const orbitGroups = {};
+  const planetSpecs = {
+    earth:{base:'#2359b7',stripe:'#6dd4e9',seed:8}, mars:{base:'#9e4d37',stripe:'#e69b64',seed:12},
+    saturn:{base:'#c7a66c',stripe:'#f4dfaa',seed:18}, neptune:{base:'#214ab5',stripe:'#67c9ff',seed:25}, eos:{base:'#62469d',stripe:'#f0a6e9',seed:31}
+  };
+  Object.entries(info).forEach(([id,d])=>{
+    if (id === 'sun') return;
+    const orbit = new THREE.Group(); system.add(orbit); orbitGroups[id]=orbit;
+    const ringGeo=new THREE.BufferGeometry(); const pts=[]; const seg=180;
+    for(let i=0;i<=seg;i++){const a=i/seg*Math.PI*2;pts.push(Math.cos(a)*d.orbit,0,Math.sin(a)*d.orbit);}
+    ringGeo.setAttribute('position',new THREE.Float32BufferAttribute(pts,3));
+    const orbitLine=new THREE.Line(ringGeo,new THREE.LineBasicMaterial({color:0x6b82c7,transparent:true,opacity:.2})); system.add(orbitLine);
+    const group=new THREE.Group(); group.userData={id,angle:Math.random()*Math.PI*2,orbit:d.orbit,speed:d.speed}; system.add(group);
+    const spec=planetSpecs[id];
+    const texture=surfaceTexture(spec.base,spec.stripe,spec.seed);
+    const mat=new THREE.MeshStandardMaterial({map:texture,color:0xffffff,roughness:.9,metalness:.02,emissive:new THREE.Color(d.color).multiplyScalar(.055)});
+    const mesh=new THREE.Mesh(new THREE.SphereGeometry(d.size,40,32),mat); mesh.userData.planetId=id; group.add(mesh);
+    if(id==='saturn') {
+      const ringGroup=new THREE.Group(); ringGroup.rotation.x=1.22; ringGroup.rotation.y=.12; group.add(ringGroup);
+      const ring=new THREE.Mesh(new THREE.RingGeometry(d.size*1.18,d.size*2.0,96),new THREE.MeshStandardMaterial({color:0xdac79d,side:THREE.DoubleSide,transparent:true,opacity:.76,roughness:1}));
+      ring.rotation.x=-Math.PI/2; ringGroup.add(ring);
+      const ring2=new THREE.Mesh(new THREE.RingGeometry(d.size*1.42,d.size*1.65,96),new THREE.MeshBasicMaterial({color:0xf1e1bd,side:THREE.DoubleSide,transparent:true,opacity:.4})); ring2.rotation.x=-Math.PI/2; ringGroup.add(ring2);
+    }
+    if(id==='earth') {
+      const cloud=new THREE.Mesh(new THREE.SphereGeometry(d.size*1.018,32,24),new THREE.MeshBasicMaterial({color:0xb7efff,transparent:true,opacity:.09,wireframe:true})); group.add(cloud);
+      const moonPivot=new THREE.Group(); group.add(moonPivot); moonPivot.userData.isMoon=true;
+      const moon=new THREE.Mesh(new THREE.SphereGeometry(.105,18,16),new THREE.MeshStandardMaterial({color:0xbec7d7,roughness:1})); moon.position.set(d.size+0.3,0,0); moon.userData.isMoon=true; moonPivot.add(moon); group.userData.moonPivot=moonPivot;
+    }
+    group.userData.mesh=mesh; planetMeshes[id]=group;
+  });
+
+  const raycaster=new THREE.Raycaster(); const pointerNdc=new THREE.Vector2();
+  let down=null, dragged=false, dragX=0, dragY=0, rotationX=-.2, rotationY=.18, targetRotationX=rotationX, targetRotationY=rotationY;
+  let pinchStart=null, pinchZoom=targetZoom;
+  function resize(){
+    const rect=wrap.getBoundingClientRect(); if(rect.width<2||rect.height<2)return;
+    renderer.setSize(rect.width,rect.height,false); camera.aspect=rect.width/rect.height; camera.updateProjectionMatrix();
+  }
+  window.__resizePlanetScene=resize;
+  const ro=new ResizeObserver(resize); ro.observe(wrap); window.addEventListener('resize',resize,{passive:true});
+  resize();
+
+  function selectPlanet(id){
+    if(!info[id])return; selectedId=id;
+    const d=info[id];
+    document.getElementById('planet-info-kicker').textContent=d.kicker;
+    document.getElementById('planet-info-name').textContent=d.name;
+    document.getElementById('planet-info-tag').textContent=d.tag;
+    document.getElementById('planet-info-summary').textContent=d.summary;
+    document.getElementById('planet-fact-type').textContent=d.type;
+    document.getElementById('planet-fact-year').textContent=d.year;
+    document.getElementById('planet-fact-distance').textContent=d.distance;
+    document.getElementById('planet-info-detail').textContent=d.detail;
+    document.querySelectorAll('[data-planet-id]').forEach(b=>b.classList.toggle('active',b.dataset.planetId===id));
+    targetZoom= id==='sun' ? 12.8 : (id==='neptune'||id==='eos' ? 13.8 : 15.2);
+  }
+  window.__selectPlanet=selectPlanet;
+  document.querySelectorAll('[data-planet-id]').forEach(button=>button.addEventListener('click',()=>selectPlanet(button.dataset.planetId)));
+  document.querySelectorAll('[data-planet-zoom]').forEach(button=>button.addEventListener('click',()=>{targetZoom=THREE.MathUtils.clamp(targetZoom+(button.dataset.planetZoom==='in'?-1.6:1.6),10.5,25);}));
+
+  canvas.addEventListener('pointerdown',e=>{ if(e.button!==undefined&&e.button!==0)return; down={x:e.clientX,y:e.clientY,id:e.pointerId}; dragged=false; dragX=e.clientX; dragY=e.clientY; try{canvas.setPointerCapture(e.pointerId);}catch(_){} });
+  canvas.addEventListener('pointermove',e=>{if(!down)return;const dx=e.clientX-dragX,dy=e.clientY-dragY;if(Math.hypot(e.clientX-down.x,e.clientY-down.y)>4)dragged=true;if(dragged){targetRotationY+=dx*.006;targetRotationX=THREE.MathUtils.clamp(targetRotationX+dy*.004,-.65,.85);}dragX=e.clientX;dragY=e.clientY;});
+  canvas.addEventListener('pointerup',e=>{
+    if(!down)return;
+    if(!dragged){const rect=canvas.getBoundingClientRect();pointerNdc.x=((e.clientX-rect.left)/rect.width)*2-1;pointerNdc.y=-((e.clientY-rect.top)/rect.height)*2+1;raycaster.setFromCamera(pointerNdc,camera);const hits=raycaster.intersectObjects([sun,...Object.values(planetMeshes).map(g=>g.userData.mesh)],false);if(hits.length){const id=hits[0].object.userData.planetId;selectPlanet(id);}}
+    down=null;try{canvas.releasePointerCapture(e.pointerId);}catch(_){}
+  });
+  canvas.addEventListener('pointercancel',()=>{down=null;});
+  canvas.addEventListener('wheel',e=>{e.preventDefault();targetZoom=THREE.MathUtils.clamp(targetZoom+e.deltaY*.018,10.5,25);},{passive:false});
+  let touchPinchStart=null;
+  canvas.addEventListener('touchstart',e=>{if(e.touches.length===2){touchPinchStart=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);pinchZoom=targetZoom;}},{passive:true});
+  canvas.addEventListener('touchmove',e=>{if(e.touches.length===2&&touchPinchStart){e.preventDefault();const dist=Math.max(1,Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY));targetZoom=THREE.MathUtils.clamp(pinchZoom*touchPinchStart/dist,10.5,25);}},{passive:false});
+  canvas.addEventListener('touchend',e=>{if(e.touches.length<2)touchPinchStart=null;},{passive:true});
+
+  const clock=new THREE.Clock();
+  function animate(now){
+    requestAnimationFrame(animate); const dt=Math.min(.04,clock.getDelta()); const t=now*.001;
+    rotationX+=(targetRotationX-rotationX)*(1-Math.exp(-dt*5)); rotationY+=(targetRotationY-rotationY)*(1-Math.exp(-dt*5));
+    system.rotation.x=rotationX; system.rotation.y=rotationY+Math.sin(t*.04)*.035;
+    currentZoom+=(targetZoom-currentZoom)*(1-Math.exp(-dt*3));
+    camera.position.set(0,6.2,currentZoom); camera.lookAt(0,0,0);
+    sun.rotation.y=t*.12; sunGlow.material.rotation=-t*.025; corona.rotation.y=-t*.05;
+    Object.entries(planetMeshes).forEach(([id,g])=>{
+      const d=info[id]; const a=g.userData.angle+t*d.speed*.22;
+      g.position.set(Math.cos(a)*d.orbit,Math.sin(a*1.7)*.12,Math.sin(a)*d.orbit*.55);
+      g.userData.mesh.rotation.y=t*(id==='earth'?.22:.12);
+      if(g.userData.moonPivot)g.userData.moonPivot.rotation.y=t*.8;
+    });
+    backgroundStars.rotation.y=t*.003; backgroundStars.rotation.x=Math.sin(t*.04)*.02;
+    renderer.render(scene,camera);
+  }
+  selectPlanet('earth'); requestAnimationFrame(animate);
+})();
+
 </script>
 
 </body>
