@@ -813,20 +813,19 @@ document.getElementById("back-galaxy").addEventListener("click", () => {
       button.addEventListener("click", () => {
         const section = button.dataset.section;
 
-          if (section === "daily") {
-  currentCategory = "all";
-  document.querySelectorAll(".category").forEach(item => {
-    item.classList.toggle("active", item.dataset.category === "all");
-  });
-  showMessage(getDailyMessage());
-  showView(daily);
-} else if (section === "galaxy") {
-  showView(galaxyView);
-} else {
-  document.getElementById("other-title").textContent = otherSections[section][0];
-  document.getElementById("other-text").textContent = otherSections[section][1];
-  showView(other);
-}
+        if (section === "daily") {
+          currentCategory = "all";
+          document.querySelectorAll(".category").forEach(item => {
+            item.classList.toggle("active", item.dataset.category === "all");
+          });
+          showMessage(getDailyMessage());
+          showView(daily);
+        } else if (section === "galaxy") {
+          showView(galaxyView);
+        } else if (otherSections[section]) {
+          document.getElementById("other-title").textContent = otherSections[section][0];
+          document.getElementById("other-text").textContent = otherSections[section][1];
+          showView(other);
         }
       });
     });
