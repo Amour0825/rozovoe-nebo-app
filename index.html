@@ -999,6 +999,35 @@ body.eclipse-inner-mode .planet-scene-controls button { border-radius: 3px; bord
 #dossier-app .dossier-seal{font-size:10px;letter-spacing:.18em;color:#9baddf;text-transform:uppercase}
 @media(max-width:480px){#dossier-app .dossier-nav .dossier-button{flex:1}#dossier-app .dossier-option{padding:12px}}
 
+
+/* ÉCLIPSE GAME MODULE — isolated addition; existing sections remain untouched. */
+#eclipse-game{--game-blue:#8fa8e4;--game-wine:#6f293f;color:#e9e2e8;padding-bottom:50px}
+#eclipse-game .game-shell{max-width:920px;margin:0 auto;padding:8px clamp(18px,5vw,44px)}
+#eclipse-game .game-kicker{font-size:9px;letter-spacing:.22em;color:#9caedc;text-transform:uppercase}
+#eclipse-game .game-title{font:400 clamp(39px,8vw,68px)/1.02 Didot,"Bodoni 72",Georgia,serif;letter-spacing:-.035em;margin:16px 0 12px;color:#f3eaf0}
+#eclipse-game .game-copy{font-size:13px;line-height:1.85;color:#b9adbb;max-width:640px}
+#eclipse-game .game-panel{position:relative;overflow:hidden;margin-top:22px;padding:clamp(18px,4vw,30px);border:1px solid rgba(143,168,228,.23);background:radial-gradient(ellipse at 90% 0%,rgba(76,85,132,.13),transparent 45%),linear-gradient(145deg,rgba(30,15,24,.93),rgba(8,8,13,.98));box-shadow:0 20px 55px rgba(0,0,0,.22)}
+#eclipse-game .game-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:20px 0}
+#eclipse-game .game-stat{border:1px solid rgba(190,164,184,.16);padding:12px;background:rgba(255,255,255,.018)}
+#eclipse-game .game-stat span{display:block;color:#958a9b;font-size:9px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px}
+#eclipse-game .game-stat strong{font:400 23px Georgia,serif;color:#e8e3f4}
+#eclipse-game .game-track{height:2px;background:rgba(255,255,255,.08);margin:18px 0 24px}#eclipse-game .game-track>span{display:block;height:100%;width:0;background:linear-gradient(90deg,#702b43,#8fa8e4);transition:width .25s}
+#eclipse-game .game-question{font:400 clamp(23px,5vw,34px)/1.25 Didot,Georgia,serif;color:#f1e8ef;margin:13px 0}
+#eclipse-game .game-muted{font-size:12px;line-height:1.8;color:#a99dac}
+#eclipse-game .game-scene{border:1px solid rgba(143,168,228,.18);background:rgba(5,7,14,.58);padding:18px;margin:17px 0;font-size:13px;line-height:2;color:#d5d5e8;white-space:pre-line}
+#eclipse-game .game-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:18px 0}
+#eclipse-game .game-option{font:inherit;text-align:left;font-size:12px;line-height:1.6;padding:13px 14px;border:1px solid rgba(178,147,169,.2);background:rgba(255,255,255,.025);color:#ded4df;cursor:pointer;transition:border-color .2s,background .2s}
+#eclipse-game .game-option:hover{border-color:rgba(143,168,228,.65);background:rgba(89,91,139,.1)}
+#eclipse-game .game-option:disabled{cursor:default;opacity:.85}#eclipse-game .game-option.correct{border-color:#8ba98e;background:rgba(71,112,82,.15)}#eclipse-game .game-option.wrong{border-color:#a65b70;background:rgba(112,38,61,.18)}
+#eclipse-game .game-btn{font:inherit;cursor:pointer;padding:12px 16px;border:1px solid rgba(143,168,228,.4);background:linear-gradient(110deg,rgba(100,34,56,.55),rgba(31,37,65,.55));color:#f3edf2;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+#eclipse-game .game-btn.secondary{background:transparent;border-color:rgba(190,164,184,.22);color:#c5b9c4}
+#eclipse-game .game-feedback{padding:13px 15px;margin:15px 0;border-left:2px solid #8fa8e4;background:rgba(143,168,228,.06);font-size:12px;line-height:1.75;color:#d6d9eb}
+#eclipse-game .game-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:18px}
+#eclipse-game .game-badge{display:inline-block;border:1px solid rgba(143,168,228,.3);color:#b8c6eb;padding:7px 10px;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+#eclipse-game .game-input{width:100%;box-sizing:border-box;padding:14px;border:1px solid rgba(178,147,169,.25);background:rgba(0,0,0,.24);color:#f0eaf2;font:inherit;font-size:14px;margin:10px 0 13px;outline:none}
+#eclipse-game .game-input:focus{border-color:#8fa8e4}
+@media(max-width:520px){#eclipse-game .game-options{grid-template-columns:1fr}#eclipse-game .game-stats{gap:6px}#eclipse-game .game-stat{padding:10px 8px}#eclipse-game .game-stat strong{font-size:20px}}
+
 </style> 
 </head>
 <body class="home-mode">
@@ -1108,6 +1137,23 @@ body.eclipse-inner-mode .planet-scene-controls button { border-radius: 3px; bord
         <button class="action" id="copy-message">♡ скопировать послание</button>
       </div>
       <div class="status" id="status" role="status"></div>
+    </section>
+
+
+    <section id="eclipse-game" class="view">
+      <button class="back" id="game-back-home">← назад к моему миру</button>
+      <div class="game-shell">
+        <p class="game-kicker">ÉCLIPSE · UNITÉ DES AFFAIRES NON CLASSÉES</p>
+        <h2 class="game-title">Дело № 00</h2>
+        <p class="game-copy">Архив хранит то, что другие пропустили. Изучай детали, расшифровывай сообщения и сопоставляй улики. Каждое пройденное дело повышает уровень сложности.</p>
+        <div class="game-stats">
+          <div class="game-stat"><span>Очки</span><strong id="game-score">0</strong></div>
+          <div class="game-stat"><span>Уровень</span><strong id="game-level">01</strong></div>
+          <div class="game-stat"><span>Звание</span><strong id="game-rank" style="font-size:17px">Наблюдатель</strong></div>
+        </div>
+        <div class="game-panel" id="game-panel" aria-live="polite"></div>
+        <p class="game-muted" style="margin-top:18px">Прогресс хранится в этом браузере на твоём устройстве. Игра работает без отдельного сервера и не отправляет ответы куда-либо.</p>
+      </div>
     </section>
 
     <section id="other" class="view">
@@ -1709,6 +1755,7 @@ document.getElementById("back-to-galaxy-from-planets").addEventListener("click",
     let currentCategory = "all";
     let currentMessage = null;
     let previousIndex = -1;
+    const gameView = document.getElementById("eclipse-game");
 
     function showView(view) {
       document.querySelectorAll(".view").forEach(section => {
@@ -1717,7 +1764,7 @@ document.getElementById("back-to-galaxy-from-planets").addEventListener("click",
       view.classList.add("active");
       document.body.classList.toggle("archive-mode", view.id === "archive-view");
       document.body.classList.toggle("home-mode", view.id === "home");
-      document.body.classList.toggle("eclipse-inner-mode", ["daily", "other", "planet-universe-view"].includes(view.id));
+      document.body.classList.toggle("eclipse-inner-mode", ["daily", "other", "planet-universe-view", "eclipse-game"].includes(view.id));
       window.scrollTo({top: 0, behavior: "smooth"});
     }
 
@@ -1879,7 +1926,10 @@ document.getElementById("back-to-galaxy-from-planets").addEventListener("click",
       button.addEventListener("click", () => {
         const section = button.dataset.section;
 
-        if (section === "daily") {
+        if (section === "game") {
+          showGameIntro();
+          showView(gameView);
+        } else if (section === "daily") {
           currentCategory = "all";
           document.querySelectorAll(".category").forEach(item => {
             item.classList.toggle("active", item.dataset.category === "all");
@@ -1954,6 +2004,61 @@ document.getElementById("back-to-galaxy-from-planets").addEventListener("click",
       }
     });
   </script>
+
+<script>
+    // Local, browser-only mini-game: observation, ciphers and deduction.
+    const GAME_KEY = "eclipse_casefile_progress_v1";
+    const gamePanel = document.getElementById("game-panel");
+    let gameState = {score:0, solved:0, best:0};
+    try { gameState = {...gameState, ...JSON.parse(localStorage.getItem(GAME_KEY) || "{}")} } catch(e) {}
+    let gameRound = 0, gameAnswered = false, gameSceneTimer = null, gameMode = "intro";
+    const gameCases = [
+      {mode:"observe",title:"Комната 07",scene:"КОМНАТА 07\nНа столе: синяя книга, чашка с трещиной, серебряный ключ.\nЧасы остановились на 21:14. У окна лежит сухой лист.",prompt:"Какого цвета была книга?",options:["Тёмно-синяя","Бордовая","Чёрная","Серая"],answer:0,why:"В отчёте указана синяя книга. Внимание к мелочи — первая привычка архивариуса."},
+      {mode:"cipher",title:"Перехваченное сообщение",prompt:"Каждая буква сдвинута на одну позицию вперёд по русскому алфавиту. Чтобы прочитать код, сдвинь буквы назад. Что означает «ЛМЯШ»?",options:["КЛЮЧ","КЛЮК","КЛЮЧЬ","КЛЮН"],answer:0,why:"Сдвиг назад на одну позицию раскрывает слово «КЛЮЧ»."},
+      {mode:"detective",title:"Дело № 00-A",prompt:"Свидетель говорит: «Я ушёл в 20:40». Журнал доступа фиксирует его пропуск на входе в 20:52. Что можно заключить?",options:["Он точно лжёт во всём","Записи противоречат словам о времени ухода","Он был в двух местах одновременно","Никаких выводов сделать нельзя"],answer:1,why:"Факт входа в 20:52 не согласуется с заявлением, что свидетель уже ушёл в 20:40. Это несоответствие, но не доказательство всех остальных деталей."},
+      {mode:"observe",title:"Папка наблюдения 12",scene:"ПОЛКА B\nТри папки: белая с меткой 03, чёрная с меткой 08, красная с меткой 11.\nНа стене — карта без подписи. На полу — две капли воды.",prompt:"Какой номер был на чёрной папке?",options:["03","08","11","18"],answer:1,why:"Чёрная папка была отмечена номером 08."},
+      {mode:"cipher",title:"Шифр Цезаря",prompt:"Каждая буква русского алфавита сдвинута на две позиции вперёд (алфавит включает Ё). Сдвинь буквы назад: «УРП». Какое слово было зашифровано?",options:["СОН","СЕТ","ТОН","РОК"],answer:0,why:"У→С, Р→О, П→Н: получается «СОН»."},
+      {mode:"detective",title:"Показания свидетелей",prompt:"Анна: «Свет в архиве был выключен». Борис: «Я читал там документ при настольной лампе». В журнале электрика указано: «Общее освещение отключено, локальная лампа работала». Что верно?",options:["Анна обязательно врёт","Борис обязательно врёт","Оба показания могут быть верны одновременно","Журнал ничего не объясняет"],answer:2,why:"Общее освещение и локальная лампа — разные источники света, поэтому показания совместимы."},
+      {mode:"observe",title:"Последний кадр",scene:"КАМЕРА 03 · 23:18\nУ двери стоит человек в сером пальто. В левой руке — конверт. На полу виден круглый след от стакана. На стене календарь с отметкой 16.",prompt:"В какой руке был конверт?",options:["В правой","В левой","В обеих","Рука не видна"],answer:1,why:"Конверт был в левой руке. Чем сложнее дело, тем важнее не достраивать детали по догадке."},
+      {mode:"cipher",title:"Двойной ключ",prompt:"Числа соответствуют буквам алфавита: А=1, Б=2, В=3 и так далее. Что за слово скрыто в последовательности 12–13–32–25?",options:["КЛЮЧ","ЛУЧЬ","ЛУКИ","КЛАН"],answer:0,why:"В этом деле архив использует условный ключ таблицы. Ответ по карточке: «КЛЮЧ». В реальной криптографии всегда нужно уточнять, какой именно алфавит и таблица используются."},
+      {mode:"detective",title:"Дело № 00-FINAL",prompt:"В журнале: дверь открыли ключом А в 19:05. Камера показывает, что ключ А всё время оставался в прозрачном сейфе, а сейф вскрыли в 19:20. Электронный замок не имеет резервного доступа. Какое объяснение противоречит всем трём данным?",options:["Время в журнале ошибочно","Камера неверно показывает момент","Ключ А использовали в 19:05, не открывая сейф","Возможна ошибка одного из источников"],answer:2,why:"Если ключ был заперт в сейфе до 19:20, а резервного доступа нет, его использование в 19:05 невозможно при условии точности остальных записей. В расследовании проверяют надёжность источников."}
+    ];
+    // Normalize a typographic quote in the observation case title.
+    gameCases[6].title = "Последний кадр";
+    function saveGame(){ try{localStorage.setItem(GAME_KEY,JSON.stringify(gameState))}catch(e){}; updateGameStats(); }
+    function updateGameStats(){
+      document.getElementById("game-score").textContent=String(gameState.score||0);
+      document.getElementById("game-level").textContent=String(Math.min(99,Math.floor((gameState.solved||0)/3)+1)).padStart(2,"0");
+      const solved=gameState.solved||0;
+      document.getElementById("game-rank").textContent=solved>=18?"Архивариус":solved>=12?"Следователь":solved>=6?"Криптограф":solved>=3?"Аналитик":"Наблюдатель";
+    }
+    function showGameIntro(){
+      clearTimeout(gameSceneTimer); gameMode="intro"; updateGameStats();
+      gamePanel.innerHTML=`<div class="game-kicker">СЕКТОР 00 · ДОСТУП ОТКРЫТ</div><h3 class="game-question">Три навыка. Один архив.</h3><p class="game-copy">Каждое дело состоит из одного испытания. Сначала наблюдение, затем шифры, затем логические расследования — и так по кругу. После каждого ответа откроется объяснение.</p><div class="game-stats"><div class="game-stat"><span>01</span><strong style="font-size:16px">Наблюдение</strong></div><div class="game-stat"><span>02</span><strong style="font-size:16px">Шифры</strong></div><div class="game-stat"><span>03</span><strong style="font-size:16px">Дедукция</strong></div></div><p class="game-muted">Новый раунд открывается после предыдущего. За правильный ответ начисляются очки; сложность постепенно растёт.</p><div class="game-footer"><span class="game-badge">Локальный режим · без сервера</span><button class="game-btn" id="game-start">Открыть первое дело ↗</button></div>`;
+      document.getElementById("game-start").addEventListener("click",()=>{gameRound=0;renderGameRound();});
+    }
+    function renderGameRound(){
+      clearTimeout(gameSceneTimer); gameAnswered=false; gameMode="round";
+      const idx=gameRound%gameCases.length, c=gameCases[idx];
+      const difficulty=Math.floor((gameState.solved||0)/3)+1;
+      const modeName=c.mode==="observe"?"НАБЛЮДЕНИЕ":c.mode==="cipher"?"ВЗЛОМ АРХИВА":"ДЕДУКЦИЯ";
+      const options=c.options.map((o,i)=>`<button class="game-option" data-game-answer="${i}">${o}</button>`).join("");
+      gamePanel.innerHTML=`<div class="game-kicker">${modeName} · ДЕЛО ${String(idx+1).padStart(2,"0")}</div><div class="game-track"><span style="width:${Math.min(100,((gameRound+1)/9)*100)}%"></span></div><div class="game-muted">Уровень сложности ${difficulty} · раунд ${gameRound+1}</div><h3 class="game-question">${c.title}</h3>${c.scene?`<div class="game-scene" id="game-scene">${c.scene}</div><p class="game-muted" id="game-memory-note">Запомни детали. Архивная запись будет скрыта через ${Math.max(3,6-Math.floor((gameState.solved||0)/6))} секунд…</p>`:""}<p class="game-copy">${c.prompt}</p><div class="game-options" id="game-options">${options}</div><div id="game-feedback"></div><div class="game-footer"><span class="game-badge">${modeName}</span><button class="game-btn" id="game-next" hidden>Следующее дело →</button></div>`;
+      gamePanel.querySelectorAll("[data-game-answer]").forEach(b=>b.addEventListener("click",()=>answerGame(Number(b.dataset.gameAnswer),c)));
+      if(c.scene){gamePanel.querySelectorAll("[data-game-answer]").forEach(b=>b.disabled=true);gameSceneTimer=setTimeout(()=>{const scene=document.getElementById("game-scene");if(scene)scene.textContent="ЗАПИСЬ СКРЫТА · ВОССТАНОВИ ДЕТАЛИ ПО ПАМЯТИ";const note=document.getElementById("game-memory-note");if(note)note.textContent="Запись закрыта. Теперь выбери ответ.";gamePanel.querySelectorAll("[data-game-answer]").forEach(b=>b.disabled=false);},Math.max(3,6-Math.floor((gameState.solved||0)/6))*1000);}
+      updateGameStats();
+    }
+    function answerGame(choice,c){if(gameAnswered)return;gameAnswered=true;clearTimeout(gameSceneTimer);const correct=choice===c.answer;const pts=correct?100+Math.min(200,Math.floor((gameState.solved||0)/3)*20):0;gameState.score=(gameState.score||0)+pts;if(correct)gameState.solved=(gameState.solved||0)+1;gameState.best=Math.max(gameState.best||0,gameState.score);saveGame();
+      gamePanel.querySelectorAll("[data-game-answer]").forEach((b,i)=>{b.disabled=true;if(i===c.answer)b.classList.add("correct");else if(i===choice&&!correct)b.classList.add("wrong");});
+      document.getElementById("game-feedback").innerHTML=`<div class="game-feedback"><strong>${correct?"ДОСТУП ПОДТВЕРЖДЁН · +"+pts+" ОЧКОВ":"НЕСОВПАДЕНИЕ · +0 ОЧКОВ"}</strong><br>${c.why}</div>`;
+      const next=document.getElementById("game-next");next.hidden=false;next.textContent=gameRound===8?"Завершить цикл ↗":"Следующее дело →";next.addEventListener("click",()=>{gameRound++;if(gameRound>=9){showGameSummary()}else renderGameRound();},{once:true});
+    }
+    function showGameSummary(){gameMode="summary";updateGameStats();gamePanel.innerHTML=`<div class="game-kicker">ЦИКЛ ЗАВЕРШЁН · ОТЧЁТ</div><h3 class="game-question">Материалы приняты.</h3><p class="game-copy">Ты прошёл первый цикл из девяти дел: наблюдение, шифры и логические расследования. Следующие циклы будут сложнее, а очки и звание сохранятся в этом браузере.</p><div class="game-stats"><div class="game-stat"><span>Всего очков</span><strong>${gameState.score||0}</strong></div><div class="game-stat"><span>Верных ответов</span><strong>${gameState.solved||0}</strong></div><div class="game-stat"><span>Лучший результат</span><strong>${gameState.best||0}</strong></div></div><div class="game-footer"><button class="game-btn secondary" id="game-home-intro">В меню игры</button><button class="game-btn" id="game-again">Начать новый цикл ↻</button></div>`;document.getElementById("game-home-intro").addEventListener("click",showGameIntro);document.getElementById("game-again").addEventListener("click",()=>{gameRound=0;renderGameRound();});}
+    document.getElementById("game-back-home").addEventListener("click",()=>showView(home));
+    updateGameStats();
+
+
+</script>
 
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
@@ -2460,6 +2565,7 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.m
 
 
     // ÉCLIPSE DOSSIER PERSONNEL — self-reflection quiz with locally calculated, descriptive results.
+
     const dossierQuestions = [
       {chapter:"I · ЛИЧНОСТЬ", prompt:"Какую версию себя ты показываешь людям чаще всего?", note:"Здесь нет правильного ответа. Выбери то, что чаще совпадает с реальностью.", options:["Ту, с которой проще взаимодействовать","Почти настоящую — мне нечего скрывать","Разным людям — разные версии меня","Я и сам(а) не всегда понимаю, какой я"], scores:[{mask:2},{open:2},{adaptive:2},{reflect:2}]},
       {chapter:"I · ЛИЧНОСТЬ", prompt:"Когда остаёшься один на один с собой, что происходит чаще?", options:["Наконец-то чувствую спокойствие","Начинаю прокручивать разговоры и детали","Ищу занятие, чтобы не застревать в мыслях","Настроение меняется — зависит от дня"], scores:[{independent:2},{reflect:2},{guard:1},{sensitive:2}]},
