@@ -1028,6 +1028,80 @@ body.eclipse-inner-mode .planet-scene-controls button { border-radius: 3px; bord
 #eclipse-game .game-input:focus{border-color:#8fa8e4}
 @media(max-width:520px){#eclipse-game .game-options{grid-template-columns:1fr}#eclipse-game .game-stats{gap:6px}#eclipse-game .game-stat{padding:10px 8px}#eclipse-game .game-stat strong{font-size:20px}}
 
+
+/* ===== ÉCLIPSE VISUAL GALLERY — isolated addition ===== */
+#eclipse-gallery.view{min-height:100vh;background:#090708;color:#f1e9e8;padding:0 0 70px;}
+.gallery-shell{max-width:1240px;margin:auto;padding:0 clamp(18px,5vw,68px)}
+.gallery-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px 0;border-bottom:1px solid rgba(190,170,151,.16)}
+.gallery-back{border:1px solid rgba(190,170,151,.24);border-radius:99px;background:transparent;color:#eadbdc;padding:10px 14px;cursor:pointer;font:inherit;font-size:11px;letter-spacing:.05em}
+.gallery-mark{font:10px Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#a89a87}
+.gallery-hero{display:grid;grid-template-columns:1.1fr .9fr;align-items:end;gap:28px;padding:clamp(42px,8vw,94px) 0 48px}
+.gallery-kicker{font:9px Arial,sans-serif;letter-spacing:.25em;text-transform:uppercase;color:#b28a61;margin:0 0 20px}
+.gallery-hero h2{font:400 clamp(54px,9vw,108px)/.88 Georgia,'Times New Roman',serif;letter-spacing:-.065em;margin:0;color:#f0eee9}
+.gallery-hero h2 em{color:#8a3b43;font-weight:400}
+.gallery-intro{font:13px/2 Arial,sans-serif;color:#b3aaa4;max-width:390px;margin:0 0 6px}
+.gallery-meta{display:flex;gap:15px;flex-wrap:wrap;margin-top:26px;color:#92867c;font:9px Arial,sans-serif;letter-spacing:.13em;text-transform:uppercase}
+.gallery-meta span+span:before{content:'✦';margin-right:15px;color:#8b3944}
+.gallery-toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:0 0 20px;padding-top:18px;border-top:1px solid rgba(190,170,151,.16)}
+.gallery-toolbar-label{font:9px Arial,sans-serif;letter-spacing:.19em;text-transform:uppercase;color:#a69a8d}
+.gallery-filters{display:flex;gap:7px;flex-wrap:wrap}
+.gallery-filter{border:1px solid rgba(190,170,151,.18);border-radius:99px;background:transparent;color:#bba9aa;padding:8px 12px;font:10px Arial,sans-serif;cursor:pointer;transition:.2s}
+.gallery-filter:hover,.gallery-filter.active{border-color:#92505a;color:#f2dfe0;background:rgba(108,39,48,.28)}
+.gallery-editorial-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:68px;gap:12px}
+.gallery-card{position:relative;display:block;grid-column:span 4;grid-row:span 4;overflow:hidden;border:1px solid rgba(190,170,151,.14);background:#171011;padding:0;cursor:zoom-in;text-align:left;color:#f0eee9;isolation:isolate}
+.gallery-card.featured{grid-column:span 7;grid-row:span 6}.gallery-card.tall{grid-column:span 5;grid-row:span 6}.gallery-card.wide{grid-column:span 6;grid-row:span 4}
+.gallery-card[hidden]{display:none}
+.gallery-card img{width:100%;height:100%;display:block;object-fit:cover;position:absolute;inset:0;filter:brightness(.77) saturate(.78);transition:transform .65s cubic-bezier(.2,.7,.2,1),filter .45s}
+.gallery-card:hover img,.gallery-card:focus-visible img{transform:scale(1.045);filter:brightness(.93) saturate(.9)}
+.gallery-card:after{content:'';position:absolute;inset:25% 0 0;background:linear-gradient(transparent,rgba(10,5,7,.9));z-index:0;pointer-events:none}
+.gallery-card-copy{position:absolute;z-index:1;left:18px;right:18px;bottom:17px;display:flex;align-items:end;justify-content:space-between;gap:12px}
+.gallery-card-index{display:block;color:#bda58d;font:9px Arial,sans-serif;letter-spacing:.17em;margin-bottom:7px}
+.gallery-card-title{display:block;font:400 clamp(18px,2.2vw,27px)/1.1 Georgia,serif}
+.gallery-card-sub{display:block;color:#a99f99;font:9px Arial,sans-serif;letter-spacing:.11em;text-transform:uppercase;margin-top:8px}
+.gallery-card-arrow{font:18px Georgia,serif;color:#d8c9b3;padding-bottom:2px}
+.gallery-note{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:26px 0 0;margin-top:25px;border-top:1px solid rgba(190,170,151,.16);color:#806d70;font:10px/1.8 Arial,sans-serif}
+.gallery-note a{color:#b88a90;text-decoration:none;border-bottom:1px solid rgba(184,138,144,.35)}
+.gallery-lightbox{position:fixed;inset:0;z-index:10000;background:rgba(5,3,4,.94);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:24px}
+.gallery-lightbox.open{display:flex}
+.gallery-lightbox-inner{position:relative;width:min(100%,1040px);max-height:90vh;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(180px,.55fr);gap:24px;align-items:center}
+.gallery-lightbox img{display:block;width:100%;max-height:84vh;object-fit:contain;background:#100b0c}
+.gallery-lightbox-copy{color:#f0e2e2}.gallery-lightbox-copy small{color:#b57d84;font:9px Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase}.gallery-lightbox-copy h3{font:400 clamp(28px,4vw,46px)/1.05 Georgia,serif;margin:14px 0}.gallery-lightbox-copy p{color:#b5a2a4;font:12px/1.9 Arial,sans-serif}
+.gallery-lightbox-close{position:absolute;top:-12px;right:-12px;z-index:2;width:40px;height:40px;border:1px solid rgba(255,255,255,.25);border-radius:50%;background:#1c1113;color:#fff;font-size:22px;cursor:pointer}
+@media(max-width:700px){.gallery-hero{grid-template-columns:1fr;gap:25px}.gallery-intro{max-width:560px}.gallery-toolbar{align-items:flex-start;flex-direction:column}.gallery-editorial-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:100px;gap:9px}.gallery-card,.gallery-card.featured,.gallery-card.tall,.gallery-card.wide{grid-column:span 1;grid-row:span 3;min-height:240px}.gallery-card.featured{grid-column:span 2;grid-row:span 4}.gallery-card-copy{left:12px;right:12px;bottom:12px}.gallery-card-title{font-size:20px}.gallery-lightbox-inner{grid-template-columns:1fr;gap:12px;max-height:92vh;overflow:auto}.gallery-lightbox img{max-height:60vh}.gallery-lightbox-copy h3{margin:8px 0}.gallery-lightbox-close{top:-10px;right:-10px}}
+@media(prefers-reduced-motion:reduce){.gallery-card img{transition:none}}
+
+
+/* v8: gallery must escape the narrow pink home layout when it is active */
+body:has(#eclipse-gallery.active){background:#08090b!important;color:#eeece7!important;min-height:100vh;}
+body:has(#eclipse-gallery.active) .page{width:100%!important;max-width:none!important;margin:0!important;padding:0!important;background:#08090b!important;}
+body:has(#eclipse-gallery.active) .hero,body:has(#eclipse-gallery.active)>.page>.footer{display:none!important;}
+body:has(#eclipse-gallery.active) #eclipse-gallery{display:block!important;width:100%!important;min-height:100vh!important;background:#08090b!important;color:#eeece7!important;}
+#eclipse-gallery .gallery-shell{width:100%;max-width:1240px;margin:0 auto;}
+#eclipse-gallery .gallery-editorial-grid{width:100%;}
+#eclipse-gallery .gallery-card img{z-index:0;object-fit:cover;}
+
+/* v7 visual-archive correction: hard-isolate palette from legacy pink theme */
+#eclipse-gallery.view{background:#08090b!important;color:#eeece7!important;color-scheme:dark;}
+#eclipse-gallery .gallery-shell{color:#eeece7;}
+#eclipse-gallery .gallery-top,#eclipse-gallery .gallery-toolbar{border-color:rgba(193,169,132,.18)!important;}
+#eclipse-gallery .gallery-back{border-color:rgba(193,169,132,.28)!important;color:#e7dfd3!important;background:#0b0b0d!important;}
+#eclipse-gallery .gallery-mark,#eclipse-gallery .gallery-meta,#eclipse-gallery .gallery-toolbar-label{color:#9d9388!important;}
+#eclipse-gallery .gallery-kicker{color:#b99a70!important;}
+#eclipse-gallery .gallery-hero h2{color:#f0eee9!important;}
+#eclipse-gallery .gallery-hero h2 em{color:#8a3b43!important;}
+#eclipse-gallery .gallery-intro{color:#b8b1aa!important;}
+#eclipse-gallery .gallery-filter{border-color:rgba(193,169,132,.2)!important;color:#c3bbb1!important;background:#0b0b0d!important;}
+#eclipse-gallery .gallery-filter:hover,#eclipse-gallery .gallery-filter.active{border-color:#8a3b43!important;color:#f0eee9!important;background:rgba(91,30,39,.35)!important;}
+#eclipse-gallery .gallery-card{background:#111114!important;border-color:rgba(193,169,132,.18)!important;color:#f0eee9!important;}
+#eclipse-gallery .gallery-card img{display:block!important;opacity:1!important;visibility:visible!important;}
+#eclipse-gallery .gallery-card-copy{color:#f0eee9!important;}
+#eclipse-gallery .gallery-card-index{color:#d1b58b!important;}
+#eclipse-gallery .gallery-card-sub{color:#c4b9ad!important;}
+#eclipse-gallery .gallery-note{border-color:rgba(193,169,132,.18)!important;color:#93887d!important;}
+#eclipse-gallery .gallery-note a{color:#c6aa80!important;border-color:rgba(198,170,128,.35)!important;}
+#eclipse-gallery .gallery-lightbox-copy{color:#f0eee9!important;}
+#eclipse-gallery .gallery-lightbox-copy small{color:#c6aa80!important;}
+#eclipse-gallery .gallery-lightbox-close{background:#171416!important;color:#f0eee9!important;border-color:rgba(193,169,132,.3)!important;}
 </style> 
 </head>
 <body class="home-mode">
@@ -1049,15 +1123,6 @@ body.eclipse-inner-mode .planet-scene-controls button { border-radius: 3px; bord
           <span class="item-text">
             <span class="item-title">опросы и интересы</span>
             <span class="item-description">узнай себя немного лучше</span>
-          </span>
-          <span class="arrow">›</span>
-        </button>
-
-        <button class="item" data-section="gallery">
-          <span class="emoji">🌷</span>
-          <span class="item-text">
-            <span class="item-title">моя галерея</span>
-            <span class="item-description">картинки, воспоминания и послания</span>
           </span>
           <span class="arrow">›</span>
         </button>
@@ -1163,6 +1228,76 @@ body.eclipse-inner-mode .planet-scene-controls button { border-radius: 3px; bord
       <h2 class="view-title" id="other-title">скоро ♡</h2>
       <p class="view-subtitle" id="other-text"></p>
       <div id="dossier-app" hidden aria-live="polite"></div>
+    </section>
+
+
+    <section id="eclipse-gallery" class="view">
+      <div class="gallery-shell">
+        <div class="gallery-top">
+          <button class="gallery-back" id="gallery-back-home" type="button">← МОЙ МИР</button>
+          <span class="gallery-mark">ÉCLIPSE · PRIVATE VISUAL ARCHIVE</span>
+        </div>
+        <header class="gallery-hero">
+          <div>
+            <p class="gallery-kicker">COLLECTION Nº 01 · VISUAL NOTES</p>
+            <h2>The visual<br><em>archive.</em></h2>
+            <div class="gallery-meta"><span>Curated fragments</span><span>Vol. 01</span><span>Open collection</span></div>
+          </div>
+          <p class="gallery-intro">Не просто подборка изображений, а визуальный дневник: тёмная архитектура, цветы в полумраке, городские огни и кадры, которые хочется сохранить. Коллекция будет постепенно меняться вместе с твоим настроением.</p>
+        </header>
+        <div class="gallery-toolbar">
+          <span class="gallery-toolbar-label">SELECT A MOOD / ВЫБЕРИ НАСТРОЕНИЕ</span>
+          <div class="gallery-filters" id="gallery-filters" aria-label="Фильтры галереи">
+            <button type="button" class="gallery-filter active" data-gallery-filter="all">Всё</button>
+            <button type="button" class="gallery-filter" data-gallery-filter="architecture">Архитектура</button>
+            <button type="button" class="gallery-filter" data-gallery-filter="botanical">Ботаника</button>
+            <button type="button" class="gallery-filter" data-gallery-filter="night">Ночь</button>
+            <button type="button" class="gallery-filter" data-gallery-filter="editorial">Editorial</button>
+          </div>
+        </div>
+        <div class="gallery-editorial-grid" id="gallery-grid">
+          <button class="gallery-card featured" type="button" data-gallery-category="architecture" data-title="Red in the shadows" data-subtitle="Architecture · Rotterdam" data-source="https://unsplash.com/photos/red-and-black-high-rise-building-DFJUl3Hhs8I">
+            <img src="https://images.unsplash.com/photo-1596189103198-86c29939de9e?auto=format&fit=crop&w=1400&q=85" alt="Красно-чёрная городская архитектура" loading="eager" fetchpriority="high">
+            <span class="gallery-card-copy"><span><span class="gallery-card-index">01 / ARCHITECTURE</span><span class="gallery-card-title">Red in the shadows</span><span class="gallery-card-sub">A city in another light</span></span><span class="gallery-card-arrow">↗</span></span>
+          </button>
+          <button class="gallery-card tall" type="button" data-gallery-category="botanical" data-title="Velvet flora" data-subtitle="Botanical · Dark floral" data-source="https://unsplash.com/photos/dark-red-orchids-and-foliage-illuminated-by-spotlight-TQW9PsXSgtQ">
+            <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1000&q=85" alt="Тёмно-красные орхидеи на почти чёрном фоне" loading="eager" fetchpriority="high">
+            <span class="gallery-card-copy"><span><span class="gallery-card-index">02 / BOTANICAL</span><span class="gallery-card-title">Velvet flora</span><span class="gallery-card-sub">Softness after dark</span></span><span class="gallery-card-arrow">↗</span></span>
+          </button>
+          <button class="gallery-card wide" type="button" data-gallery-category="night" data-title="Blue hour" data-subtitle="Night · City lights" data-source="https://unsplash.com/s/photos/city-lights-at-night">
+            <img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1200&q=85" alt="Ночное небо и огни города" loading="eager" fetchpriority="high">
+            <span class="gallery-card-copy"><span><span class="gallery-card-index">03 / NOCTURNE</span><span class="gallery-card-title">Blue hour</span><span class="gallery-card-sub">Between dusk and silence</span></span><span class="gallery-card-arrow">↗</span></span>
+          </button>
+          <button class="gallery-card" type="button" data-gallery-category="editorial" data-title="Quiet form" data-subtitle="Editorial · Minimalism" data-source="https://unsplash.com/s/photos/minimalist-editorial">
+            <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=85" alt="Минималистичный модный editorial-кадр" loading="eager" fetchpriority="high">
+            <span class="gallery-card-copy"><span><span class="gallery-card-index">04 / EDITORIAL</span><span class="gallery-card-title">Quiet form</span><span class="gallery-card-sub">Less, but intentional</span></span><span class="gallery-card-arrow">↗</span></span>
+          </button>
+          <button class="gallery-card" type="button" data-gallery-category="night" data-title="Nocturne" data-subtitle="Night · Deep blue" data-source="https://unsplash.com/s/photos/night-sky">
+            <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=85" alt="Тёмное звёздное небо над горами" loading="eager" fetchpriority="high">
+            <span class="gallery-card-copy"><span><span class="gallery-card-index">05 / NOCTURNE</span><span class="gallery-card-title">Nocturne</span><span class="gallery-card-sub">A little further away</span></span><span class="gallery-card-arrow">↗</span></span>
+          </button>
+          <button class="gallery-card wide" type="button" data-gallery-category="architecture" data-title="Lines of silence" data-subtitle="Architecture · Geometry" data-source="https://unsplash.com/s/photos/modern-architecture">
+            <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1200&q=85" alt="Современная архитектура с чистыми линиями" loading="eager" fetchpriority="high">
+            <span class="gallery-card-copy"><span><span class="gallery-card-index">06 / ARCHITECTURE</span><span class="gallery-card-title">Lines of silence</span><span class="gallery-card-sub">Order in the unknown</span></span><span class="gallery-card-arrow">↗</span></span>
+          </button>
+          <button class="gallery-card" type="button" data-gallery-category="botanical" data-title="Petal study" data-subtitle="Botanical · Close-up" data-source="https://unsplash.com/s/photos/dark-flowers">
+            <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=900&q=85" alt="Цветы в мягком естественном свете" loading="eager" fetchpriority="high">
+            <span class="gallery-card-copy"><span><span class="gallery-card-index">07 / BOTANICAL</span><span class="gallery-card-title">Petal study</span><span class="gallery-card-sub">Details worth keeping</span></span><span class="gallery-card-arrow">↗</span></span>
+          </button>
+          <button class="gallery-card" type="button" data-gallery-category="editorial" data-title="Afterimage" data-subtitle="Editorial · Film still" data-source="https://unsplash.com/s/photos/film-photography">
+            <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=900&q=85" alt="Море и мягкий приглушённый свет" loading="eager" fetchpriority="high">
+            <span class="gallery-card-copy"><span><span class="gallery-card-index">08 / AFTERIMAGE</span><span class="gallery-card-title">Afterimage</span><span class="gallery-card-sub">What stays with us</span></span><span class="gallery-card-arrow">↗</span></span>
+          </button>
+        </div>
+        <footer class="gallery-note"><span>ÉCLIPSE VISUAL ARCHIVE · COLLECTION Nº 01</span><span>Фотографии загружаются с Unsplash; нажми на кадр, чтобы открыть его крупнее. Для загрузки нужен интернет.</span><span>Image sources: <a href="https://unsplash.com/" target="_blank" rel="noopener noreferrer">Unsplash</a></span></footer>
+      </div>
+      <div class="gallery-lightbox" id="gallery-lightbox" role="dialog" aria-modal="true" aria-label="Просмотр изображения">
+        <div class="gallery-lightbox-inner">
+          <button class="gallery-lightbox-close" id="gallery-lightbox-close" type="button" aria-label="Закрыть">×</button>
+          <img id="gallery-lightbox-image" src="" alt="">
+          <div class="gallery-lightbox-copy"><small id="gallery-lightbox-subtitle"></small><h3 id="gallery-lightbox-title"></h3><p>Визуальный фрагмент коллекции ÉCLIPSE. Источник изображения указан ниже.</p><p><a id="gallery-lightbox-source" href="https://unsplash.com/" target="_blank" rel="noopener noreferrer" style="color:#c18b92">Открыть источник ↗</a></p></div>
+        </div>
+      </div>
     </section>
 
     <section id="galaxy-view" class="view">
@@ -1929,6 +2064,8 @@ document.getElementById("back-to-galaxy-from-planets").addEventListener("click",
         if (section === "game") {
           showGameIntro();
           showView(gameView);
+        } else if (section === "gallery") {
+          showView(document.getElementById("eclipse-gallery"));
         } else if (section === "daily") {
           currentCategory = "all";
           document.querySelectorAll(".category").forEach(item => {
@@ -2651,6 +2788,62 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.m
       document.getElementById('dossier-copy').addEventListener('click',async()=>{const report='ÉCLIPSE — DOSSIER PERSONNEL\n'+traitNames.join(' · ')+'\n\n'+archiveNote+'\n\n'+relationText+'\n\n'+tension+'\n\n— личное досье';try{await navigator.clipboard.writeText(report);document.getElementById('dossier-copy-status').textContent='Отчёт скопирован.';}catch(e){document.getElementById('dossier-copy-status').textContent='Копирование недоступно в этом браузере — можно выделить текст вручную.';}});
     }
 
+</script>
+
+
+<script>
+(function initEclipseGallery(){
+  const root=document.getElementById('eclipse-gallery');
+  if(!root)return;
+  const filters=root.querySelectorAll('[data-gallery-filter]');
+  const cards=[...root.querySelectorAll('[data-gallery-category]')];
+  const galleryImages=[...root.querySelectorAll('.gallery-card img')];
+  galleryImages.forEach((img,index)=>{
+    img.loading='eager';
+    img.decoding='async';
+    img.addEventListener('error',()=>{
+      if(img.dataset.fallbackTried==='1') return;
+      img.dataset.fallbackTried='1';
+      const fallbacks=[
+        'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1400&q=85',
+        'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1000&q=85',
+        'https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=85',
+        'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=85',
+        'https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=900&q=85',
+        'https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=900&q=85'
+      ];
+      if(fallbacks[index] && img.src!==fallbacks[index]) img.src=fallbacks[index];
+    },{once:true});
+  });
+  filters.forEach(btn=>btn.addEventListener('click',()=>{
+    filters.forEach(b=>b.classList.toggle('active',b===btn));
+    const category=btn.dataset.galleryFilter;
+    cards.forEach(card=>{card.hidden=category!=='all'&&card.dataset.galleryCategory!==category;});
+  }));
+  const modal=document.getElementById('gallery-lightbox');
+  const modalImg=document.getElementById('gallery-lightbox-image');
+  const modalTitle=document.getElementById('gallery-lightbox-title');
+  const modalSubtitle=document.getElementById('gallery-lightbox-subtitle');
+  const modalSource=document.getElementById('gallery-lightbox-source');
+  const close=()=>{modal.classList.remove('open');modalImg.src='';document.body.style.overflow='';};
+  cards.forEach(card=>card.addEventListener('click',()=>{
+    const img=card.querySelector('img');
+    modalImg.src=img.currentSrc||img.src;modalImg.alt=img.alt;
+    modalTitle.textContent=card.dataset.title||img.alt;
+    modalSubtitle.textContent=card.dataset.subtitle||'';
+    modalSource.href=card.dataset.source||'https://unsplash.com/';
+    modal.classList.add('open');document.body.style.overflow='hidden';
+  }));
+  document.getElementById('gallery-lightbox-close').addEventListener('click',close);
+  modal.addEventListener('click',e=>{if(e.target===modal)close();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))close();});
+  document.getElementById('gallery-back-home').addEventListener('click',()=>{
+    if(typeof showView==='function')showView(document.getElementById('home'));
+    else {root.classList.remove('active');document.getElementById('home')?.classList.add('active');}
+  });
+})();
 </script>
 
 </body>
